@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Иброхимов Дилмурод</title>
+<meta name="description" content="Резюме Data Engineer в виде запуска Airflow DAG: Airflow, ClickHouse, PostgreSQL, Python.">
+<meta property="og:title" content="Иброхимов Дилмурод — Data Engineer">
+<meta property="og:description" content="Airflow, ClickHouse, PostgreSQL, Python. 38 DAG-ов, ~12 млн строк в сутки.">
+<meta property="og:type" content="profile">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23101315'/%3E%3Cpath d='M10 16C16 16 16 9 22 9M10 16C16 16 16 23 22 23' fill='none' stroke='%23EEF0EC' stroke-width='2'/%3E%3Crect x='5' y='13' width='6' height='6' fill='%23F2D230'/%3E%3Crect x='21' y='6' width='6' height='6' fill='%23EEF0EC'/%3E%3Crect x='21' y='20' width='6' height='6' fill='%23EEF0EC'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@75..112.5,300..800&family=Onest:wght@400..800&display=swap" rel="stylesheet">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --ground:#EEF0EC;
+  --panel:#F8F9F6;
+  --ink:#101315;
+  --ink-2:#4F5753;
+  --ink-3:#7F8782;
+  --rule:#D2D6D0;
+  --accent:#F2D230;
+  --on-accent:#101315;
+  --ok:#12804E;
+  --ok-soft:#D5ECDE;
+  --queued:#A2A9A4;
+  --warn:#8F5E00;
+  --warn-soft:#F3E5C2;
+  --band:56%;
+  --mono:"Martian Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --sans:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --pad:clamp(18px,4vw,56px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F1316;--panel:#151A1E;--ink:#E7EAE5;--ink-2:#A7AFAA;--ink-3:#6F7773;--rule:#283035;
+    --accent:#E9CB3A;--on-accent:#0F1316;--ok:#45C486;--ok-soft:#15342A;--queued:#5B635F;--warn:#E3A948;--warn-soft:#3A2D14;
+    --band:74%;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1316;--panel:#151A1E;--ink:#E7EAE5;--ink-2:#A7AFAA;--ink-3:#6F7773;--rule:#283035;
+  --accent:#E9CB3A;--on-accent:#0F1316;--ok:#45C486;--ok-soft:#15342A;--queued:#5B635F;--warn:#E3A948;--warn-soft:#3A2D14;
+  --band:74%;color-scheme:dark;
+}
+
+/* task states: one set of props, reused by pills, nodes, squares, cells */
+[data-state="success"]{--st:var(--ok);--st-soft:var(--ok-soft);--st-ink:var(--ok)}
+[data-state="running"]{--st:var(--accent);--st-soft:var(--accent);--st-ink:var(--on-accent)}
+[data-state="queued"]{--st:var(--queued);--st-soft:transparent;--st-ink:var(--ink-3)}
+[data-state="paused"]{--st:var(--warn);--st-soft:var(--warn-soft);--st-ink:var(--warn)}
+[data-state="none"]{--st:var(--rule);--st-soft:transparent;--st-ink:var(--ink-3)}
+
+/* ---------- base ---------- */
+*{box-sizing:border-box}
+html{background:var(--ground);scroll-behavior:smooth;scroll-padding-top:68px}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p,ul,dl,dd{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:var(--pad)}
+mark{background:linear-gradient(transparent var(--band),color-mix(in srgb,var(--accent) 80%,transparent) var(--band));color:inherit;padding:0 .06em}
+.blank{font-family:var(--mono);color:var(--ink-3);letter-spacing:.12em}
+.num{font-variant-numeric:tabular-nums}
+
+.pill{display:inline-flex;align-items:center;font:500 11px/1 var(--mono);padding:5px 8px;border:1px solid var(--st);background:var(--st-soft);color:var(--st-ink);white-space:nowrap;transition:background-color .25s,color .25s,border-color .25s}
+.sq{display:inline-block;width:10px;height:10px;flex:none;background:var(--st);border:1px solid var(--st)}
+.sq[data-state="queued"]{background:transparent}
+
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 13px/1 var(--mono);padding:12px 16px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);text-decoration:none;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--ink);color:var(--ground)}
+.btn-primary{background:var(--ink);color:var(--ground)}
+.btn-primary:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn-sm{padding:8px 12px;font-size:12px}
+
+/* ---------- top bar ---------- */
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.bar .wrap{display:flex;align-items:center;gap:14px;height:54px}
+.brand{display:flex;align-items:center;gap:10px;font:600 13px/1 var(--mono);text-decoration:none;white-space:nowrap}
+.brand svg{flex:none}
+.nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
+.nav::-webkit-scrollbar{display:none}
+.nav a{display:flex;align-items:center;gap:8px;padding:9px 11px;font:500 12px/1 var(--mono);color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--panel)}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(32px,5vw,72px);padding-bottom:clamp(28px,4vw,44px)}
+.crumb{display:flex;flex-wrap:wrap;gap:4px 14px;font:400 12px/1.5 var(--mono);color:var(--ink-3);margin-bottom:clamp(22px,3vw,36px)}
+.crumb b{color:var(--ink);font-weight:600}
+.hero-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,4vw,64px);align-items:end}
+.name{font-family:var(--mono);font-stretch:75%;font-weight:800;font-size:clamp(40px,7.2vw,104px);line-height:.9;letter-spacing:-.045em}
+.name span{display:block}
+.role{margin-top:20px;font:500 clamp(17px,1.6vw,21px)/1.45 var(--sans);color:var(--ink-2);text-wrap:balance}
+.lead{font-size:18px;line-height:1.6;max-width:52ch;text-wrap:pretty}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 18px;margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);font-size:15px}
+.facts dt{font:400 12px/1.95 var(--mono);color:var(--ink-3)}
+
+/* ---------- DAG run panel ---------- */
+.run-panel{background:var(--panel);border:1px solid var(--rule)}
+.run-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px 16px;padding:10px 14px 10px 18px;border-bottom:1px solid var(--rule)}
+.run-bar-l{display:flex;align-items:center;flex-wrap:wrap;gap:4px 16px;font:400 12px/1.4 var(--mono);color:var(--ink-3);min-width:0}
+.run-bar-l b{color:var(--ink);font-weight:600}
+.run-bar-r{display:flex;align-items:center;gap:10px}
+
+.dag{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(30px,5vw,84px);row-gap:22px;padding:clamp(24px,3vw,40px) clamp(18px,3vw,40px)}
+.edges{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.edge{fill:none;stroke:var(--rule);stroke-width:1.5;stroke-dasharray:4 4;transition:stroke .3s}
+.edge.on{stroke:var(--ink-3);stroke-dasharray:none}
+.arrow{fill:var(--ink-3)}
+.pkt{fill:var(--accent);stroke:var(--ink);stroke-width:1}
+
+.node{grid-column:var(--c);grid-row:var(--r);align-self:center;position:relative;z-index:1;display:grid;gap:3px;min-width:0;padding:12px 14px 13px;background:var(--ground);border:1.5px solid var(--st);text-decoration:none;transition:border-color .25s,box-shadow .25s,transform .2s}
+.node:hover{transform:translateY(-2px)}
+.node[data-state="running"]{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 45%,transparent)}
+.n-id{font:600 13px/1.3 var(--mono);font-stretch:75%;overflow-wrap:anywhere}
+.n-what{font:600 15px/1.3 var(--sans)}
+.n-op{font:400 11px/1.3 var(--mono);font-stretch:75%;color:var(--ink-3);overflow-wrap:anywhere}
+.n-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px}
+.n-dur{font:400 11px/1 var(--mono);color:var(--ink-3);white-space:nowrap}
+
+.run-foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px 20px;padding:0 18px 14px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font:400 11px/1 var(--mono);color:var(--ink-3)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.hint{font-size:13px;color:var(--ink-3)}
+
+.log{height:196px;overflow:auto;padding:12px 0;border-top:1px solid var(--rule);background:var(--ground);font:400 12px/1.8 var(--mono);color:var(--ink-2)}
+.ln{display:grid;grid-template-columns:92px 158px 40px auto;gap:12px;padding:0 18px;white-space:nowrap;width:max-content;min-width:100%}
+.ln .lt{color:var(--ink-3)}
+.ln .lk{color:var(--ink);font-stretch:75%}
+.ln [data-lvl="WARN"]{color:var(--warn)}
+.ln [data-lvl="OK"]{color:var(--ok)}
+
+/* ---------- task sections ---------- */
+.task{padding-top:clamp(56px,8vw,112px)}
+.task-head{display:grid;gap:14px;margin-bottom:clamp(22px,3vw,36px);padding-top:16px;border-top:1.5px solid var(--ink)}
+.ti{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font:400 12px/1.4 var(--mono);color:var(--ink-3)}
+.ti b{color:var(--ink);font-weight:600}
+.task h2{font-family:var(--mono);font-stretch:75%;font-weight:700;font-size:clamp(32px,4.4vw,58px);line-height:1;letter-spacing:-.035em;text-wrap:balance}
+.note{font-size:15px;color:var(--ink-2);max-width:60ch}
+
+/* grid view */
+.gv{background:var(--panel);border:1px solid var(--rule);padding:16px 20px 18px;margin-bottom:clamp(28px,4vw,48px)}
+.gv-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 20px;margin-bottom:14px;font:400 12px/1.4 var(--mono);color:var(--ink-3)}
+.gv-head b{color:var(--ink);font-weight:600}
+.hatch{display:inline-block;width:30px;height:10px;background:repeating-linear-gradient(-45deg,var(--ink-3) 0 1.5px,transparent 1.5px 5px);border:1px solid var(--ink-3);flex:none}
+.gv-scroll{overflow-x:auto}
+.gv-grid{display:grid;grid-template-columns:minmax(150px,230px) repeat(var(--n,13),minmax(22px,1fr)) minmax(150px,auto);gap:5px;align-items:center;min-width:680px}
+.gv-mo{font:400 10px/1.3 var(--mono);color:var(--ink-3);text-align:center;align-self:end}
+.gv-mo b{display:block;font-weight:600;color:var(--ink-2)}
+.gv-label{padding:6px 10px 6px 0;min-width:0}
+.gv-label b{display:block;font:600 14px/1.25 var(--sans)}
+.gv-label span{display:block;font-size:12px;color:var(--ink-3)}
+.cell{display:block;height:24px;background:var(--st);border:1px solid var(--st)}
+.cell[data-state="none"]{background:transparent;border:1px dashed var(--rule)}
+.cell[data-state="running"]{border-color:var(--ink)}
+.gv-tail{display:flex;align-items:center;gap:8px;padding-left:8px;font:400 11px/1.3 var(--mono);color:var(--ink-2);white-space:nowrap}
+
+/* job */
+.job{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(24px,4vw,64px)}
+.job-meta{position:sticky;top:84px;align-self:start}
+.job-meta h3{font:700 clamp(22px,2.2vw,28px)/1.15 var(--sans);letter-spacing:-.015em}
+.org{font-weight:600;margin-top:10px}
+.muted{color:var(--ink-2);font-size:15px}
+.dates{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px;font:500 12px/1.5 var(--mono)}
+.group + .group{margin-top:34px}
+.group h4{font:600 12px/1 var(--mono);letter-spacing:.04em;color:var(--ink-3);margin-bottom:10px}
+.group ul{list-style:none;padding:0}
+.group li{position:relative;padding:12px 0 12px 28px;border-top:1px solid var(--rule);max-width:72ch;text-wrap:pretty}
+.group li::before{content:"";position:absolute;left:0;top:23px;width:16px;height:1.5px;background:var(--ink)}
+.group li::after{content:"";position:absolute;left:12px;top:20px;border:4px solid transparent;border-left:5px solid var(--ink);border-right:0}
+
+/* tables */
+.tbl{overflow-x:auto;background:var(--panel);border:1px solid var(--rule)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{padding:12px 16px;text-align:left;font:500 11px/1 var(--mono);color:var(--ink-3);white-space:nowrap;border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;vertical-align:top;border-top:1px solid var(--rule)}
+tbody tr:first-child td{border-top:0}
+tbody tr:not(.grp):hover td{background:var(--ground)}
+td.id{font:500 13px/1.6 var(--mono);font-stretch:75%;white-space:nowrap}
+td.type{font-weight:600;white-space:nowrap}
+tr.grp th{padding:18px 16px 8px;border-bottom:0;border-top:1px solid var(--rule);color:var(--ink-2);font-weight:600}
+tbody tr.grp:first-child th{border-top:0}
+.t-conn{min-width:760px}
+.t-dags{min-width:940px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{display:inline-block;padding:4px 7px;font:500 11px/1 var(--mono);color:var(--ink-2);border:1px solid var(--rule);white-space:nowrap}
+
+/* education + contacts */
+.duo{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,4vw,56px);align-items:start}
+.t-vars td{font-size:15px}
+.sink{background:var(--ink);color:var(--ground);padding:clamp(22px,3vw,34px);display:grid;gap:18px}
+.sink-k{font:400 12px/1 var(--mono);color:color-mix(in srgb,var(--ground) 60%,var(--ink))}
+.sink-to{display:block;margin-top:-8px;font:700 clamp(19px,2.3vw,30px)/1.2 var(--mono);font-stretch:75%;letter-spacing:-.02em;text-decoration:none;overflow-wrap:anywhere}
+.sink-to:hover{text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:3px;text-underline-offset:6px}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 18px;border-top:1px solid color-mix(in srgb,var(--ground) 20%,var(--ink))}
+.kv dt,.kv dd{padding:10px 0;border-bottom:1px solid color-mix(in srgb,var(--ground) 20%,var(--ink))}
+.kv dt{font:400 12px/1.9 var(--mono);color:color-mix(in srgb,var(--ground) 60%,var(--ink))}
+.kv a{text-decoration:none}
+.kv a:hover{text-decoration:underline}
+.sink .blank{color:color-mix(in srgb,var(--ground) 55%,var(--ink))}
+.sink .btn{border-color:var(--ground);color:var(--ground)}
+.sink .btn-primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.sink .btn-primary:hover{background:var(--ground);border-color:var(--ground);color:var(--ink)}
+.sink :focus-visible{outline-color:var(--accent)}
+
+.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding-top:72px;padding-bottom:40px;font:400 12px/1.7 var(--mono);color:var(--ink-3)}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .hero-grid,.job,.duo{grid-template-columns:minmax(0,1fr)}
+  .job-meta{position:static}
+}
+@media (max-width:760px){
+  .brand-name{display:none}
+  .dag{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px;row-gap:44px}
+  .node{grid-column:var(--mc);grid-row:var(--mr)}
+  .node[data-wide]{justify-self:center;width:calc(50% - 7px)}
+  .n-id{font-size:12px}
+  .hint{display:none}
+  .ln{grid-template-columns:84px 150px 36px auto;gap:10px;padding:0 14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+  .node:hover{transform:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar" aria-label="Разделы">
+  <div class="wrap">
+    <a class="brand" href="#profile">
+      <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M5 7C10 7 10 2.5 15 2.5M5 7C10 7 10 11.5 15 11.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="0.5" y="4.5" width="5" height="5" fill="currentColor"/><rect x="14.5" y="0" width="5" height="5" fill="currentColor"/><rect x="14.5" y="9" width="5" height="5" fill="currentColor"/></svg>
+      <span class="brand-name">ibroximov_dilmurod</span>
+    </a>
+    <span class="pill run-state" data-state="success">success</span>
+    <div class="nav">
+      <a href="#experience"><i class="sq" data-task="transform_experience" data-state="success"></i>Опыт</a>
+      <a href="#stack"><i class="sq" data-task="load_stack" data-state="success"></i>Стек</a>
+      <a href="#projects"><i class="sq" data-task="publish_projects" data-state="success"></i>Проекты</a>
+      <a href="#education"><i class="sq" data-task="check_education" data-state="success"></i>Образование</a>
+      <a href="#contacts"><i class="sq" data-task="sink_contacts" data-state="success"></i>Контакты</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap" id="profile">
+  <p class="crumb"><span>DAGs / <b>ibroximov_dilmurod</b></span><span>owner: data-engineering</span><span>schedule: @daily</span><span>tags: airflow, clickhouse, postgres</span></p>
+  <div class="hero-grid">
+    <div>
+      <h1 class="name"><span>Иброхимов</span><span>Дилмурод</span></h1>
+      <p class="role">Data Engineer · Apache Airflow · ClickHouse · PostgreSQL · Python</p>
+    </div>
+    <div>
+      <p class="lead">Отвечаю за пайплайны, по которым городские данные Ташкента попадают в хранилище и в отчёты. <mark>38 DAG-ов</mark> в Airflow каждый день забирают <mark>~12 млн строк</mark> из <mark>17 источников</mark>. После переноса аналитики в ClickHouse отчёты строятся за <mark>1,5 с вместо 40</mark>.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=Data%20Engineer">Написать на почту</a>
+        <a class="btn num" href="tel:+998884104545">+998 88 410 45 45</a>
+      </div>
+      <dl class="facts">
+        <dt>сейчас</dt><dd>Data Engineer, Raqamli Rivojlanish Departamenti</dd>
+        <dt>город</dt><dd>Ташкент, Узбекистан</dd>
+        <dt>формат</dt><dd>офис, гибрид или удалёнка</dd>
+      </dl>
+    </div>
+  </div>
+</header>
+
+<section class="wrap" aria-labelledby="run-title">
+  <div class="run-panel">
+    <div class="run-bar">
+      <div class="run-bar-l"><b id="run-title">Graph</b><span id="run-id">run_id: manual__2026-09-11</span><span>6 задач</span></div>
+      <div class="run-bar-r">
+        <span class="pill run-state" data-state="success">success</span>
+        <button type="button" class="btn btn-sm" id="trigger">▶ Перезапустить</button>
+      </div>
+    </div>
+
+    <div class="dag" id="dag">
+      <svg class="edges" id="edges" aria-hidden="true">
+        <defs><marker id="arr" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0 0L8 4L0 8Z"/></marker></defs>
+      </svg>
+      <a class="node" href="#profile" data-task="extract_profile" data-state="success" data-wide style="--c:1;--r:1/3;--mc:1/3;--mr:1">
+        <span class="n-id">extract_profile</span><span class="n-what">О себе</span><span class="n-op">PythonOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="extract_profile">0,6 с</span></span>
+      </a>
+      <a class="node" href="#experience" data-task="transform_experience" data-state="success" style="--c:2;--r:1;--mc:1;--mr:2">
+        <span class="n-id">transform_experience</span><span class="n-what">Опыт</span><span class="n-op">PostgresOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="transform_experience">1,4 с</span></span>
+      </a>
+      <a class="node" href="#stack" data-task="load_stack" data-state="success" style="--c:2;--r:2;--mc:2;--mr:2">
+        <span class="n-id">load_stack</span><span class="n-what">Стек</span><span class="n-op">DockerOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="load_stack">0,9 с</span></span>
+      </a>
+      <a class="node" href="#projects" data-task="publish_projects" data-state="success" style="--c:3;--r:1;--mc:1;--mr:3">
+        <span class="n-id">publish_projects</span><span class="n-what">Пет-проекты</span><span class="n-op">BashOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="publish_projects">0,7 с</span></span>
+      </a>
+      <a class="node" href="#education" data-task="check_education" data-state="success" style="--c:3;--r:2;--mc:2;--mr:3">
+        <span class="n-id">check_education</span><span class="n-what">Образование</span><span class="n-op">SQLCheckOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="check_education">0,4 с</span></span>
+      </a>
+      <a class="node" href="#contacts" data-task="sink_contacts" data-state="success" data-wide style="--c:4;--r:1/3;--mc:1/3;--mr:4">
+        <span class="n-id">sink_contacts</span><span class="n-what">Контакты</span><span class="n-op">EmailOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="sink_contacts">0,3 с</span></span>
+      </a>
+    </div>
+
+    <div class="run-foot">
+      <div class="legend">
+        <span><i class="sq" data-state="success"></i>success</span>
+        <span><i class="sq" data-state="running"></i>running</span>
+        <span><i class="sq" data-state="queued"></i>queued</span>
+        <span><i class="sq" data-state="paused"></i>paused</span>
+      </div>
+      <p class="hint">Нажмите на задачу, чтобы перейти к разделу</p>
+    </div>
+    <div class="log" id="log" role="log" aria-label="Лог запуска"></div>
+  </div>
+</section>
+
+<main>
+  <section class="task wrap" id="experience">
+    <div class="task-head">
+      <p class="ti"><b>transform_experience</b><span>PostgresOperator</span><span class="pill" data-task="transform_experience" data-state="success">success</span><span data-dur="transform_experience">1,4 с</span></p>
+      <h2>Опыт работы</h2>
+    </div>
+
+    <div class="gv">
+      <div class="gv-head">
+        <span><b>Grid</b> · один квадрат = один месяц</span>
+        <span class="legend">
+          <span><i class="sq" data-state="success"></i>success</span>
+          <span><i class="sq" data-state="running"></i>running</span>
+          <span><i class="hatch"></i>scheduled</span>
+        </span>
+      </div>
+      <div class="gv-scroll"><div class="gv-grid" id="gv"></div></div>
+    </div>
+
+    <article class="job">
+      <div class="job-meta">
+        <h3>Data Engineer</h3>
+        <p class="org">Raqamli Rivojlanish Departamenti</p>
+        <p class="muted">Департамент цифрового развития, Ташкент</p>
+        <p class="dates"><span>ноябрь 2025 — сейчас</span><span class="pill" data-state="running" id="job-dur">10 мес.</span></p>
+      </div>
+      <div>
+        <div class="group">
+          <h4>Пайплайны и хранилища</h4>
+          <ul>
+            <li>Разработал 15 и поддерживаю <mark>38 DAG-ов</mark> в Apache Airflow. Каждый день они собирают <mark>~12 млн строк</mark> из 17 источников: API ведомств, базы районных хокимиятов, выгрузки в XML и Excel.</li>
+            <li>Настроил ретраи, SLA и алерты о сбоях: <mark>99,6%</mark> запусков проходят без ручного вмешательства, а упавший пайплайн команда видит в течение 5 минут.</li>
+            <li>Спроектировал схемы PostgreSQL для 9 предметных областей. Благодаря партиционированию и индексам ключевые запросы стали выполняться <mark>в 6 раз быстрее</mark>.</li>
+            <li>Перенёс аналитические агрегаты в ClickHouse (900+ млн строк). На материализованных представлениях отчёты строятся <mark>за 1,5 с вместо 40</mark>.</li>
+            <li>Встроил в каждый пайплайн проверки качества: полнота, дубликаты, соответствие схеме. Доля битых записей в витринах снизилась <mark>с 4% до 0,3%</mark>.</li>
+            <li>Заменил ручные выгрузки скриптами на Python и pandas. Аналитики экономят около <mark>20 часов в неделю</mark>.</li>
+          </ul>
+        </div>
+        <div class="group">
+          <h4>Интеграции и сервисы</h4>
+          <ul>
+            <li>Подключил <mark>11 внешних сервисов</mark> по REST API, данные в JSON и XML проверяются по схеме.</li>
+            <li>Вынес тяжёлые задачи в очереди Celery, до <mark>200 тыс. задач в сутки</mark>. Кэш на Redis сократил ответ внутреннего API <mark>с 1,2 с до 150 мс</mark>.</li>
+            <li>Передаю данные в реальном времени через WebSocket на панель операторов, задержка меньше секунды.</li>
+            <li>Подключил полнотекстовый поиск на Elasticsearch по 3 млн обращений граждан, ответ приходит быстрее 200 мс.</li>
+          </ul>
+        </div>
+        <div class="group">
+          <h4>Инфраструктура</h4>
+          <ul>
+            <li>Упаковал 14 сервисов в Docker Compose. Новое окружение поднимается <mark>за 10 минут</mark> вместо половины рабочего дня.</li>
+            <li>Перенёс 60+ паролей и ключей доступа из кода и .env-файлов в HashiCorp Vault.</li>
+            <li>Храню сырые данные и бэкапы в AWS S3, отдельные ETL-задачи запускаю на EC2.</li>
+            <li>Настроил CI/CD в GitLab: линтер, тесты и автоматический деплой DAG-ов после код-ревью.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="task wrap" id="stack">
+    <div class="task-head">
+      <p class="ti"><b>load_stack</b><span>DockerOperator</span><span class="pill" data-task="load_stack" data-state="success">success</span><span data-dur="load_stack">0,9 с</span></p>
+      <h2>Стек</h2>
+      <p class="note">Admin → Connections: всё, к чему мои пайплайны подключаются каждый день.</p>
+    </div>
+    <div class="tbl">
+      <table class="t-conn">
+        <thead><tr><th>conn_id</th><th>тип</th><th>где и зачем</th></tr></thead>
+        <tbody>
+          <tr class="grp"><th colspan="3">Оркестрация и очереди</th></tr>
+          <tr><td class="id">airflow_default</td><td class="type">Apache Airflow</td><td>38 DAG-ов, ретраи, SLA, алерты о сбоях</td></tr>
+          <tr><td class="id">celery_workers</td><td class="type">Celery</td><td>Фоновые задачи, до 200 тыс. в сутки</td></tr>
+          <tr><td class="id">redis_cache</td><td class="type">Redis</td><td>Кэш внутреннего API и очереди</td></tr>
+          <tr class="grp"><th colspan="3">Хранилища и поиск</th></tr>
+          <tr><td class="id">postgres_core</td><td class="type">PostgreSQL</td><td>Схемы для 9 предметных областей, партиционирование, индексы</td></tr>
+          <tr><td class="id">clickhouse_dwh</td><td class="type">ClickHouse</td><td>Аналитическое хранилище на 900+ млн строк, материализованные представления</td></tr>
+          <tr><td class="id">es_search</td><td class="type">Elasticsearch</td><td>Полнотекстовый поиск по обращениям граждан</td></tr>
+          <tr class="grp"><th colspan="3">Интеграции и обработка</th></tr>
+          <tr><td class="id">http_external</td><td class="type">REST API · JSON · XML</td><td>11 внешних сервисов с проверкой данных по схеме</td></tr>
+          <tr><td class="id">ws_operators</td><td class="type">WebSocket</td><td>Поток на панель операторов в реальном времени</td></tr>
+          <tr><td class="id">python_etl</td><td class="type">Python · pandas · SQL</td><td>Трансформации, проверки качества, автоматизация выгрузок</td></tr>
+          <tr class="grp"><th colspan="3">Инфраструктура</th></tr>
+          <tr><td class="id">docker_runtime</td><td class="type">Docker Compose · Linux</td><td>14 сервисов, окружение за 10 минут</td></tr>
+          <tr><td class="id">vault_secrets</td><td class="type">HashiCorp Vault</td><td>Пароли и ключи доступа вне кода</td></tr>
+          <tr><td class="id">aws_default</td><td class="type">AWS S3 · EC2</td><td>Сырые данные, бэкапы, отдельные ETL-задачи</td></tr>
+          <tr><td class="id">gitlab_ci</td><td class="type">Git · GitLab CI/CD</td><td>Линтер, тесты, автодеплой DAG-ов</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="task wrap" id="projects">
+    <div class="task-head">
+      <p class="ti"><b>publish_projects</b><span>BashOperator</span><span class="pill" data-task="publish_projects" data-state="success">success</span><span data-dur="publish_projects">0,7 с</span></p>
+      <h2>Пет-проекты</h2>
+      <p class="note">Проекты вне работы в виде списка DAG-ов. Активные открываются на GitHub.</p>
+    </div>
+    <div class="tbl">
+      <table class="t-dags">
+        <thead><tr><th>статус</th><th>dag_id</th><th>schedule</th><th>что делает</th><th>стек</th><th>репозиторий</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="pill" data-state="paused">paused</span></td>
+            <td class="id">cbu_rates_pipeline</td>
+            <td class="id">@daily</td>
+            <td>Каждый день забирает курсы валют ЦБ Узбекистана, хранит историю в PostgreSQL и строит витрину в ClickHouse. На каждом запуске проверяет качество данных.</td>
+            <td><span class="chips"><span class="chip">Airflow</span><span class="chip">PostgreSQL</span><span class="chip">ClickHouse</span><span class="chip">Docker</span></span></td>
+            <td><span class="blank">____</span></td>
+          </tr>
+          <tr>
+            <td><span class="pill" data-state="paused">paused</span></td>
+            <td class="id">realtime_events_stream</td>
+            <td class="id">@continuous</td>
+            <td>Принимает события по WebSocket, буферизует их в Redis Streams и считает поминутные агрегаты в ClickHouse.</td>
+            <td><span class="chips"><span class="chip">WebSocket</span><span class="chip">Redis</span><span class="chip">ClickHouse</span></span></td>
+            <td><span class="blank">____</span></td>
+          </tr>
+          <tr>
+            <td><span class="pill" data-state="paused">paused</span></td>
+            <td class="id">vacancy_search</td>
+            <td class="id">@hourly</td>
+            <td>Парсит вакансии, обрабатывает их в очередях Celery и отдаёт поиск по Elasticsearch через REST API.</td>
+            <td><span class="chips"><span class="chip">Celery</span><span class="chip">Elasticsearch</span><span class="chip">REST API</span></span></td>
+            <td><span class="blank">____</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="duo wrap">
+    <section class="task" id="education">
+      <div class="task-head">
+        <p class="ti"><b>check_education</b><span>SQLCheckOperator</span><span class="pill" data-task="check_education" data-state="success">success</span><span data-dur="check_education">0,4 с</span></p>
+        <h2>Образование и языки</h2>
+        <p class="note">Admin → Variables</p>
+      </div>
+      <div class="tbl">
+        <table class="t-vars">
+          <thead><tr><th>key</th><th>value</th></tr></thead>
+          <tbody>
+            <tr><td class="id">education.degree</td><td>Бакалавр, информационные технологии в бизнесе</td></tr>
+            <tr><td class="id">education.university</td><td><span class="blank">____</span>, Ташкент</td></tr>
+            <tr><td class="id">education.period</td><td>2025–2029 <span class="pill" data-state="running">учусь</span></td></tr>
+            <tr><td class="id">certificates</td><td><span class="blank">____</span></td></tr>
+            <tr><td class="id">languages.uz</td><td>родной</td></tr>
+            <tr><td class="id">languages.ru</td><td>свободно, C1</td></tr>
+            <tr><td class="id">languages.en</td><td>B2 · IELTS <span class="blank">____</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="task" id="contacts">
+      <div class="task-head">
+        <p class="ti"><b>sink_contacts</b><span>EmailOperator</span><span class="pill" data-task="sink_contacts" data-state="success">success</span><span data-dur="sink_contacts">0,3 с</span></p>
+        <h2>Контакты</h2>
+        <p class="note">Последняя задача DAG-а: доставить письмо.</p>
+      </div>
+      <div class="sink">
+        <p class="sink-k">to</p>
+        <a class="sink-to" href="mailto:ibroximovdilmurod44@gmail.com?subject=Data%20Engineer">ibroximovdilmurod44@gmail.com</a>
+        <dl class="kv">
+          <dt>phone</dt><dd class="num"><a href="tel:+998884104545">+998 88 410 45 45</a></dd>
+          <dt>telegram</dt><dd><span class="blank">____</span></dd>
+          <dt>github</dt><dd><span class="blank">____</span></dd>
+          <dt>linkedin</dt><dd><span class="blank">____</span></dd>
+        </dl>
+        <div class="actions" style="margin-top:4px">
+          <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=Data%20Engineer">Написать письмо</a>
+          <a class="btn" href="tel:+998884104545">Позвонить</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="foot wrap">
+  <span>DagRun ibroximov_dilmurod · state=<span class="run-text">success</span> · обновлено 11.09.2026</span>
+  <span>Собрано вручную: HTML, CSS, JavaScript</span>
+</footer>
+
+<script>
+(() => {
+  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const fmt = (n) => n.toFixed(1).replace(".", ",");
+  const MO = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
+
+  /* ---------- DAG ---------- */
+  const TASKS = [
+    { id: "extract_profile", dur: 0.6, deps: [], logs: [["INFO", "Иброхимов Дилмурод · Data Engineer · Ташкент"]] },
+    { id: "transform_experience", dur: 1.4, deps: ["extract_profile"], logs: [
+      ["INFO", "Raqamli Rivojlanish Departamenti · ноябрь 2025 — сейчас"],
+      ["INFO", "38 DAG-ов · 17 источников · ~12 млн строк в сутки"],
+      ["INFO", "ClickHouse: отчёты за 1,5 с вместо 40"]] },
+    { id: "load_stack", dur: 0.9, deps: ["extract_profile"], logs: [["INFO", "14 connections: Airflow, PostgreSQL, ClickHouse, Celery, Redis, Docker…"]] },
+    { id: "check_education", dur: 0.4, deps: ["load_stack"], logs: [["INFO", "Бакалавр, ИТ в бизнесе · 2025–2029 · учится"]] },
+    { id: "publish_projects", dur: 0.7, deps: ["transform_experience", "load_stack"], logs: [["WARN", "3 пет-проекта на паузе: нет ссылок на репозитории"]] },
+    { id: "sink_contacts", dur: 0.3, deps: ["publish_projects", "check_education"], logs: [["INFO", "Готов к доставке → ibroximovdilmurod44@gmail.com"]] },
+  ];
+  const EDGES = [
+    ["extract_profile", "transform_experience"], ["extract_profile", "load_stack"],
+    ["transform_experience", "publish_projects"], ["load_stack", "publish_projects"],
+    ["load_stack", "check_education"], ["publish_projects", "sink_contacts"], ["check_education", "sink_contacts"],
+  ].map(([s, t]) => ({ s, t }));
+
+  const dag = $("#dag"), svg = $("#edges"), logEl = $("#log");
+  const NS = "http://www.w3.org/2000/svg";
+  const nodes = Object.fromEntries($$(".node", dag).map((n) => [n.dataset.task, n]));
+
+  EDGES.forEach((e) => {
+    e.path = document.createElementNS(NS, "path");
+    e.path.setAttribute("class", "edge on");
+    e.path.setAttribute("marker-end", "url(#arr)");
+    svg.appendChild(e.path);
+    e.pk = [0, 1, 2].map(() => {
+      const r = document.createElementNS(NS, "rect");
+      r.setAttribute("class", "pkt"); r.setAttribute("width", 6); r.setAttribute("height", 6);
+      r.style.display = "none"; svg.appendChild(r); return r;
+    });
+  });
+
+  function layout() {
+    const box = dag.getBoundingClientRect();
+    svg.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`);
+    EDGES.forEach((e) => {
+      const a = nodes[e.s].getBoundingClientRect(), b = nodes[e.t].getBoundingClientRect();
+      let d;
+      if (b.left >= a.right - 2) {
+        const x1 = a.right - box.left, y1 = a.top + a.height / 2 - box.top;
+        const x2 = b.left - box.left - 2, y2 = b.top + b.height / 2 - box.top, mx = (x1 + x2) / 2;
+        d = `M${x1} ${y1}C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`;
+      } else {
+        const x1 = a.left + a.width / 2 - box.left, y1 = a.bottom - box.top;
+        const x2 = b.left + b.width / 2 - box.left, y2 = b.top - box.top - 2, my = (y1 + y2) / 2;
+        d = `M${x1} ${y1}C${x1} ${my} ${x2} ${my} ${x2} ${y2}`;
+      }
+      e.path.setAttribute("d", d);
+      e.len = e.path.getTotalLength();
+    });
+  }
+
+  function setState(id, st) {
+    $$(`[data-task="${id}"]`).forEach((el) => {
+      el.dataset.state = st;
+      const p = el.classList.contains("pill") ? el : el.querySelector(".pill");
+      if (p) p.textContent = st;
+    });
+  }
+  const setRun = (st) => {
+    $$(".run-state").forEach((el) => { el.dataset.state = st; el.textContent = st; });
+    $$(".run-text").forEach((el) => (el.textContent = st));
+  };
+  const setDur = (id, txt) => $$(`[data-dur="${id}"]`).forEach((el) => (el.textContent = txt));
+
+  const pad = (n, l = 2) => String(n).padStart(l, "0");
+  const clock = () => { const d = new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${pad(d.getMilliseconds(), 3)}`; };
+  function log(task, lvl, msg) {
+    const ln = document.createElement("div");
+    ln.className = "ln";
+    [clock(), task || "dagrun", lvl, msg].forEach((txt, i) => {
+      const s = document.createElement("span");
+      s.className = ["lt", "lk", "lv", "lm"][i];
+      if (i === 2) s.dataset.lvl = lvl;
+      s.textContent = txt;
+      ln.appendChild(s);
+    });
+    logEl.appendChild(ln);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+  function finishTask(t) {
+    run.st[t.id] = "success";
+    setState(t.id, "success");
+    setDur(t.id, `${fmt(t.dur)} с`);
+    t.logs.forEach(([l, m]) => log(t.id, l, m));
+    log(t.id, "OK", `success за ${fmt(t.dur)} с`);
+  }
+
+  let run = null, raf = 0, visible = true;
+
+  function trigger() {
+    run = { t0: performance.now() + 450, st: {}, start: {}, done: false };
+    TASKS.forEach((t) => { run.st[t.id] = "queued"; setState(t.id, "queued"); setDur(t.id, "—"); });
+    logEl.textContent = "";
+    $("#run-id").textContent = `run_id: manual__${new Date().toISOString().slice(0, 19)}`;
+    setRun("running");
+    log(null, "INFO", "Запуск DAG ibroximov_dilmurod: 6 задач");
+    if (RM) {
+      TASKS.forEach(finishTask);
+      run.done = true;
+      setRun("success");
+      log(null, "OK", "DagRun завершён: state=success");
+      drawEdges(0);
+      return;
+    }
+    loop();
+  }
+
+  function drawEdges(now) {
+    const sec = now / 1000;
+    EDGES.forEach((e, i) => {
+      e.path.classList.toggle("on", !run || run.st[e.s] === "success");
+      let n = 0, period = 1;
+      if (!RM && e.len) {
+        if (run && !run.done && run.st[e.t] === "running") { n = 3; period = 0.9; }
+        else if (!run || run.done) { n = 1; period = 3.2; }
+      }
+      e.pk.forEach((r, k) => {
+        if (k >= n) { r.style.display = "none"; return; }
+        const f = (sec / period + k / n + i * 0.137) % 1;
+        const p = e.path.getPointAtLength(f * e.len);
+        r.setAttribute("x", p.x - 3); r.setAttribute("y", p.y - 3);
+        r.style.display = "";
+      });
+    });
+  }
+
+  function frame(now) {
+    raf = 0;
+    if (run && !run.done) {
+      const el = (now - run.t0) / 1000;
+      if (el >= 0) {
+        TASKS.forEach((t) => { if (run.st[t.id] === "running" && el - run.start[t.id] >= t.dur) finishTask(t); });
+        TASKS.forEach((t) => {
+          if (run.st[t.id] === "queued" && t.deps.every((d) => run.st[d] === "success")) {
+            run.st[t.id] = "running"; run.start[t.id] = el; setState(t.id, "running");
+            log(t.id, "INFO", "задача запущена");
+          }
+        });
+        if (TASKS.every((t) => run.st[t.id] === "success")) {
+          run.done = true; setRun("success");
+          log(null, "OK", `DagRun завершён: state=success, ${fmt(el)} с`);
+        }
+      }
+    }
+    drawEdges(now);
+    if ((run && !run.done) || visible) loop();
+  }
+  const loop = () => { if (!raf && !RM) raf = requestAnimationFrame(frame); };
+
+  new ResizeObserver(layout).observe(dag);
+  if (document.fonts) document.fonts.ready.then(layout);
+  new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible) loop(); }).observe(dag);
+  $("#trigger").addEventListener("click", trigger);
+  layout();
+  trigger();
+
+  /* ---------- Grid по месяцам ---------- */
+  const now = new Date();
+  const cur = { y: now.getFullYear(), m: now.getMonth() + 1 };
+  const idx = (p) => p.y * 12 + p.m - 1;
+  const durTxt = (m) => [Math.floor(m / 12) ? `${Math.floor(m / 12)} г.` : "", m % 12 ? `${m % 12} мес.` : ""].filter(Boolean).join(" ") || "0 мес.";
+  const FROM = { y: 2025, m: 9 };
+  const ROWS = [
+    { title: "Data Engineer", sub: "Raqamli Rivojlanish Departamenti", from: { y: 2025, m: 11 }, to: null },
+    { title: "Бакалавр, ИТ в бизнесе", sub: "вуз: ____", from: { y: 2025, m: 9 }, to: { y: 2029, m: 6 } },
+  ];
+  const N = Math.max(1, idx(cur) - idx(FROM) + 1);
+  const gv = $("#gv");
+  gv.style.setProperty("--n", N);
+  let html = "<span></span>";
+  for (let i = 0; i < N; i++) {
+    const k = idx(FROM) + i, m = (k % 12) + 1, y = Math.floor(k / 12);
+    html += `<span class="gv-mo">${MO[m - 1]}${i === 0 || m === 1 ? `<b>${y}</b>` : ""}</span>`;
+  }
+  html += "<span></span>";
+  ROWS.forEach((r) => {
+    html += `<div class="gv-label"><b>${r.title}</b><span>${r.sub}</span></div>`;
+    for (let i = 0; i < N; i++) {
+      const k = idx(FROM) + i, st = k < idx(r.from) ? "none" : k < idx(cur) ? "success" : "running";
+      html += `<i class="cell" data-state="${st}" title="${MO[k % 12]} ${Math.floor(k / 12)}: ${st}"></i>`;
+    }
+    html += r.to
+      ? `<span class="gv-tail"><i class="hatch"></i>ещё ${durTxt(idx(r.to) - idx(cur))} · до ${MO[r.to.m - 1]} ${r.to.y}</span>`
+      : `<span class="gv-tail">${durTxt(idx(cur) - idx(r.from))} · сейчас</span>`;
+  });
+  gv.innerHTML = html;
+  $("#job-dur").textContent = durTxt(idx(cur) - idx(ROWS[0].from));
+})();
+</script>
+</body>
+</html>
