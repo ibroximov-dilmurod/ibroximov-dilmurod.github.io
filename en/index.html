@@ -164,6 +164,7 @@ mark{background:linear-gradient(transparent var(--band),color-mix(in srgb,var(--
 .gv-tail{display:flex;align-items:center;gap:8px;padding-left:8px;font:400 11px/1.3 var(--mono);color:var(--ink-2);white-space:nowrap}
 
 /* job */
+.job + .job{margin-top:clamp(30px,4vw,52px);padding-top:clamp(26px,3vw,38px);border-top:1px solid var(--rule)}
 .job{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(24px,4vw,64px)}
 .job-meta{position:sticky;top:84px;align-self:start}
 .job-meta h3{font:700 clamp(22px,2.2vw,28px)/1.15 var(--sans);letter-spacing:-.015em}
@@ -389,6 +390,25 @@ tbody tr.grp:first-child th{border-top:0}
         </div>
       </div>
     </article>
+    <article class="job">
+      <div class="job-meta">
+        <h3>Python Developer, freelance</h3>
+        <p class="org">Remote</p>
+        <p class="muted">Data collection and processing projects</p>
+        <p class="dates"><span>2023 — 2024</span><span class="pill" data-state="success">2 yr</span></p>
+      </div>
+      <div>
+        <div class="group">
+          <h4>WHAT I DID</h4>
+          <ul>
+            <li>Wrote Python scrapers and data-collection scripts: pulled data from websites and APIs, cleaned it in pandas and loaded it into PostgreSQL, Excel and Google Sheets.</li>
+            <li>Set up scheduled loads with retries and failure alerts, so exports no longer had to be run by hand.</li>
+            <li>Built REST API integrations and Telegram bots for clients' internal work.</li>
+            <li>Worked with clients directly: gathered requirements, estimated the work and delivered it.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
   </section>
 
   <section class="task wrap" id="stack">
@@ -522,6 +542,7 @@ tbody tr.grp:first-child th{border-top:0}
     { id: "transform_experience", dur: 1.4, deps: ["extract_profile"], logs: [
       ["INFO", "Raqamli Rivojlanish Departamenti · November 2025 — present"],
       ["INFO", "38 DAGs · 17 sources · ~12M rows a day"],
+      ["INFO", "Freelance 2023-2024 · scrapers, ETL, integrations"],
       ["INFO", "ClickHouse: reports in 1.5 s instead of 40"]] },
     { id: "load_stack", dur: 0.9, deps: ["extract_profile"], logs: [["INFO", "14 connections: Airflow, PostgreSQL, ClickHouse, Celery, Redis, Docker…"]] },
     { id: "check_education", dur: 0.4, deps: ["load_stack"], logs: [["INFO", "BSc, Business IT · KIUT · 2025–2029 · studying"]] },
@@ -680,32 +701,39 @@ tbody tr.grp:first-child th{border-top:0}
   const cur = { y: now.getFullYear(), m: now.getMonth() + 1 };
   const idx = (p) => p.y * 12 + p.m - 1;
   const durTxt = (m) => [Math.floor(m / 12) ? `${Math.floor(m / 12)} yr` : "", m % 12 ? `${m % 12} mo` : ""].filter(Boolean).join(" ") || "0 mo";
-  const FROM = { y: 2025, m: 9 };
+  const FROM = { y: 2023, m: 1 };
+  const JOB_FROM = { y: 2025, m: 11 };
   const ROWS = [
-    { title: "Data Engineer", sub: "Raqamli Rivojlanish Departamenti", from: { y: 2025, m: 11 }, to: null },
+    { title: "Python Developer, freelance", sub: "Remote", from: { y: 2023, m: 1 }, to: { y: 2024, m: 12 } },
+    { title: "Data Engineer", sub: "Raqamli Rivojlanish Departamenti", from: JOB_FROM, to: null },
     { title: "BSc, Business IT", sub: "KIUT, Tashkent", from: { y: 2025, m: 9 }, to: { y: 2029, m: 6 } },
   ];
   const N = Math.max(1, idx(cur) - idx(FROM) + 1);
+  const step = N > 20 ? 3 : 1;
   const gv = $("#gv");
   gv.style.setProperty("--n", N);
   let html = "<span></span>";
   for (let i = 0; i < N; i++) {
     const k = idx(FROM) + i, m = (k % 12) + 1, y = Math.floor(k / 12);
-    html += `<span class="gv-mo">${MO[m - 1]}${i === 0 || m === 1 ? `<b>${y}</b>` : ""}</span>`;
+    const showMo = i === 0 || m === 1 || (m - 1) % step === 0;
+    html += `<span class="gv-mo">${showMo ? MO[m - 1] : ""}${i === 0 || m === 1 ? `<b>${y}</b>` : ""}</span>`;
   }
   html += "<span></span>";
   ROWS.forEach((r) => {
     html += `<div class="gv-label"><b>${r.title}</b><span>${r.sub}</span></div>`;
+    const ended = r.to && idx(r.to) <= idx(cur);
     for (let i = 0; i < N; i++) {
-      const k = idx(FROM) + i, st = k < idx(r.from) ? "none" : k < idx(cur) ? "success" : "running";
+      const k = idx(FROM) + i;
+      const outside = k < idx(r.from) || (r.to && k > idx(r.to));
+      const st = outside ? "none" : k < idx(cur) ? "success" : "running";
       html += `<i class="cell" data-state="${st}" title="${MO[k % 12]} ${Math.floor(k / 12)}: ${st}"></i>`;
     }
-    html += r.to
-      ? `<span class="gv-tail"><i class="hatch"></i>${durTxt(idx(r.to) - idx(cur))} left · until ${MO[r.to.m - 1]} ${r.to.y}</span>`
-      : `<span class="gv-tail">${durTxt(idx(cur) - idx(r.from))} · now</span>`;
+    if (ended) html += `<span class="gv-tail">${durTxt(idx(r.to) - idx(r.from) + 1)} · ${r.from.y}–${r.to.y}</span>`;
+    else if (r.to) html += `<span class="gv-tail"><i class="hatch"></i>${durTxt(idx(r.to) - idx(cur))} left · until ${MO[r.to.m - 1]} ${r.to.y}</span>`;
+    else html += `<span class="gv-tail">${durTxt(idx(cur) - idx(r.from))} · now</span>`;
   });
   gv.innerHTML = html;
-  $("#job-dur").textContent = durTxt(idx(cur) - idx(ROWS[0].from));
+  $("#job-dur").textContent = durTxt(idx(cur) - idx(JOB_FROM));
 })();
 </script>
 </body>
