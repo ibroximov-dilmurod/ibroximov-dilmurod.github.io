@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Иброхимов Дилмурод — Senior Backend Developer</title>
-<meta name="description" content="Резюме Senior Backend Developer в виде документации API: Python, FastAPI, PostgreSQL, Celery, Google Cloud, автономные ИИ-агенты.">
-<meta property="og:title" content="Иброхимов Дилмурод — Senior Backend Developer">
-<meta property="og:description" content="Python, FastAPI, Google Cloud, автономные ИИ-агенты. p95 150 мс при 350 запросах в секунду.">
+<title>Dilmurod Ibroximov — Senior Backend Developer</title>
+<meta name="description" content="Senior Backend Developer resume as API documentation: Python, FastAPI, PostgreSQL, Celery, Google Cloud, autonomous AI agents.">
+<meta property="og:title" content="Dilmurod Ibroximov — Senior Backend Developer">
+<meta property="og:description" content="Python, FastAPI, Google Cloud, autonomous AI agents. 150 ms p95 at 350 requests per second.">
 <meta property="og:type" content="profile">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230B111C'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='19' font-weight='700' fill='%2362A0FF' text-anchor='middle'%3E%7B%7D%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,7 +63,6 @@ button{font:inherit;color:inherit}
 code,kbd{font-family:var(--mono)}
 .num{font-variant-numeric:tabular-nums}
 
-/* ---------- shell ---------- */
 .shell{display:grid;grid-template-columns:270px minmax(0,1fr);max-width:1500px;margin:0 auto}
 .side{position:sticky;top:0;height:100vh;overflow:auto;padding:24px 18px 40px;background:var(--surface);border-right:1px solid var(--rule)}
 .main{min-width:0;padding:0 clamp(18px,3.4vw,52px) 96px}
@@ -72,8 +71,12 @@ code,kbd{font-family:var(--mono)}
 .brand-mark{width:30px;height:30px;flex:none;display:grid;place-items:center;background:var(--code-bg);color:var(--accent);font:700 15px/1 var(--mono);border-radius:6px}
 .brand b{font-size:15px;font-weight:700;letter-spacing:-.01em}
 .brand span{display:block;font:400 12px/1.3 var(--mono);color:var(--ink-3)}
-.side-ver{font:500 11px/1 var(--mono);color:var(--ink-3);margin:14px 0 18px;display:flex;gap:8px;align-items:center}
+.side-ver{font:500 11px/1 var(--mono);color:var(--ink-3);margin:14px 0 10px;display:flex;gap:8px;align-items:center}
 .side-ver i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.lang{display:inline-flex;border:1px solid var(--rule);border-radius:7px;overflow:hidden;margin:0 0 4px}
+.lang a{padding:5px 11px;font:600 11.5px/1 var(--mono);color:var(--ink-3);text-decoration:none}
+.lang a.is-on{background:var(--accent);color:#fff}
+.lang a:hover:not(.is-on){background:var(--surface-2);color:var(--ink)}
 
 .nav-grp{font:500 11px/1 var(--mono);letter-spacing:.06em;color:var(--ink-3);margin:20px 0 8px}
 .nav{display:grid;gap:1px}
@@ -88,7 +91,6 @@ code,kbd{font-family:var(--mono)}
 .side-foot a{color:var(--accent);text-decoration:none}
 .side-foot a:hover{text-decoration:underline}
 
-/* ---------- hero ---------- */
 .hero{padding:clamp(30px,4vw,56px) 0 clamp(24px,3vw,40px)}
 .eyebrow{font:500 12px/1 var(--mono);color:var(--ink-3);letter-spacing:.05em;margin-bottom:16px}
 h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-height:1.05;text-wrap:balance}
@@ -112,7 +114,6 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
 .slo b{display:block;font:700 clamp(24px,2.6vw,32px)/1 var(--sans);letter-spacing:-.03em}
 .slo span{display:block;margin-top:7px;font-size:13px;color:var(--ink-3)}
 
-/* ---------- endpoints ---------- */
 .ep{padding-top:clamp(48px,6vw,84px);scroll-margin-top:20px}
 .ep-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;padding-bottom:14px;border-bottom:1px solid var(--rule)}
 .mth{font:700 11px/1 var(--mono);letter-spacing:.05em;padding:6px 9px;border-radius:5px;color:#fff}
@@ -139,7 +140,6 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
 .tk-cmd{color:var(--tk-key);font-weight:700}
 .tk-flag{color:var(--code-ink-2)}
 
-/* ---------- content blocks ---------- */
 .adv{display:grid;gap:0}
 .adv div{padding:16px 0;border-top:1px solid var(--rule)}
 .adv div:first-child{border-top:0;padding-top:0}
@@ -156,7 +156,6 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
 .grp li::before{content:"";position:absolute;left:2px;top:20px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
 .grp li b{color:var(--ink);font-weight:600}
 
-/* trace */
 .trace{border:1px solid var(--rule);border-radius:10px;background:var(--surface);padding:16px;display:grid;gap:12px}
 .trace-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;font:500 11.5px/1.4 var(--mono);color:var(--ink-3)}
 .trace-row{display:grid;grid-template-columns:minmax(120px,190px) minmax(0,1fr);gap:14px;align-items:center}
@@ -225,11 +224,6 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
   html{scroll-behavior:auto}
   *{transition:none!important;animation:none!important}
 }
-.lang{display:inline-flex;border:1px solid var(--rule);border-radius:7px;overflow:hidden;margin:0 0 4px}
-.lang a{padding:5px 11px;font:600 11.5px/1 var(--mono);color:var(--ink-3);text-decoration:none}
-.lang a.is-on{background:var(--accent);color:#fff}
-.lang a:hover:not(.is-on){background:var(--surface-2);color:var(--ink)}
-
 @media print{
   .side,.hero-actions,.ep-code,.trace,.copy,.foot a{display:none!important}
   .shell{display:block;max-width:none}
@@ -251,16 +245,16 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
   <aside class="side">
     <a class="brand" href="#overview">
       <span class="brand-mark" aria-hidden="true">{}</span>
-      <span><b>Иброхимов Дилмурод</b><span>senior backend developer</span></span>
+      <span><b>Dilmurod Ibroximov</b><span>senior backend developer</span></span>
     </a>
     <p class="side-ver"><i aria-hidden="true"></i>API v1 · healthy</p>
-    <div class="lang" role="group" aria-label="Язык страницы">
-      <a class="is-on" href="./" aria-current="page">RU</a>
-      <a href="./en/">EN</a>
+    <div class="lang" role="group" aria-label="Page language">
+      <a href="../">RU</a>
+      <a class="is-on" href="./" aria-current="page">EN</a>
     </div>
 
-    <p class="nav-grp">РЕСУРСЫ</p>
-    <nav class="nav" aria-label="Разделы">
+    <p class="nav-grp">RESOURCES</p>
+    <nav class="nav" aria-label="Sections">
       <a href="#profile"><span class="m" data-m="get">GET</span>/profile</a>
       <a href="#advantages"><span class="m" data-m="get">GET</span>/advantages</a>
       <a href="#experience"><span class="m" data-m="get">GET</span>/experience</a>
@@ -269,13 +263,13 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
       <a href="#stack"><span class="m" data-m="get">GET</span>/stack</a>
       <a href="#education"><span class="m" data-m="get">GET</span>/education</a>
     </nav>
-    <p class="nav-grp">ДЕЙСТВИЯ</p>
-    <nav class="nav" aria-label="Контакты">
+    <p class="nav-grp">ACTIONS</p>
+    <nav class="nav" aria-label="Contacts">
       <a href="#contacts"><span class="m" data-m="post">POST</span>/contacts</a>
     </nav>
 
     <div class="side-foot">
-      <span>Другая версия резюме:</span>
+      <span>Other version of this resume:</span>
       <a href="https://ibroximov-dilmurod.github.io/">Data Engineer →</a>
     </div>
   </aside>
@@ -284,57 +278,56 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
     <header class="hero" id="overview">
       <p class="eyebrow">SERVICE · ibroximov-backend</p>
       <h1>Senior Backend Developer</h1>
-      <p class="tagline">Python · FastAPI · PostgreSQL · Celery · Google Cloud · автономные ИИ-агенты</p>
-      <p class="lede">Проектирую и веду сервисы, которыми пользуются люди: REST API и интеграции, очереди и кэш, схемы баз и их производительность. Собственный продукт MIRYAS AI — автономный ИИ-агент, который сам создаёт и запускает рекламные кампании в Meta, — целиком работает в Google Cloud.</p>
-      <p class="note">Страница оформлена как документация API: каждый раздел резюме — это эндпоинт. Примеры запросов условные, читать их можно как оглавление.</p>
+      <p class="tagline">Python · FastAPI · PostgreSQL · Celery · Google Cloud · autonomous AI agents</p>
+      <p class="lede">I design and run services that people actually use: REST APIs and integrations, queues and caching, database schemas and their performance. My own product, MIRYAS AI — an autonomous AI agent that creates and launches Meta ad campaigns on its own — runs entirely on Google Cloud.</p>
+      <p class="note">This page is laid out as API documentation: every resume section is an endpoint. The request examples are illustrative, read them as a table of contents.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=Senior%20Backend%20Developer">Написать на почту</a>
+        <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=Senior%20Backend%20Developer">Send an email</a>
         <a class="btn num" href="tel:+998884104545">+998 88 410 45 45</a>
-        <a class="btn" href="https://meta-ads-agent-v7dho4qhxa-uc.a.run.app" target="_blank" rel="noopener">Открыть MIRYAS AI</a>
-        <a class="btn" href="Ibroximov-Dilmurod-Backend.pdf" download>Скачать PDF</a>
+        <a class="btn" href="https://meta-ads-agent-v7dho4qhxa-uc.a.run.app" target="_blank" rel="noopener">Open MIRYAS AI</a>
+        <a class="btn" href="../Ibroximov-Dilmurod-Backend-EN.pdf" download>Download PDF</a>
       </div>
 
-      <section class="svc" aria-label="Показатели сервиса">
+      <section class="svc" aria-label="Service metrics">
         <div class="svc-bar">
           <span class="pill">healthy</span>
-          <span>base_url: <b>https://ibroximov-dilmurod.github.io/backend</b></span>
+          <span>base_url: <b>https://ibroximov-dilmurod.github.io/backend/en</b></span>
           <span>region: <b>Tashkent, UZ</b></span>
-          <span>формат: <b>офис · гибрид · удалёнка</b></span>
+          <span>work: <b>office · hybrid · remote</b></span>
         </div>
         <div class="slo">
-          <div><b class="num">99,9%</b><span>доступность сервисов</span></div>
-          <div><b class="num">150 мс</b><span>p95 времени ответа</span></div>
-          <div><b class="num">~350</b><span>запросов в секунду в пике</span></div>
-          <div><b class="num">200 тыс.</b><span>фоновых задач в сутки</span></div>
+          <div><b class="num">99.9%</b><span>service uptime</span></div>
+          <div><b class="num">150 ms</b><span>p95 response time</span></div>
+          <div><b class="num">~350</b><span>requests per second at peak</span></div>
+          <div><b class="num">200k</b><span>background tasks per day</span></div>
         </div>
       </section>
     </header>
 
-    <!-- GET /profile -->
     <section class="ep" id="profile">
-      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/profile</code><span class="ep-sum">О себе</span></div>
-      <h2>О себе</h2>
+      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/profile</code><span class="ep-sum">About</span></div>
+      <h2>About</h2>
       <div class="ep-body">
         <div class="ep-doc">
-          <p>Backend-разработчик: проектирую и веду сервисы на Python и FastAPI в Департаменте цифрового развития Ташкента. Сервисы держат около 350 запросов в секунду в пике при p95 150 мс и доступности 99,9%.</p>
-          <p>Отвечаю за REST API и интеграции с 11 внешними системами, очереди на Celery и Redis, схемы и производительность PostgreSQL, поиск на Elasticsearch и передачу данных в реальном времени через WebSocket. Сервисы живут в Docker за Nginx, секреты в Vault, выкатка через GitLab CI/CD.</p>
-          <p>Отдельно веду собственный продукт MIRYAS AI: автономный ИИ-агент для рекламы в Meta, полностью развёрнутый в Google Cloud.</p>
+          <p>Backend developer: I design and run Python and FastAPI services at the Digital Development Department of Tashkent. They handle around 350 requests per second at peak, with a p95 of 150 ms and 99.9% uptime.</p>
+          <p>I own the REST APIs and integrations with 11 external systems, the Celery and Redis queues, PostgreSQL schemas and their performance, Elasticsearch search and real-time delivery over WebSocket. Services run in Docker behind Nginx, secrets live in Vault, releases go through GitLab CI/CD.</p>
+          <p>On the side I build my own product, MIRYAS AI: an autonomous AI agent for Meta advertising, deployed entirely on Google Cloud.</p>
         </div>
         <div class="ep-code">
           <figure class="code">
-            <figcaption class="code-bar"><span>Ответ</span><span class="st">200 OK</span></figcaption>
+            <figcaption class="code-bar"><span>Response</span><span class="st">200 OK</span></figcaption>
             <pre data-lang="json"><code>{
-  "name": "Иброхимов Дилмурод",
+  "name": "Dilmurod Ibroximov",
   "role": "Senior Backend Developer",
-  "location": "Ташкент, Узбекистан",
-  "employment": ["офис", "гибрид", "удалёнка"],
+  "location": "Tashkent, Uzbekistan",
+  "employment": ["office", "hybrid", "remote"],
   "core": ["Python", "FastAPI", "PostgreSQL", "Celery"],
   "cloud": "Google Cloud",
   "slo": { "uptime": "99.9%", "p95_ms": 150, "rps_peak": 350 }
 }</code></pre>
           </figure>
           <figure class="code">
-            <figcaption class="code-bar"><span>curl</span><button type="button" class="copy">копировать</button></figcaption>
+            <figcaption class="code-bar"><span>curl</span><button type="button" class="copy">copy</button></figcaption>
             <pre data-lang="bash"><code>curl -s $BASE/profile \
   -H "Accept: application/json"</code></pre>
           </figure>
@@ -342,33 +335,32 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
       </div>
     </section>
 
-    <!-- GET /advantages -->
     <section class="ep" id="advantages">
-      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/advantages</code><span class="ep-sum">Преимущества</span></div>
-      <h2>Преимущества</h2>
+      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/advantages</code><span class="ep-sum">Strengths</span></div>
+      <h2>Strengths</h2>
       <div class="ep-body">
         <div class="ep-doc">
           <div class="adv">
-            <div><b>Довожу продукт до людей</b><p>MIRYAS AI сделал целиком сам: от схемы базы и API до продакшена в Google Cloud и живых клиентов. Отвечаю не за задачу в трекере, а за то, чтобы сервис работал.</p></div>
-            <div><b>Строю автономных ИИ-агентов, а не обёртки над чатом</b><p>Агент сам принимает решения и вызывает функции, но действует внутри жёстких ограничений: лимит бюджета, старт на паузе, подтверждение человеком.</p></div>
-            <div><b>Держу нагрузку и слежу за деньгами</b><p>Кэш, очереди, автомасштабирование в Cloud Run, таймауты и лимиты на интеграциях. p95 150 мс при 350 запросах в секунду.</p></div>
-            <div><b>Понимаю не только код, но и данные</b><p>PostgreSQL, ClickHouse, Elasticsearch и пайплайны в Airflow: проектирую хранилище под задачу, а не подгоняю задачу под имеющуюся базу.</p></div>
-            <div><b>Безопасность по умолчанию</b><p>OAuth, секреты в Vault и Secret Manager, никаких паролей в коде и .env-файлах.</p></div>
-            <div><b>Три рабочих языка</b><p>Узбекский, русский и английский: общаюсь с командой, заказчиком и документацией без переводчика.</p></div>
+            <div><b>I ship products to real users</b><p>MIRYAS AI is mine end to end: database schema, API, production on Google Cloud, live clients. I own the service working, not a ticket being closed.</p></div>
+            <div><b>I build autonomous AI agents, not chat wrappers</b><p>The agent decides and calls functions on its own, but inside hard limits: a budget cap, campaigns starting paused, a human confirming before money moves.</p></div>
+            <div><b>I keep services fast and cheap</b><p>Caching, queues, autoscaling on Cloud Run, timeouts and limits on every integration. 150 ms p95 at 350 requests per second.</p></div>
+            <div><b>I understand data, not just code</b><p>PostgreSQL, ClickHouse, Elasticsearch and Airflow pipelines: I design storage around the task instead of bending the task to fit the database.</p></div>
+            <div><b>Security by default</b><p>OAuth, secrets in Vault and Secret Manager, no passwords in code or .env files.</p></div>
+            <div><b>Three working languages</b><p>Uzbek, Russian and English: I work with the team, the client and the documentation without a translator.</p></div>
           </div>
         </div>
         <div class="ep-code">
           <figure class="code">
-            <figcaption class="code-bar"><span>Ответ</span><span class="st">200 OK</span></figcaption>
+            <figcaption class="code-bar"><span>Response</span><span class="st">200 OK</span></figcaption>
             <pre data-lang="json"><code>{
   "count": 6,
   "items": [
-    { "id": "ship",      "title": "Довожу продукт до людей" },
-    { "id": "agents",    "title": "Автономные ИИ-агенты" },
-    { "id": "load",      "title": "Держу нагрузку" },
-    { "id": "data",      "title": "Понимаю данные" },
-    { "id": "security",  "title": "Безопасность по умолчанию" },
-    { "id": "languages", "title": "Три рабочих языка" }
+    { "id": "ship",      "title": "Ships products to real users" },
+    { "id": "agents",    "title": "Autonomous AI agents" },
+    { "id": "load",      "title": "Keeps services fast" },
+    { "id": "data",      "title": "Understands data" },
+    { "id": "security",  "title": "Security by default" },
+    { "id": "languages", "title": "Three working languages" }
   ]
 }</code></pre>
           </figure>
@@ -376,68 +368,67 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
       </div>
     </section>
 
-    <!-- GET /experience -->
     <section class="ep" id="experience">
-      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/experience</code><span class="ep-sum">Опыт работы</span></div>
-      <h2>Опыт работы</h2>
+      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/experience</code><span class="ep-sum">Experience</span></div>
+      <h2>Experience</h2>
       <div class="ep-body">
         <div class="ep-doc">
           <figure class="trace">
-            <figcaption class="trace-head"><span>trace_id: <b>career.ibroximov</b></span><span id="trace-now">сейчас</span></figcaption>
+            <figcaption class="trace-head"><span>trace_id: <b>career.ibroximov</b></span><span id="trace-now">now</span></figcaption>
             <div id="trace"></div>
             <div class="trace-axis" id="trace-axis"></div>
           </figure>
 
           <div class="role">
-            <h3>Backend-разработчик</h3>
+            <h3>Backend Developer</h3>
             <p class="org">Raqamli Rivojlanish Departamenti</p>
-            <p class="meta">Департамент цифрового развития, Ташкент · 2025 — настоящее время</p>
+            <p class="meta">Digital Development Department, Tashkent · 2025 — present</p>
 
             <div class="grp">
-              <h4>API И СЕРВИСЫ</h4>
+              <h4>APIS AND SERVICES</h4>
               <ul>
-                <li>Проектирую и веду REST API на FastAPI: <b>14 сервисов</b>, ~350 запросов в секунду в пике, p95 150 мс, доступность 99,9%.</li>
-                <li>Держу контракт API в OpenAPI: схемы на pydantic, версионирование, обратная совместимость при изменениях.</li>
-                <li>Настроил аутентификацию и авторизацию по JWT и OAuth2 с разграничением прав по ролям.</li>
-                <li>Подключил <b>11 внешних систем</b> по REST API, данные в JSON и XML проверяются по схеме. На нестабильных интеграциях — таймауты и повторы с экспоненциальной задержкой.</li>
-                <li>Передаю данные в реальном времени через WebSocket на панель операторов, задержка меньше секунды.</li>
+                <li>Design and run REST APIs on FastAPI: <b>14 services</b>, ~350 requests per second at peak, 150 ms p95, 99.9% uptime.</li>
+                <li>Keep the API contract in OpenAPI: pydantic schemas, versioning, backward compatibility on every change.</li>
+                <li>Set up authentication and authorization with JWT and OAuth2, with role-based access.</li>
+                <li>Connected <b>11 external systems</b> over REST; JSON and XML payloads are validated against schemas. Unstable integrations get timeouts and retries with exponential backoff.</li>
+                <li>Stream data in real time over WebSocket to the operators' dashboard, under one second of latency.</li>
               </ul>
             </div>
 
             <div class="grp">
-              <h4>ДАННЫЕ И ПРОИЗВОДИТЕЛЬНОСТЬ</h4>
+              <h4>DATA AND PERFORMANCE</h4>
               <ul>
-                <li>Спроектировал схемы PostgreSQL для 9 предметных областей, миграции на Alembic. Партиционирование и индексы ускорили ключевые запросы <b>в 6 раз</b>.</li>
-                <li>Кэш на Redis сократил ответ внутреннего API <b>с 1,2 секунды до 150 мс</b>.</li>
-                <li>Вынес тяжёлые операции в очереди Celery: до 200 тыс. задач в сутки, идемпотентность и повторы при сбоях.</li>
-                <li>Аналитические выборки увёл в ClickHouse (900+ млн строк): отчёты строятся <b>за 1,5 секунды вместо 40</b> и больше не мешают основной базе.</li>
-                <li>Подключил полнотекстовый поиск на Elasticsearch по 3 млн обращений граждан, ответ быстрее 200 мс.</li>
-                <li>Регулярные фоновые расчёты веду в Apache Airflow: 38 DAG-ов, 99,6% запусков без ручного вмешательства.</li>
+                <li>Designed PostgreSQL schemas for 9 domains with Alembic migrations. Partitioning and indexes made key queries <b>6× faster</b>.</li>
+                <li>Redis caching cut the internal API response <b>from 1.2 s to 150 ms</b>.</li>
+                <li>Moved heavy work into Celery queues: up to 200k tasks a day, idempotent, with retries on failure.</li>
+                <li>Pushed analytical queries into ClickHouse (900M+ rows): reports build <b>in 1.5 s instead of 40</b> and no longer disturb the main database.</li>
+                <li>Added full-text search on Elasticsearch across 3M citizen requests, answering in under 200 ms.</li>
+                <li>Run recurring background jobs in Apache Airflow: 38 DAGs, 99.6% of runs need no manual work.</li>
               </ul>
             </div>
 
             <div class="grp">
-              <h4>ИНФРАСТРУКТУРА И КАЧЕСТВО КОДА</h4>
+              <h4>INFRASTRUCTURE AND CODE QUALITY</h4>
               <ul>
-                <li>Упаковал 14 сервисов в Docker Compose за Nginx. Новое окружение поднимается <b>за 10 минут</b> вместо половины рабочего дня.</li>
-                <li>Настроил CI/CD в GitLab: линтеры, тесты на pytest, автоматический деплой после код-ревью.</li>
-                <li>Перенёс 60+ паролей и ключей доступа из кода и .env-файлов в HashiCorp Vault.</li>
-                <li>Ревьюю чужие merge request-ы и пишу документацию, по которой новые разработчики поднимают проект сами.</li>
-                <li>Разбираю инциденты на проде по логам и метрикам: нахожу причину, чиню и оставляю защиту, чтобы это не повторилось.</li>
+                <li>Packed 14 services into Docker Compose behind Nginx. A fresh environment comes up <b>in 10 minutes</b> instead of half a day.</li>
+                <li>Set up GitLab CI/CD: linters, pytest, automatic deploy after code review.</li>
+                <li>Moved 60+ passwords and access keys out of code and .env files into HashiCorp Vault.</li>
+                <li>Review other people's merge requests and write the documentation new developers use to run the project themselves.</li>
+                <li>Handle production incidents through logs and metrics: find the cause, fix it, and leave a guard so it does not happen again.</li>
               </ul>
             </div>
           </div>
 
           <div class="role">
-            <h3>Python-разработчик, фриланс</h3>
-            <p class="org">Удалённо</p>
+            <h3>Python Developer, freelance</h3>
+            <p class="org">Remote</p>
             <p class="meta">2023 — 2024</p>
             <div class="grp">
-              <h4>ЧТО ДЕЛАЛ</h4>
+              <h4>WHAT I DID</h4>
               <ul>
-                <li>Делал сервисы и автоматизацию на заказ: REST API, интеграции с внешними системами, Telegram-боты.</li>
-                <li>Собирал бэкенды на Python с PostgreSQL, очередями и фоновыми задачами, разворачивал их в Docker.</li>
-                <li>Работал с заказчиками напрямую: собирал требования, оценивал сроки и сдавал результат.</li>
+                <li>Built services and automation to order: REST APIs, integrations with external systems, Telegram bots.</li>
+                <li>Wrote Python backends with PostgreSQL, queues and background jobs, and deployed them in Docker.</li>
+                <li>Worked with clients directly: gathered requirements, estimated the work and delivered it.</li>
               </ul>
             </div>
           </div>
@@ -445,63 +436,62 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
 
         <div class="ep-code">
           <figure class="code">
-            <figcaption class="code-bar"><span>Ответ</span><span class="st">200 OK</span></figcaption>
+            <figcaption class="code-bar"><span>Response</span><span class="st">200 OK</span></figcaption>
             <pre data-lang="json"><code>{
   "company": "Raqamli Rivojlanish Departamenti",
-  "role": "Backend-разработчик",
+  "role": "Backend Developer",
   "since": "2025",
   "services": 14,
   "integrations": 11,
   "queue": { "engine": "Celery", "tasks_per_day": 200000 },
   "cache": { "engine": "Redis", "api_ms": 150 },
   "storage": ["PostgreSQL", "ClickHouse", "Elasticsearch"],
-  "delivery": ["Docker", "Nginx", "GitLab CI/CD", "Vault"]
+  "previous": { "role": "Python developer, freelance", "years": "2023-2024" }
 }</code></pre>
           </figure>
           <figure class="code">
-            <figcaption class="code-bar"><span>curl</span><button type="button" class="copy">копировать</button></figcaption>
+            <figcaption class="code-bar"><span>curl</span><button type="button" class="copy">copy</button></figcaption>
             <pre data-lang="bash"><code>curl -s $BASE/experience</code></pre>
           </figure>
         </div>
       </div>
     </section>
 
-    <!-- GET /products/miryas-ai -->
     <section class="ep" id="miryas">
-      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/products/miryas-ai</code><span class="ep-sum">Собственный продукт</span></div>
+      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/products/miryas-ai</code><span class="ep-sum">Own product</span></div>
       <h2>MIRYAS AI</h2>
       <div class="ep-body">
         <div class="ep-doc">
           <div class="product">
-            <div class="top"><b>Автономный ИИ-агент для рекламы в Meta</b><span class="live">● в проде</span></div>
+            <div class="top"><b>Autonomous AI agent for Meta advertising</b><span class="live">● in production</span></div>
             <a class="url" href="https://meta-ads-agent-v7dho4qhxa-uc.a.run.app" target="_blank" rel="noopener">meta-ads-agent-v7dho4qhxa-uc.a.run.app</a>
             <div class="guards">
-              <div><b>$50</b><span>дневной лимит бюджета</span></div>
-              <div><b>на паузе</b><span>старт каждой кампании</span></div>
-              <div><b>uz · ru · en</b><span>языки интерфейса</span></div>
+              <div><b>$50</b><span>daily budget cap</span></div>
+              <div><b>paused</b><span>how every campaign starts</span></div>
+              <div><b>uz · ru · en</b><span>interface languages</span></div>
             </div>
           </div>
-          <p>Сервис заменяет малому бизнесу рекламное агентство: клиент один раз входит через Facebook, а дальше агент сам изучает его Instagram, готовит объявления и запускает настоящую таргетированную кампанию в Meta Ads.</p>
+          <p>The service replaces an ad agency for small businesses: the client logs in through Facebook once, and from there the agent studies their Instagram, prepares the ads and launches a real targeted campaign in Meta Ads.</p>
           <div class="grp">
-            <h4>ЧТО СДЕЛАНО</h4>
+            <h4>WHAT IS BUILT</h4>
             <ul>
-              <li>Вход через OAuth Facebook: пароль клиента не проходит через сервис, токены доступа лежат в Secret Manager.</li>
-              <li>Защита бюджета: дневной лимит $50, каждая кампания стартует на паузе и не тратит деньги, пока клиент не подтвердит запуск.</li>
-              <li>Работа с Meta Marketing API: создание кампаний, групп объявлений и креативов, обработка лимитов и ошибок платформы, повторы запросов.</li>
-              <li>Автономный ИИ-агент на LLM через Vertex AI: разбор профиля и продукта, генерация текстов объявлений, подбор аудитории, вызов функций Meta API как инструментов агента.</li>
-              <li>Развёрнуто в Google Cloud: Cloud Run с автомасштабированием, база в Cloud SQL, сборка через Cloud Build и Artifact Registry, фоновые задачи в Cloud Tasks и Cloud Scheduler, логи и алерты в Cloud Logging и Monitoring.</li>
+              <li>Facebook OAuth login: the client's password never passes through the service, access tokens live in Secret Manager.</li>
+              <li>Budget guardrails: a $50 daily cap, and every campaign starts paused and spends nothing until the client confirms.</li>
+              <li>Meta Marketing API: creating campaigns, ad sets and creatives, handling platform rate limits and errors, retrying requests.</li>
+              <li>An autonomous AI agent on an LLM through Vertex AI: it reads the profile and the product, writes ad copy, picks the audience and calls Meta API functions as its tools.</li>
+              <li>Deployed on Google Cloud: Cloud Run with autoscaling, Cloud SQL for the database, builds through Cloud Build and Artifact Registry, background work in Cloud Tasks and Cloud Scheduler, logs and alerts in Cloud Logging and Monitoring.</li>
             </ul>
           </div>
           <div class="chips">
-            <span class="chip hi">Python</span><span class="chip hi">FastAPI</span><span class="chip">Cloud Run</span><span class="chip">Cloud SQL</span><span class="chip">Secret Manager</span><span class="chip">Cloud Build</span><span class="chip">Artifact Registry</span><span class="chip">Cloud Tasks</span><span class="chip">Cloud Scheduler</span><span class="chip">Cloud Storage</span><span class="chip">Logging и Monitoring</span><span class="chip">IAM</span><span class="chip hi">Vertex AI</span><span class="chip">Meta Marketing API</span><span class="chip">OAuth 2.0</span><span class="chip">Redis</span><span class="chip">Docker</span>
+            <span class="chip hi">Python</span><span class="chip hi">FastAPI</span><span class="chip">Cloud Run</span><span class="chip">Cloud SQL</span><span class="chip">Secret Manager</span><span class="chip">Cloud Build</span><span class="chip">Artifact Registry</span><span class="chip">Cloud Tasks</span><span class="chip">Cloud Scheduler</span><span class="chip">Cloud Storage</span><span class="chip">Logging &amp; Monitoring</span><span class="chip">IAM</span><span class="chip hi">Vertex AI</span><span class="chip">Meta Marketing API</span><span class="chip">OAuth 2.0</span><span class="chip">Redis</span><span class="chip">Docker</span>
           </div>
         </div>
         <div class="ep-code">
           <figure class="code">
-            <figcaption class="code-bar"><span>Ответ</span><span class="st">200 OK</span></figcaption>
+            <figcaption class="code-bar"><span>Response</span><span class="st">200 OK</span></figcaption>
             <pre data-lang="json"><code>{
   "name": "MIRYAS AI",
-  "type": "автономный ИИ-агент",
+  "type": "autonomous AI agent",
   "url": "https://meta-ads-agent-v7dho4qhxa-uc.a.run.app",
   "runtime": "Google Cloud Run",
   "integrations": ["Meta Marketing API", "Facebook OAuth 2.0", "Vertex AI"],
@@ -514,40 +504,39 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
 }</code></pre>
           </figure>
           <figure class="code">
-            <figcaption class="code-bar"><span>curl</span><button type="button" class="copy">копировать</button></figcaption>
+            <figcaption class="code-bar"><span>curl</span><button type="button" class="copy">copy</button></figcaption>
             <pre data-lang="bash"><code>curl -s $BASE/products/miryas-ai</code></pre>
           </figure>
         </div>
       </div>
     </section>
 
-    <!-- GET /projects -->
     <section class="ep" id="projects">
-      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/projects</code><span class="ep-sum">Пет-проекты</span></div>
-      <h2>Пет-проекты</h2>
+      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/projects</code><span class="ep-sum">Side projects</span></div>
+      <h2>Side projects</h2>
       <div class="ep-body">
         <div class="ep-doc">
           <div class="prj">
             <article>
               <h3>rates-service</h3>
-              <p>Сервис курсов валют ЦБ Узбекистана с документацией OpenAPI и кэшем на стороне сервиса.</p>
+              <p>Currency rates from the Central Bank of Uzbekistan, with OpenAPI documentation and server-side caching.</p>
               <div class="chips"><span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">Redis</span><span class="chip">OpenAPI</span></div>
             </article>
             <article>
               <h3>realtime-gateway</h3>
-              <p>WebSocket-шлюз с буфером на Redis Streams, обратным давлением и метриками.</p>
+              <p>A WebSocket gateway with a Redis Streams buffer, backpressure and metrics.</p>
               <div class="chips"><span class="chip">WebSocket</span><span class="chip">Redis Streams</span><span class="chip">Python</span></div>
             </article>
             <article>
               <h3>vacancy-search-api</h3>
-              <p>Парсер вакансий: обработка в очередях Celery и поиск через Elasticsearch.</p>
+              <p>A job-posting crawler: processing in Celery queues and search through Elasticsearch.</p>
               <div class="chips"><span class="chip">Celery</span><span class="chip">Elasticsearch</span><span class="chip">REST API</span></div>
             </article>
           </div>
         </div>
         <div class="ep-code">
           <figure class="code">
-            <figcaption class="code-bar"><span>Ответ</span><span class="st">200 OK</span></figcaption>
+            <figcaption class="code-bar"><span>Response</span><span class="st">200 OK</span></figcaption>
             <pre data-lang="json"><code>{
   "count": 3,
   "items": [
@@ -561,10 +550,9 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
       </div>
     </section>
 
-    <!-- GET /stack -->
     <section class="ep" id="stack">
-      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/stack</code><span class="ep-sum">Стек</span></div>
-      <h2>Стек</h2>
+      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/stack</code><span class="ep-sum">Stack</span></div>
+      <h2>Stack</h2>
       <div class="ep-body">
         <div class="ep-doc">
           <dl class="rows">
@@ -572,16 +560,16 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
             <div class="row"><dt>frameworks</dt><dd class="chips"><span class="chip">FastAPI</span><span class="chip">pydantic</span><span class="chip">SQLAlchemy</span><span class="chip">Alembic</span><span class="chip">Celery</span></dd></div>
             <div class="row"><dt>storage</dt><dd class="chips"><span class="chip">PostgreSQL</span><span class="chip">Redis</span><span class="chip">ClickHouse</span><span class="chip">Elasticsearch</span></dd></div>
             <div class="row"><dt>api</dt><dd class="chips"><span class="chip">REST</span><span class="chip">OpenAPI</span><span class="chip">WebSocket</span><span class="chip">JWT</span><span class="chip">OAuth2</span><span class="chip">JSON</span><span class="chip">XML</span></dd></div>
-            <div class="row"><dt>google_cloud</dt><dd class="chips"><span class="chip hi">Cloud Run</span><span class="chip">Cloud Build</span><span class="chip">Artifact Registry</span><span class="chip">Cloud SQL</span><span class="chip">Secret Manager</span><span class="chip">Cloud Storage</span><span class="chip">Pub/Sub</span><span class="chip">Cloud Tasks</span><span class="chip">Cloud Scheduler</span><span class="chip">BigQuery</span><span class="chip hi">Vertex AI</span><span class="chip">Logging и Monitoring</span><span class="chip">IAM</span></dd></div>
-            <div class="row"><dt>ai</dt><dd class="chips"><span class="chip hi">Автономные ИИ-агенты</span><span class="chip">вызов функций</span><span class="chip">проектирование промптов</span><span class="chip">генерация текстов</span></dd></div>
-            <div class="row"><dt>infra</dt><dd class="chips"><span class="chip">Docker Compose</span><span class="chip">Nginx</span><span class="chip">Linux</span><span class="chip">AWS S3 и EC2</span><span class="chip">HashiCorp Vault</span></dd></div>
-            <div class="row"><dt>quality</dt><dd class="chips"><span class="chip">pytest</span><span class="chip">линтеры</span><span class="chip">код-ревью</span><span class="chip">GitLab CI/CD</span></dd></div>
+            <div class="row"><dt>google_cloud</dt><dd class="chips"><span class="chip hi">Cloud Run</span><span class="chip">Cloud Build</span><span class="chip">Artifact Registry</span><span class="chip">Cloud SQL</span><span class="chip">Secret Manager</span><span class="chip">Cloud Storage</span><span class="chip">Pub/Sub</span><span class="chip">Cloud Tasks</span><span class="chip">Cloud Scheduler</span><span class="chip">BigQuery</span><span class="chip hi">Vertex AI</span><span class="chip">Logging &amp; Monitoring</span><span class="chip">IAM</span></dd></div>
+            <div class="row"><dt>ai</dt><dd class="chips"><span class="chip hi">autonomous AI agents</span><span class="chip">function calling</span><span class="chip">prompt design</span><span class="chip">copy generation</span></dd></div>
+            <div class="row"><dt>infra</dt><dd class="chips"><span class="chip">Docker Compose</span><span class="chip">Nginx</span><span class="chip">Linux</span><span class="chip">AWS S3 &amp; EC2</span><span class="chip">HashiCorp Vault</span></dd></div>
+            <div class="row"><dt>quality</dt><dd class="chips"><span class="chip">pytest</span><span class="chip">linters</span><span class="chip">code review</span><span class="chip">GitLab CI/CD</span></dd></div>
             <div class="row"><dt>extra</dt><dd class="chips"><span class="chip">Apache Airflow</span><span class="chip">pandas</span></dd></div>
           </dl>
         </div>
         <div class="ep-code">
           <figure class="code">
-            <figcaption class="code-bar"><span>Ответ</span><span class="st">200 OK</span></figcaption>
+            <figcaption class="code-bar"><span>Response</span><span class="st">200 OK</span></figcaption>
             <pre data-lang="json"><code>{
   "languages": ["Python", "SQL"],
   "frameworks": ["FastAPI", "pydantic", "SQLAlchemy", "Alembic", "Celery"],
@@ -591,72 +579,70 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
     "Secret Manager", "Cloud Storage", "Pub/Sub", "Cloud Tasks",
     "Cloud Scheduler", "BigQuery", "Vertex AI", "Logging", "IAM"
   ],
-  "ai": ["автономные агенты", "function calling", "промпты"],
-  "quality": ["pytest", "линтеры", "код-ревью", "GitLab CI/CD"]
+  "ai": ["autonomous agents", "function calling", "prompt design"],
+  "quality": ["pytest", "linters", "code review", "GitLab CI/CD"]
 }</code></pre>
           </figure>
         </div>
       </div>
     </section>
 
-    <!-- GET /education -->
     <section class="ep" id="education">
-      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/education</code><span class="ep-sum">Образование и языки</span></div>
-      <h2>Образование и языки</h2>
+      <div class="ep-head"><span class="mth" data-m="get">GET</span><code class="path">/education</code><span class="ep-sum">Education and languages</span></div>
+      <h2>Education and languages</h2>
       <div class="ep-body">
         <div class="ep-doc">
           <dl class="rows">
-            <div class="row"><dt>degree</dt><dd>Бакалавр, информационные технологии в бизнесе</dd></div>
+            <div class="row"><dt>degree</dt><dd>BSc, Business Information Technology</dd></div>
             <div class="row"><dt>university</dt><dd>Kimyo International University in Tashkent (KIUT)</dd></div>
-            <div class="row"><dt>period</dt><dd class="num">2025–2029, обучение продолжается</dd></div>
-            <div class="row"><dt>languages</dt><dd class="chips"><span class="chip">узбекский — родной</span><span class="chip">русский — C1</span><span class="chip">английский — B2</span></dd></div>
+            <div class="row"><dt>period</dt><dd class="num">2025–2029, in progress</dd></div>
+            <div class="row"><dt>languages</dt><dd class="chips"><span class="chip">Uzbek — native</span><span class="chip">Russian — C1</span><span class="chip">English — B2</span></dd></div>
           </dl>
         </div>
         <div class="ep-code">
           <figure class="code">
-            <figcaption class="code-bar"><span>Ответ</span><span class="st">200 OK</span></figcaption>
+            <figcaption class="code-bar"><span>Response</span><span class="st">200 OK</span></figcaption>
             <pre data-lang="json"><code>{
-  "degree": "Бакалавр, ИТ в бизнесе",
+  "degree": "BSc, Business Information Technology",
   "university": "Kimyo International University in Tashkent",
-  "period": "2025–2029",
+  "period": "2025-2029",
   "in_progress": true,
-  "languages": { "uz": "родной", "ru": "C1", "en": "B2" }
+  "languages": { "uz": "native", "ru": "C1", "en": "B2" }
 }</code></pre>
           </figure>
         </div>
       </div>
     </section>
 
-    <!-- POST /contacts -->
     <section class="ep" id="contacts">
-      <div class="ep-head"><span class="mth" data-m="post">POST</span><code class="path">/contacts</code><span class="ep-sum">Контакты</span></div>
-      <h2>Связаться</h2>
+      <div class="ep-head"><span class="mth" data-m="post">POST</span><code class="path">/contacts</code><span class="ep-sum">Contacts</span></div>
+      <h2>Get in touch</h2>
       <div class="ep-body">
         <div class="ep-doc">
           <div class="sink">
             <a class="big" href="mailto:ibroximovdilmurod44@gmail.com?subject=Senior%20Backend%20Developer">ibroximovdilmurod44@gmail.com</a>
             <a class="big num" href="tel:+998884104545">+998 88 410 45 45</a>
-            <p>Отвечаю в течение дня. Готов к офису, гибриду и удалёнке, рассматриваю позиции backend и работу с ИИ-агентами.</p>
+            <p>I reply within a day. Open to office, hybrid and remote work, and interested in backend roles and work with AI agents.</p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=Senior%20Backend%20Developer">Написать письмо</a>
-              <a class="btn" href="tel:+998884104545">Позвонить</a>
+              <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=Senior%20Backend%20Developer">Send an email</a>
+              <a class="btn" href="tel:+998884104545">Call</a>
             </div>
           </div>
         </div>
         <div class="ep-code">
           <figure class="code">
-            <figcaption class="code-bar"><span>Тело запроса</span><span>application/json</span></figcaption>
+            <figcaption class="code-bar"><span>Request body</span><span>application/json</span></figcaption>
             <pre data-lang="json"><code>{
-  "company": "ваша компания",
+  "company": "your company",
   "role": "Senior Backend Developer",
-  "message": "расскажите про задачу"
+  "message": "tell me about the task"
 }</code></pre>
           </figure>
           <figure class="code">
-            <figcaption class="code-bar"><span>Ответ</span><span class="st">202 Accepted</span></figcaption>
+            <figcaption class="code-bar"><span>Response</span><span class="st">202 Accepted</span></figcaption>
             <pre data-lang="json"><code>{
   "status": "accepted",
-  "reply_within": "1 день",
+  "reply_within": "1 day",
   "email": "ibroximovdilmurod44@gmail.com"
 }</code></pre>
           </figure>
@@ -665,8 +651,8 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
     </section>
 
     <footer class="foot">
-      <span>API v1 · обновлено 12.09.2026 · собрано вручную на HTML, CSS и JavaScript</span>
-      <span>Версия для дата-инженера: <a href="https://ibroximov-dilmurod.github.io/">ibroximov-dilmurod.github.io</a></span>
+      <span>API v1 · updated 12.09.2026 · hand-built with HTML, CSS and JavaScript</span>
+      <span>Data Engineer version: <a href="https://ibroximov-dilmurod.github.io/">ibroximov-dilmurod.github.io</a></span>
     </footer>
   </main>
 </div>
@@ -675,7 +661,11 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
 (() => {
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
-  /* подсветка JSON и curl */
+  /* print to PDF */
+  const pdf = document.getElementById("pdf");
+  if (pdf) pdf.addEventListener("click", () => window.print());
+
+  /* syntax highlighting */
   const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   $$('pre[data-lang="json"] > code').forEach((el) => {
     el.innerHTML = esc(el.textContent).replace(
@@ -694,31 +684,27 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
       .replace(/("(?:[^"\\]|\\.)*")/g, '<span class="tk-str">$1</span>');
   });
 
-  /* печать в PDF */
-  const pdf = document.getElementById("pdf");
-  if (pdf) pdf.addEventListener("click", () => window.print());
-
-  /* копирование примеров */
+  /* copy buttons */
   $$(".copy").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const code = btn.closest(".code").querySelector("code");
       const back = btn.textContent;
       try {
         await navigator.clipboard.writeText(code.textContent);
-        btn.textContent = "скопировано";
+        btn.textContent = "copied";
       } catch {
         const r = document.createRange();
         r.selectNodeContents(code);
         const sel = getSelection();
         sel.removeAllRanges();
         sel.addRange(r);
-        btn.textContent = "выделено, нажмите Ctrl+C";
+        btn.textContent = "selected, press Ctrl+C";
       }
       setTimeout(() => (btn.textContent = back), 2000);
     });
   });
 
-  /* активный пункт меню */
+  /* active nav item */
   const links = new Map($$(".nav a").map((a) => [a.getAttribute("href").slice(1), a]));
   const io = new IntersectionObserver(
     (entries) => {
@@ -735,14 +721,14 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
   );
   $$("section.ep").forEach((s) => io.observe(s));
 
-  /* карьера как трасса запроса */
+  /* career as a request trace */
   const now = new Date();
   const cur = { y: now.getFullYear(), m: now.getMonth() + 1 };
   const idx = (p) => p.y * 12 + p.m - 1;
   const parse = (s) => ({ y: +s.slice(0, 4), m: +s.slice(5, 7) });
   const durTxt = (n) => {
     const y = Math.floor(n / 12), r = n % 12;
-    return [y ? `${y} г.` : "", r ? `${r} мес.` : ""].filter(Boolean).join(" ") || "меньше месяца";
+    return [y ? `${y} yr` : "", r ? `${r} mo` : ""].filter(Boolean).join(" ") || "under a month";
   };
   const SPANS = [
     { label: "freelance.python", from: "2023-01", to: "2024-12", cls: "alt" },
@@ -764,7 +750,7 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
     return `<div class="trace-row"><span class="lb">${s.label}<br><span style="color:var(--ink-3)">${durTxt(shown - f)}</span></span><span class="track">${done}${plan}</span></div>`;
   }).join("");
   document.getElementById("trace-axis").innerHTML = ["2023", "2024", "2025", "2026", "2027", "2028", "2029"].map((y) => `<span>${y}</span>`).join("");
-  document.getElementById("trace-now").textContent = `сейчас: ${String(cur.m).padStart(2, "0")}.${cur.y}`;
+  document.getElementById("trace-now").textContent = `now: ${String(cur.m).padStart(2, "0")}.${cur.y}`;
 })();
 </script>
 </body>
