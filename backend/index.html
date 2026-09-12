@@ -892,15 +892,22 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
     function travel(edge, reverse) {
       return new Promise((res) => {
         const dur = 400, t0 = performance.now();
+        let finished = false;
+        const place = (t) => {
+          const p = edge.path.getPointAtLength((reverse ? 1 - t : t) * edge.len);
+          pkt.setAttribute("cx", p.x); pkt.setAttribute("cy", p.y);
+        };
+        const finish = () => { if (finished) return; finished = true; place(1); res(); };
         edge.path.classList.add("on");
         pkt.style.display = "";
         const step = (now) => {
+          if (finished) return;
           const t = Math.min((now - t0) / dur, 1);
-          const p = edge.path.getPointAtLength((reverse ? 1 - t : t) * edge.len);
-          pkt.setAttribute("cx", p.x); pkt.setAttribute("cy", p.y);
-          if (t < 1) requestAnimationFrame(step); else res();
+          place(t);
+          if (t < 1) requestAnimationFrame(step); else finish();
         };
         requestAnimationFrame(step);
+        setTimeout(finish, dur + 250);
       });
     }
 
