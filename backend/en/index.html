@@ -224,8 +224,46 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
   html{scroll-behavior:auto}
   *{transition:none!important;animation:none!important}
 }
+.rq{margin-top:14px;border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow:hidden}
+.rq-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:11px 14px;border-bottom:1px solid var(--rule);font:500 12px/1.4 var(--mono);color:var(--ink-3)}
+.rq-bar b{color:var(--ink);font-weight:600}
+.rq-bar .spacer{margin-left:auto}
+.rq-total{font:600 12px/1 var(--mono);color:var(--ink)}
+.rq-map{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px clamp(20px,3.5vw,58px);padding:clamp(18px,2.6vw,30px)}
+.rq-edges{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.rq-edge{fill:none;stroke:var(--rule);stroke-width:1.5;transition:stroke .2s}
+.rq-edge.on{stroke:var(--accent)}
+.rq-pkt{fill:var(--accent)}
+.rq-node{position:relative;z-index:1;display:grid;gap:2px;padding:11px 12px;border:1.5px solid var(--rule);border-radius:9px;background:var(--ground);min-width:0;transition:border-color .2s,box-shadow .2s}
+.rq-node.done{border-color:color-mix(in srgb,var(--accent) 45%,var(--rule))}
+.rq-node.hit{border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)}
+.rq-node b{font:600 12.5px/1.3 var(--mono);overflow-wrap:anywhere}
+.rq-node span{font:400 11px/1.3 var(--mono);color:var(--ink-3)}
+.rq-node i{font:500 11px/1.3 var(--mono);color:var(--accent);font-style:normal;min-height:14px}
+.rq-map [data-n="client"]{grid-column:1;grid-row:2}
+.rq-map [data-n="nginx"]{grid-column:2;grid-row:2}
+.rq-map [data-n="fastapi"]{grid-column:3;grid-row:2}
+.rq-map [data-n="redis"]{grid-column:4;grid-row:1}
+.rq-map [data-n="postgres"]{grid-column:4;grid-row:2}
+.rq-map [data-n="celery"]{grid-column:4;grid-row:3}
+.rq-log{border-top:1px solid var(--rule);background:var(--code-bg);color:var(--code-ink-2);font:400 11.5px/1.9 var(--mono);padding:10px 0;height:126px;overflow:hidden}
+.rq-log div{padding:0 14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rq-log .c-ok{color:var(--post)}
+.rq-log .c-acc{color:var(--tk-num)}
+.rq-log .c-m{color:var(--tk-key)}
+@media (max-width:700px){
+  .rq-map{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 12px}
+  .rq-map [data-n="client"]{grid-column:1;grid-row:1}
+  .rq-map [data-n="nginx"]{grid-column:2;grid-row:1}
+  .rq-map [data-n="fastapi"]{grid-column:1;grid-row:2}
+  .rq-map [data-n="redis"]{grid-column:2;grid-row:2}
+  .rq-map [data-n="postgres"]{grid-column:1;grid-row:3}
+  .rq-map [data-n="celery"]{grid-column:2;grid-row:3}
+  .rq-log{height:106px}
+}
+
 @media print{
-  .side,.hero-actions,.ep-code,.trace,.copy,.foot a{display:none!important}
+  .side,.hero-actions,.ep-code,.trace,.rq,.copy,.foot a{display:none!important}
   .shell{display:block;max-width:none}
   .main{padding:0}
   body{background:#fff;color:#000;font-size:11.5pt}
@@ -298,6 +336,25 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
           <div><b class="num">200k</b><span>background tasks per day</span></div>
         </div>
       </section>
+
+      <figure class="rq" aria-label="Request path through the services">
+        <figcaption class="rq-bar">
+          <b id="rq-req">GET /profile</b>
+          <span id="rq-note">served from cache</span>
+          <span class="spacer"></span>
+          <span class="rq-total" id="rq-total">—</span>
+        </figcaption>
+        <div class="rq-map" id="rq-map">
+          <svg class="rq-edges" id="rq-edges" aria-hidden="true"></svg>
+          <div class="rq-node" data-n="client"><b>client</b><span>browser</span><i></i></div>
+          <div class="rq-node" data-n="nginx"><b>nginx</b><span>reverse proxy</span><i></i></div>
+          <div class="rq-node" data-n="fastapi"><b>fastapi</b><span>application</span><i></i></div>
+          <div class="rq-node" data-n="redis"><b>redis</b><span>cache</span><i></i></div>
+          <div class="rq-node" data-n="postgres"><b>postgres</b><span>database</span><i></i></div>
+          <div class="rq-node" data-n="celery"><b>celery</b><span>queue</span><i></i></div>
+        </div>
+        <div class="rq-log" id="rq-log" aria-hidden="true"></div>
+      </figure>
     </header>
 
     <section class="ep" id="profile">
@@ -746,6 +803,142 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
   }).join("");
   document.getElementById("trace-axis").innerHTML = ["2023", "2024", "2025", "2026", "2027", "2028", "2029"].map((y) => `<span>${y}</span>`).join("");
   document.getElementById("trace-now").textContent = `now: ${String(cur.m).padStart(2, "0")}.${cur.y}`;
+
+  /* live request path */
+  (() => {
+    const map = document.getElementById("rq-map");
+    if (!map) return;
+    const svg = document.getElementById("rq-edges");
+    const NS = "http://www.w3.org/2000/svg";
+    const elReq = document.getElementById("rq-req");
+    const elNote = document.getElementById("rq-note");
+    const elTotal = document.getElementById("rq-total");
+    const elLog = document.getElementById("rq-log");
+    const RMO = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const n = (id) => map.querySelector('[data-n="' + id + '"]');
+
+    const EDGES = [["client","nginx"],["nginx","fastapi"],["fastapi","redis"],["fastapi","postgres"],["fastapi","celery"]]
+      .map(([a, b]) => ({ a, b, path: document.createElementNS(NS, "path"), len: 0 }));
+    EDGES.forEach((e) => { e.path.setAttribute("class", "rq-edge"); svg.appendChild(e.path); });
+    const pkt = document.createElementNS(NS, "circle");
+    pkt.setAttribute("class", "rq-pkt"); pkt.setAttribute("r", "4.5"); pkt.style.display = "none";
+    svg.appendChild(pkt);
+
+    function layout() {
+      const box = map.getBoundingClientRect();
+      svg.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`);
+      EDGES.forEach((e) => {
+        const A = n(e.a).getBoundingClientRect(), B = n(e.b).getBoundingClientRect();
+        let d;
+        if (B.left >= A.right - 2) {
+          const x1 = A.right - box.left, y1 = A.top + A.height / 2 - box.top;
+          const x2 = B.left - box.left, y2 = B.top + B.height / 2 - box.top, mx = (x1 + x2) / 2;
+          d = `M${x1} ${y1}C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`;
+        } else {
+          const x1 = A.left + A.width / 2 - box.left, y1 = A.bottom - box.top;
+          const x2 = B.left + B.width / 2 - box.left, y2 = B.top - box.top, my = (y1 + y2) / 2;
+          d = `M${x1} ${y1}C${x1} ${my} ${x2} ${my} ${x2} ${y2}`;
+        }
+        e.path.setAttribute("d", d);
+        e.len = e.path.getTotalLength();
+      });
+    }
+
+    const SCEN = [
+      { req: "GET /profile", note: "served from cache", code: "200 OK", total: 12,
+        hops: [{ to: "nginx", ms: 1 }, { to: "fastapi", ms: 4 }, { to: "redis", ms: 2 }] },
+      { req: "GET /experience", note: "read from the main database", code: "200 OK", total: 34,
+        hops: [{ to: "nginx", ms: 1 }, { to: "fastapi", ms: 5 }, { to: "postgres", ms: 26 }] },
+      { req: "POST /contacts", note: "heavy work goes to the queue", code: "202 Accepted", total: 8,
+        hops: [{ to: "nginx", ms: 1 }, { to: "fastapi", ms: 4 }, { to: "celery", ms: 2 }] },
+      { req: "GET /products/miryas-ai", note: "assembled from the database", code: "200 OK", total: 27,
+        hops: [{ to: "nginx", ms: 1 }, { to: "fastapi", ms: 6 }, { to: "postgres", ms: 18 }] }
+    ];
+
+    const edgeOf = (a, b) => EDGES.find((e) => (e.a === a && e.b === b) || (e.a === b && e.b === a));
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    function reset() {
+      map.querySelectorAll(".rq-node").forEach((el) => {
+        el.classList.remove("hit", "done");
+        el.querySelector("i").textContent = "";
+      });
+      EDGES.forEach((e) => e.path.classList.remove("on"));
+      pkt.style.display = "none";
+      elTotal.textContent = "—";
+    }
+    function logLine(s) {
+      const code = s.code.split(" ")[0];
+      const div = document.createElement("div");
+      div.innerHTML = `<span class="${code === "200" ? "c-ok" : "c-acc"}">${code}</span> ` +
+        `<span class="c-m">${s.req.split(" ")[0]}</span> ${s.req.split(" ")[1]} ` +
+        `${s.total}ms · ${s.note}`;
+      elLog.appendChild(div);
+      while (elLog.children.length > 6) elLog.removeChild(elLog.firstChild);
+    }
+    function travel(edge, reverse) {
+      return new Promise((res) => {
+        const dur = 400, t0 = performance.now();
+        edge.path.classList.add("on");
+        pkt.style.display = "";
+        const step = (now) => {
+          const t = Math.min((now - t0) / dur, 1);
+          const p = edge.path.getPointAtLength((reverse ? 1 - t : t) * edge.len);
+          pkt.setAttribute("cx", p.x); pkt.setAttribute("cy", p.y);
+          if (t < 1) requestAnimationFrame(step); else res();
+        };
+        requestAnimationFrame(step);
+      });
+    }
+
+    let visible = true;
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; }).observe(map);
+    new ResizeObserver(layout).observe(map);
+    if (document.fonts) document.fonts.ready.then(layout);
+    layout();
+
+    if (RMO) {
+      const s = SCEN[0];
+      elReq.textContent = s.req; elNote.textContent = s.note;
+      s.hops.forEach((h) => { const el = n(h.to); el.classList.add("done"); el.querySelector("i").textContent = h.ms + " ms"; });
+      n("client").classList.add("done");
+      elTotal.textContent = s.total + " ms · " + s.code;
+      SCEN.forEach(logLine);
+      return;
+    }
+
+    (async () => {
+      let i = 0;
+      for (;;) {
+        while (!visible || document.hidden) await wait(400);
+        const s = SCEN[i++ % SCEN.length];
+        reset();
+        elReq.textContent = s.req;
+        elNote.textContent = s.note;
+        n("client").classList.add("done");
+        let cur = "client";
+        for (const h of s.hops) {
+          const e = edgeOf(cur, h.to);
+          await travel(e, e.a !== cur);
+          const el = n(h.to);
+          el.classList.add("hit", "done");
+          el.querySelector("i").textContent = h.ms + " ms";
+          await wait(150);
+          el.classList.remove("hit");
+          cur = h.to;
+        }
+        const backPath = s.hops.slice(0, -1).reverse().map((h) => h.to).concat("client");
+        for (const to of backPath) {
+          const e = edgeOf(cur, to);
+          await travel(e, e.a !== cur);
+          cur = to;
+        }
+        pkt.style.display = "none";
+        elTotal.textContent = s.total + " ms · " + s.code;
+        logLine(s);
+        await wait(1100);
+      }
+    })();
+  })();
 })();
 </script>
 </body>
