@@ -714,11 +714,11 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
   box.innerHTML = SPANS.map((s) => {
     const f = idx(parse(s.from));
     const realEnd = s.to ? idx(parse(s.to)) : idx(cur);
-    const done = `<span class="bar ${s.cls}" style="left:${pct(f)}%;width:${Math.max(pct(realEnd) - pct(f), 1.2)}%"></span>`;
+    const shown = s.to && idx(parse(s.to)) > idx(cur) ? idx(cur) : realEnd;
+    const done = `<span class="bar ${s.cls}" style="left:${pct(f)}%;width:${Math.max(pct(shown) - pct(f), 1.2)}%"></span>`;
     const plan = s.to && idx(parse(s.to)) > idx(cur)
       ? `<span class="bar plan" style="left:${pct(idx(cur))}%;width:${pct(idx(parse(s.to))) - pct(idx(cur))}%"></span>`
       : "";
-    const shown = s.to && idx(parse(s.to)) > idx(cur) ? idx(cur) : realEnd;
     return `<div class="trace-row"><span class="lb">${s.label}<br><span style="color:var(--ink-3)">${durTxt(shown - f)}</span></span><span class="track">${done}${plan}</span></div>`;
   }).join("");
   document.getElementById("trace-axis").innerHTML = ["2025", "2026", "2027", "2028", "2029"].map((y) => `<span>${y}</span>`).join("");
