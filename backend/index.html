@@ -280,8 +280,42 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
   .rq-log{height:106px}
 }
 
+.ag{margin-top:18px;border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow:hidden}
+.ag-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:11px 14px;border-bottom:1px solid var(--rule);font:500 12px/1.4 var(--mono);color:var(--ink-3)}
+.ag-bar b{color:var(--ink);font-weight:600}
+.ag-bar .spacer{margin-left:auto}
+.ag-state{font:600 11.5px/1 var(--mono);padding:5px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-3)}
+.ag-state[data-s="run"]{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.ag-state[data-s="wait"]{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.ag-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,.7fr)}
+.ag-steps{padding:11px 12px;display:grid;gap:2px;border-right:1px solid var(--rule);min-width:0}
+.ag-step{display:grid;grid-template-columns:19px minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:8px 7px;border-radius:7px;font:500 12px/1.45 var(--mono);color:var(--ink-3);opacity:.5;transition:opacity .2s,background-color .2s,color .2s}
+.ag-step .ix{font:600 10.5px/1.5 var(--mono);color:var(--ink-3);text-align:center;border:1px solid var(--rule);border-radius:5px}
+.ag-step .nm{min-width:0;overflow-wrap:anywhere}
+.ag-step .res{display:block;font:400 10.5px/1.5 var(--mono);color:var(--ink-3)}
+.ag-step .tm{font:500 10.5px/1.5 var(--mono);color:var(--ink-3);white-space:nowrap}
+.ag-step.run{opacity:1;background:var(--surface-2);color:var(--ink)}
+.ag-step.run .ix{border-color:var(--accent);color:var(--accent)}
+.ag-step.done{opacity:1;color:var(--ink-2)}
+.ag-step.done .ix{border-color:color-mix(in srgb,var(--ok) 45%,var(--rule));color:var(--ok)}
+.ag-code{background:var(--code-bg);color:var(--code-ink);font:400 11.5px/1.75 var(--mono);padding:12px 14px;overflow-x:auto;min-width:0}
+.ag-code .tk-key{color:var(--tk-key)}
+.ag-code .tk-str{color:var(--tk-str)}
+.ag-code .tk-num{color:var(--tk-num)}
+.ag-code .tk-lit{color:var(--tk-lit)}
+.ag-guard{display:flex;flex-wrap:wrap;align-items:center;gap:7px 13px;padding:11px 14px;border-top:1px solid var(--rule);font:500 11.5px/1.5 var(--mono);color:var(--ink-3)}
+.ag-guard .dot{width:8px;height:8px;border-radius:50%;background:var(--rule);flex:none;transition:background-color .3s}
+.ag-guard.on .dot{background:var(--warn)}
+.ag-guard.on b{color:var(--warn)}
+.ag-guard b{color:var(--ink-3);font-weight:600;transition:color .3s}
+@media (max-width:820px){
+  .ag-body{grid-template-columns:minmax(0,1fr)}
+  .ag-steps{border-right:0;border-bottom:1px solid var(--rule)}
+  .ag-code{min-height:0}
+}
+
 @media print{
-  .side,.hero-actions,.ep-code,.trace,.rq,.copy,.foot a{display:none!important}
+  .side,.hero-actions,.ep-code,.trace,.rq,.ag,.copy,.foot a{display:none!important}
   .shell{display:block;max-width:none}
   .main{padding:0}
   body{background:#fff;color:#000;font-size:11.5pt}
@@ -558,6 +592,25 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
           <div class="chips">
             <span class="chip hi">Python</span><span class="chip hi">FastAPI</span><span class="chip">Cloud Run</span><span class="chip">Cloud SQL</span><span class="chip">Secret Manager</span><span class="chip">Cloud Build</span><span class="chip">Artifact Registry</span><span class="chip">Cloud Tasks</span><span class="chip">Cloud Scheduler</span><span class="chip">Cloud Storage</span><span class="chip">Logging и Monitoring</span><span class="chip">IAM</span><span class="chip hi">Vertex AI</span><span class="chip">Meta Marketing API</span><span class="chip">OAuth 2.0</span><span class="chip">Redis</span><span class="chip">Docker</span>
           </div>
+
+          <figure class="ag" aria-label="Прогон ИИ-агента MIRYAS">
+            <figcaption class="ag-bar">
+              <b>agent run</b><span>miryas-ai</span>
+              <span class="spacer"></span>
+              <span>vertex ai · function calling</span>
+              <span class="ag-state" id="ag-state" data-s="run">выполняется</span>
+            </figcaption>
+            <div class="ag-body">
+              <div class="ag-steps" id="ag-steps"></div>
+              <pre class="ag-code" id="ag-code"></pre>
+            </div>
+            <div class="ag-guard" id="ag-guard">
+              <span class="dot" aria-hidden="true"></span>
+              <b id="ag-guard-t">ограничитель бюджета включён</b>
+              <span class="spacer"></span>
+              <span>$50/день · старт на паузе</span>
+            </div>
+          </figure>
         </div>
         <div class="ep-code">
           <figure class="code">
@@ -918,6 +971,99 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
         elStatus.dataset.s = s.code.split(" ")[0];
         logLine(s, total);
         await wait(1500);
+      }
+    })();
+  })();
+
+  /* прогон агента MIRYAS */
+  (() => {
+    const stepsEl = document.getElementById("ag-steps");
+    if (!stepsEl) return;
+    const codeEl = document.getElementById("ag-code");
+    const stateEl = document.getElementById("ag-state");
+    const guardEl = document.getElementById("ag-guard");
+    const guardT = document.getElementById("ag-guard-t");
+    const RMO = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    const STEPS = [
+      { tool: "analyze_profile", sec: 1.2, res: "ниша, тон, аудитория",
+        call: '{\n  "tool": "analyze_profile",\n  "args": { "source": "instagram", "posts": 24 },\n  "ok": true\n}' },
+      { tool: "generate_creatives", sec: 2.4, res: "3 варианта текста",
+        call: '{\n  "tool": "generate_creatives",\n  "args": { "lang": "uz", "tone": "friendly", "n": 3 },\n  "ok": true\n}' },
+      { tool: "pick_audience", sec: 0.8, res: "охват 42 000",
+        call: '{\n  "tool": "pick_audience",\n  "args": { "geo": "Tashkent", "age": [18, 45] },\n  "reach": 42000\n}' },
+      { tool: "create_campaign", sec: 1.1, res: "campaign_id 238…",
+        call: '{\n  "tool": "create_campaign",\n  "api": "meta.marketing.v20",\n  "status": "PAUSED"\n}' },
+      { tool: "set_daily_budget", sec: 0.4, res: "$50 в день",
+        call: '{\n  "tool": "set_daily_budget",\n  "args": { "usd": 50 },\n  "requires_human": true\n}' }
+    ];
+
+    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const paint = (raw) => esc(raw).replace(
+      /("(?:[^"\\]|\\.)*")(\s*:)?|\b(true|false|null)\b|(-?\d+(?:\.\d+)?)/g,
+      (m, str, colon, lit, num) => {
+        if (str) return colon ? '<span class="tk-key">' + str + '</span>' + colon : '<span class="tk-str">' + str + '</span>';
+        if (lit) return '<span class="tk-lit">' + lit + '</span>';
+        return '<span class="tk-num">' + num + '</span>';
+      });
+
+    stepsEl.innerHTML = STEPS.map((s, i) => (
+      '<div class="ag-step" data-i="' + i + '">' +
+        '<span class="ix">' + (i + 1) + '</span>' +
+        '<span class="nm">' + s.tool + '<span class="res"></span></span>' +
+        '<span class="tm"></span>' +
+      '</div>'
+    )).join("");
+    const rows = [...stepsEl.querySelectorAll(".ag-step")];
+
+    function fill(i, cls) {
+      const s = STEPS[i];
+      rows[i].className = "ag-step " + cls;
+      if (cls === "done") {
+        rows[i].querySelector(".res").textContent = s.res;
+        rows[i].querySelector(".tm").textContent = "✓ " + s.sec + "s";
+      }
+      codeEl.innerHTML = paint(s.call);
+    }
+    function reset() {
+      rows.forEach((r) => {
+        r.className = "ag-step";
+        r.querySelector(".res").textContent = "";
+        r.querySelector(".tm").textContent = "";
+      });
+      guardEl.classList.remove("on");
+      guardT.textContent = "ограничитель бюджета включён";
+      stateEl.dataset.s = "run";
+      stateEl.textContent = "выполняется";
+      codeEl.innerHTML = "";
+    }
+
+    if (RMO) {
+      STEPS.forEach((s, i) => fill(i, "done"));
+      guardEl.classList.add("on");
+      guardT.textContent = "кампания создана и стоит на паузе";
+      stateEl.dataset.s = "wait";
+      stateEl.textContent = "ждёт человека";
+      return;
+    }
+
+    (async () => {
+      for (;;) {
+        while (document.hidden) await wait(500);
+        reset();
+        await wait(500);
+        for (let i = 0; i < STEPS.length; i++) {
+          fill(i, "run");
+          await wait(Math.min(STEPS[i].sec * 620, 1500));
+          fill(i, "done");
+          await wait(180);
+        }
+        stateEl.dataset.s = "wait";
+        stateEl.textContent = "ждёт человека";
+        guardEl.classList.add("on");
+        guardT.textContent = "кампания создана и стоит на паузе";
+        await wait(3200);
       }
     })();
   })();
