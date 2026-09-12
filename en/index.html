@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Иброхимов Дилмурод</title>
-<meta name="description" content="Резюме Data Engineer в виде запуска Airflow DAG: Airflow, ClickHouse, PostgreSQL, Python.">
-<meta property="og:title" content="Иброхимов Дилмурод — Data Engineer">
-<meta property="og:description" content="Airflow, ClickHouse, PostgreSQL, Python. 38 DAG-ов, ~12 млн строк в сутки.">
+<title>Dilmurod Ibroximov</title>
+<meta name="description" content="Data Engineer resume as an Airflow DAG run: Airflow, ClickHouse, PostgreSQL, Python.">
+<meta property="og:title" content="Dilmurod Ibroximov — Data Engineer">
+<meta property="og:description" content="Airflow, ClickHouse, PostgreSQL, Python. 38 DAGs, ~12M rows a day.">
 <meta property="og:type" content="profile">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23101315'/%3E%3Cpath d='M10 16C16 16 16 9 22 9M10 16C16 16 16 23 22 23' fill='none' stroke='%23EEF0EC' stroke-width='2'/%3E%3Crect x='5' y='13' width='6' height='6' fill='%23F2D230'/%3E%3Crect x='21' y='6' width='6' height='6' fill='%23EEF0EC'/%3E%3Crect x='21' y='20' width='6' height='6' fill='%23EEF0EC'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,7 +64,6 @@ button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .wrap{max-width:1280px;margin:0 auto;padding-inline:var(--pad)}
 mark{background:linear-gradient(transparent var(--band),color-mix(in srgb,var(--accent) 80%,transparent) var(--band));color:inherit;padding:0 .06em}
-.blank{font-family:var(--mono);color:var(--ink-3);letter-spacing:.12em}
 .num{font-variant-numeric:tabular-nums}
 
 .pill{display:inline-flex;align-items:center;font:500 11px/1 var(--mono);padding:5px 8px;border:1px solid var(--st);background:var(--st-soft);color:var(--st-ink);white-space:nowrap;transition:background-color .25s,color .25s,border-color .25s}
@@ -206,7 +205,6 @@ tbody tr.grp:first-child th{border-top:0}
 .kv dt{font:400 12px/1.9 var(--mono);color:color-mix(in srgb,var(--ground) 60%,var(--ink))}
 .kv a{text-decoration:none}
 .kv a:hover{text-decoration:underline}
-.sink .blank{color:color-mix(in srgb,var(--ground) 55%,var(--ink))}
 .sink .btn{border-color:var(--ground);color:var(--ground)}
 .sink .btn-primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .sink .btn-primary:hover{background:var(--ground);border-color:var(--ground);color:var(--ink)}
@@ -237,23 +235,23 @@ tbody tr.grp:first-child th{border-top:0}
 </head>
 <body>
 
-<nav class="bar" aria-label="Разделы">
+<nav class="bar" aria-label="Sections">
   <div class="wrap">
     <a class="brand" href="#profile">
       <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M5 7C10 7 10 2.5 15 2.5M5 7C10 7 10 11.5 15 11.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="0.5" y="4.5" width="5" height="5" fill="currentColor"/><rect x="14.5" y="0" width="5" height="5" fill="currentColor"/><rect x="14.5" y="9" width="5" height="5" fill="currentColor"/></svg>
       <span class="brand-name">ibroximov_dilmurod</span>
     </a>
     <span class="pill run-state" data-state="success">success</span>
-    <div class="lang" role="group" aria-label="Язык страницы">
-      <a class="is-on" href="./" aria-current="page">RU</a>
-      <a href="./en/">EN</a>
+    <div class="lang" role="group" aria-label="Page language">
+      <a href="../">RU</a>
+      <a class="is-on" href="./" aria-current="page">EN</a>
     </div>
     <div class="nav">
-      <a href="#experience"><i class="sq" data-task="transform_experience" data-state="success"></i>Опыт</a>
-      <a href="#stack"><i class="sq" data-task="load_stack" data-state="success"></i>Стек</a>
-      <a href="#projects"><i class="sq" data-task="publish_projects" data-state="success"></i>Проекты</a>
-      <a href="#education"><i class="sq" data-task="check_education" data-state="success"></i>Образование</a>
-      <a href="#contacts"><i class="sq" data-task="sink_contacts" data-state="success"></i>Контакты</a>
+      <a href="#experience"><i class="sq" data-task="transform_experience" data-state="success"></i>Experience</a>
+      <a href="#stack"><i class="sq" data-task="load_stack" data-state="success"></i>Stack</a>
+      <a href="#projects"><i class="sq" data-task="publish_projects" data-state="success"></i>Projects</a>
+      <a href="#education"><i class="sq" data-task="check_education" data-state="success"></i>Education</a>
+      <a href="#contacts"><i class="sq" data-task="sink_contacts" data-state="success"></i>Contacts</a>
     </div>
   </div>
 </nav>
@@ -262,19 +260,19 @@ tbody tr.grp:first-child th{border-top:0}
   <p class="crumb"><span>DAGs / <b>ibroximov_dilmurod</b></span><span>owner: data-engineering</span><span>schedule: @daily</span><span>tags: airflow, clickhouse, postgres</span></p>
   <div class="hero-grid">
     <div>
-      <h1 class="name"><span>Иброхимов</span><span>Дилмурод</span></h1>
+      <h1 class="name"><span>Dilmurod</span><span>Ibroximov</span></h1>
       <p class="role">Data Engineer · Apache Airflow · ClickHouse · PostgreSQL · Python</p>
     </div>
     <div>
-      <p class="lead">Отвечаю за пайплайны, по которым городские данные Ташкента попадают в хранилище и в отчёты. <mark>38 DAG-ов</mark> в Airflow каждый день забирают <mark>~12 млн строк</mark> из <mark>17 источников</mark>. После переноса аналитики в ClickHouse отчёты строятся за <mark>1,5 с вместо 40</mark>.</p>
+      <p class="lead">I own the pipelines that carry Tashkent's city data into the warehouse and into reports. <mark>38 DAGs</mark> in Airflow pull <mark>~12M rows</mark> from <mark>17 sources</mark> every day. After the analytics moved to ClickHouse, reports build in <mark>1.5 s instead of 40</mark>.</p>
       <div class="actions">
-        <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=Data%20Engineer">Написать на почту</a>
+        <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=Data%20Engineer">Send an email</a>
         <a class="btn num" href="tel:+998884104545">+998 88 410 45 45</a>
       </div>
       <dl class="facts">
-        <dt>сейчас</dt><dd>Data Engineer, Raqamli Rivojlanish Departamenti</dd>
-        <dt>город</dt><dd>Ташкент, Узбекистан</dd>
-        <dt>формат</dt><dd>офис, гибрид или удалёнка</dd>
+        <dt>now</dt><dd>Data Engineer, Raqamli Rivojlanish Departamenti</dd>
+        <dt>city</dt><dd>Tashkent, Uzbekistan</dd>
+        <dt>work</dt><dd>office, hybrid or remote</dd>
       </dl>
     </div>
   </div>
@@ -283,10 +281,10 @@ tbody tr.grp:first-child th{border-top:0}
 <section class="wrap" aria-labelledby="run-title">
   <div class="run-panel">
     <div class="run-bar">
-      <div class="run-bar-l"><b id="run-title">Graph</b><span id="run-id">run_id: manual__2026-09-11</span><span>6 задач</span></div>
+      <div class="run-bar-l"><b id="run-title">Graph</b><span id="run-id">run_id: manual__2026-09-12</span><span>6 tasks</span></div>
       <div class="run-bar-r">
         <span class="pill run-state" data-state="success">success</span>
-        <button type="button" class="btn btn-sm" id="trigger">▶ Перезапустить</button>
+        <button type="button" class="btn btn-sm" id="trigger">▶ Re-run</button>
       </div>
     </div>
 
@@ -295,28 +293,28 @@ tbody tr.grp:first-child th{border-top:0}
         <defs><marker id="arr" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="arrow" d="M0 0L8 4L0 8Z"/></marker></defs>
       </svg>
       <a class="node" href="#profile" data-task="extract_profile" data-state="success" data-wide style="--c:1;--r:1/3;--mc:1/3;--mr:1">
-        <span class="n-id">extract_profile</span><span class="n-what">О себе</span><span class="n-op">PythonOperator</span>
-        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="extract_profile">0,6 с</span></span>
+        <span class="n-id">extract_profile</span><span class="n-what">About</span><span class="n-op">PythonOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="extract_profile">0.6 s</span></span>
       </a>
       <a class="node" href="#experience" data-task="transform_experience" data-state="success" style="--c:2;--r:1;--mc:1;--mr:2">
-        <span class="n-id">transform_experience</span><span class="n-what">Опыт</span><span class="n-op">PostgresOperator</span>
-        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="transform_experience">1,4 с</span></span>
+        <span class="n-id">transform_experience</span><span class="n-what">Experience</span><span class="n-op">PostgresOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="transform_experience">1.4 s</span></span>
       </a>
       <a class="node" href="#stack" data-task="load_stack" data-state="success" style="--c:2;--r:2;--mc:2;--mr:2">
-        <span class="n-id">load_stack</span><span class="n-what">Стек</span><span class="n-op">DockerOperator</span>
-        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="load_stack">0,9 с</span></span>
+        <span class="n-id">load_stack</span><span class="n-what">Stack</span><span class="n-op">DockerOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="load_stack">0.9 s</span></span>
       </a>
       <a class="node" href="#projects" data-task="publish_projects" data-state="success" style="--c:3;--r:1;--mc:1;--mr:3">
-        <span class="n-id">publish_projects</span><span class="n-what">Пет-проекты</span><span class="n-op">BashOperator</span>
-        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="publish_projects">0,7 с</span></span>
+        <span class="n-id">publish_projects</span><span class="n-what">Side projects</span><span class="n-op">BashOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="publish_projects">0.7 s</span></span>
       </a>
       <a class="node" href="#education" data-task="check_education" data-state="success" style="--c:3;--r:2;--mc:2;--mr:3">
-        <span class="n-id">check_education</span><span class="n-what">Образование</span><span class="n-op">SQLCheckOperator</span>
-        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="check_education">0,4 с</span></span>
+        <span class="n-id">check_education</span><span class="n-what">Education</span><span class="n-op">SQLCheckOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="check_education">0.4 s</span></span>
       </a>
       <a class="node" href="#contacts" data-task="sink_contacts" data-state="success" data-wide style="--c:4;--r:1/3;--mc:1/3;--mr:4">
-        <span class="n-id">sink_contacts</span><span class="n-what">Контакты</span><span class="n-op">EmailOperator</span>
-        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="sink_contacts">0,3 с</span></span>
+        <span class="n-id">sink_contacts</span><span class="n-what">Contacts</span><span class="n-op">EmailOperator</span>
+        <span class="n-foot"><span class="pill">success</span><span class="n-dur" data-dur="sink_contacts">0.3 s</span></span>
       </a>
     </div>
 
@@ -327,22 +325,22 @@ tbody tr.grp:first-child th{border-top:0}
         <span><i class="sq" data-state="queued"></i>queued</span>
         <span><i class="sq" data-state="paused"></i>paused</span>
       </div>
-      <p class="hint">Нажмите на задачу, чтобы перейти к разделу</p>
+      <p class="hint">Click a task to jump to its section</p>
     </div>
-    <div class="log" id="log" role="log" aria-label="Лог запуска"></div>
+    <div class="log" id="log" role="log" aria-label="Run log"></div>
   </div>
 </section>
 
 <main>
   <section class="task wrap" id="experience">
     <div class="task-head">
-      <p class="ti"><b>transform_experience</b><span>PostgresOperator</span><span class="pill" data-task="transform_experience" data-state="success">success</span><span data-dur="transform_experience">1,4 с</span></p>
-      <h2>Опыт работы</h2>
+      <p class="ti"><b>transform_experience</b><span>PostgresOperator</span><span class="pill" data-task="transform_experience" data-state="success">success</span><span data-dur="transform_experience">1.4 s</span></p>
+      <h2>Experience</h2>
     </div>
 
     <div class="gv">
       <div class="gv-head">
-        <span><b>Grid</b> · один квадрат = один месяц</span>
+        <span><b>Grid</b> · one square = one month</span>
         <span class="legend">
           <span><i class="sq" data-state="success"></i>success</span>
           <span><i class="sq" data-state="running"></i>running</span>
@@ -356,37 +354,37 @@ tbody tr.grp:first-child th{border-top:0}
       <div class="job-meta">
         <h3>Data Engineer</h3>
         <p class="org">Raqamli Rivojlanish Departamenti</p>
-        <p class="muted">Департамент цифрового развития, Ташкент</p>
-        <p class="dates"><span>ноябрь 2025 — сейчас</span><span class="pill" data-state="running" id="job-dur">10 мес.</span></p>
+        <p class="muted">Digital Development Department, Tashkent</p>
+        <p class="dates"><span>November 2025 — present</span><span class="pill" data-state="running" id="job-dur">10 mo</span></p>
       </div>
       <div>
         <div class="group">
-          <h4>Пайплайны и хранилища</h4>
+          <h4>PIPELINES AND STORAGE</h4>
           <ul>
-            <li>Разработал 15 и поддерживаю <mark>38 DAG-ов</mark> в Apache Airflow. Каждый день они собирают <mark>~12 млн строк</mark> из 17 источников: API ведомств, базы районных хокимиятов, выгрузки в XML и Excel.</li>
-            <li>Настроил ретраи, SLA и алерты о сбоях: <mark>99,6%</mark> запусков проходят без ручного вмешательства, а упавший пайплайн команда видит в течение 5 минут.</li>
-            <li>Спроектировал схемы PostgreSQL для 9 предметных областей. Благодаря партиционированию и индексам ключевые запросы стали выполняться <mark>в 6 раз быстрее</mark>.</li>
-            <li>Перенёс аналитические агрегаты в ClickHouse (900+ млн строк). На материализованных представлениях отчёты строятся <mark>за 1,5 с вместо 40</mark>.</li>
-            <li>Встроил в каждый пайплайн проверки качества: полнота, дубликаты, соответствие схеме. Доля битых записей в витринах снизилась <mark>с 4% до 0,3%</mark>.</li>
-            <li>Заменил ручные выгрузки скриптами на Python и pandas. Аналитики экономят около <mark>20 часов в неделю</mark>.</li>
+            <li>Built 15 and maintain <mark>38 DAGs</mark> in Apache Airflow. Every day they collect <mark>~12M rows</mark> from 17 sources: agency APIs, district administration databases, XML and Excel exports.</li>
+            <li>Set up retries, SLAs and failure alerts: <mark>99.6%</mark> of runs need no manual work, and the team sees a broken pipeline within 5 minutes.</li>
+            <li>Designed PostgreSQL schemas for 9 domains. Partitioning and indexes made key queries <mark>6× faster</mark>.</li>
+            <li>Moved analytical aggregates into ClickHouse (900M+ rows). On materialized views, reports build <mark>in 1.5 s instead of 40</mark>.</li>
+            <li>Built data-quality checks into every pipeline: completeness, duplicates, schema conformance. Broken records in the marts dropped <mark>from 4% to 0.3%</mark>.</li>
+            <li>Replaced manual exports with Python and pandas scripts. Analysts save about <mark>20 hours a week</mark>.</li>
           </ul>
         </div>
         <div class="group">
-          <h4>Интеграции и сервисы</h4>
+          <h4>INTEGRATIONS AND SERVICES</h4>
           <ul>
-            <li>Подключил <mark>11 внешних сервисов</mark> по REST API, данные в JSON и XML проверяются по схеме.</li>
-            <li>Вынес тяжёлые задачи в очереди Celery, до <mark>200 тыс. задач в сутки</mark>. Кэш на Redis сократил ответ внутреннего API <mark>с 1,2 с до 150 мс</mark>.</li>
-            <li>Передаю данные в реальном времени через WebSocket на панель операторов, задержка меньше секунды.</li>
-            <li>Подключил полнотекстовый поиск на Elasticsearch по 3 млн обращений граждан, ответ приходит быстрее 200 мс.</li>
+            <li>Connected <mark>11 external services</mark> over REST APIs; JSON and XML payloads are validated against schemas.</li>
+            <li>Moved heavy work into Celery queues, up to <mark>200k tasks a day</mark>. Redis caching cut the internal API response <mark>from 1.2 s to 150 ms</mark>.</li>
+            <li>Stream data in real time over WebSocket to the operators' dashboard, under one second of latency.</li>
+            <li>Added full-text search on Elasticsearch across 3M citizen requests, answering in under 200 ms.</li>
           </ul>
         </div>
         <div class="group">
-          <h4>Инфраструктура</h4>
+          <h4>INFRASTRUCTURE</h4>
           <ul>
-            <li>Упаковал 14 сервисов в Docker Compose. Новое окружение поднимается <mark>за 10 минут</mark> вместо половины рабочего дня.</li>
-            <li>Перенёс 60+ паролей и ключей доступа из кода и .env-файлов в HashiCorp Vault.</li>
-            <li>Храню сырые данные и бэкапы в AWS S3, отдельные ETL-задачи запускаю на EC2.</li>
-            <li>Настроил CI/CD в GitLab: линтер, тесты и автоматический деплой DAG-ов после код-ревью.</li>
+            <li>Packed 14 services into Docker Compose. A fresh environment comes up <mark>in 10 minutes</mark> instead of half a working day.</li>
+            <li>Moved 60+ passwords and access keys out of code and .env files into HashiCorp Vault.</li>
+            <li>Keep raw data and backups in AWS S3, and run separate ETL jobs on EC2.</li>
+            <li>Set up GitLab CI/CD: linters, tests and automatic DAG deployment after code review.</li>
           </ul>
         </div>
       </div>
@@ -395,31 +393,31 @@ tbody tr.grp:first-child th{border-top:0}
 
   <section class="task wrap" id="stack">
     <div class="task-head">
-      <p class="ti"><b>load_stack</b><span>DockerOperator</span><span class="pill" data-task="load_stack" data-state="success">success</span><span data-dur="load_stack">0,9 с</span></p>
-      <h2>Стек</h2>
-      <p class="note">Admin → Connections: всё, к чему мои пайплайны подключаются каждый день.</p>
+      <p class="ti"><b>load_stack</b><span>DockerOperator</span><span class="pill" data-task="load_stack" data-state="success">success</span><span data-dur="load_stack">0.9 s</span></p>
+      <h2>Stack</h2>
+      <p class="note">Admin → Connections: everything my pipelines talk to every day.</p>
     </div>
     <div class="tbl">
       <table class="t-conn">
-        <thead><tr><th>conn_id</th><th>тип</th><th>где и зачем</th></tr></thead>
+        <thead><tr><th>conn_id</th><th>type</th><th>where and why</th></tr></thead>
         <tbody>
-          <tr class="grp"><th colspan="3">Оркестрация и очереди</th></tr>
-          <tr><td class="id">airflow_default</td><td class="type">Apache Airflow</td><td>38 DAG-ов, ретраи, SLA, алерты о сбоях</td></tr>
-          <tr><td class="id">celery_workers</td><td class="type">Celery</td><td>Фоновые задачи, до 200 тыс. в сутки</td></tr>
-          <tr><td class="id">redis_cache</td><td class="type">Redis</td><td>Кэш внутреннего API и очереди</td></tr>
-          <tr class="grp"><th colspan="3">Хранилища и поиск</th></tr>
-          <tr><td class="id">postgres_core</td><td class="type">PostgreSQL</td><td>Схемы для 9 предметных областей, партиционирование, индексы</td></tr>
-          <tr><td class="id">clickhouse_dwh</td><td class="type">ClickHouse</td><td>Аналитическое хранилище на 900+ млн строк, материализованные представления</td></tr>
-          <tr><td class="id">es_search</td><td class="type">Elasticsearch</td><td>Полнотекстовый поиск по обращениям граждан</td></tr>
-          <tr class="grp"><th colspan="3">Интеграции и обработка</th></tr>
-          <tr><td class="id">http_external</td><td class="type">REST API · JSON · XML</td><td>11 внешних сервисов с проверкой данных по схеме</td></tr>
-          <tr><td class="id">ws_operators</td><td class="type">WebSocket</td><td>Поток на панель операторов в реальном времени</td></tr>
-          <tr><td class="id">python_etl</td><td class="type">Python · pandas · SQL</td><td>Трансформации, проверки качества, автоматизация выгрузок</td></tr>
-          <tr class="grp"><th colspan="3">Инфраструктура</th></tr>
-          <tr><td class="id">docker_runtime</td><td class="type">Docker Compose · Linux</td><td>14 сервисов, окружение за 10 минут</td></tr>
-          <tr><td class="id">vault_secrets</td><td class="type">HashiCorp Vault</td><td>Пароли и ключи доступа вне кода</td></tr>
-          <tr><td class="id">aws_default</td><td class="type">AWS S3 · EC2</td><td>Сырые данные, бэкапы, отдельные ETL-задачи</td></tr>
-          <tr><td class="id">gitlab_ci</td><td class="type">Git · GitLab CI/CD</td><td>Линтер, тесты, автодеплой DAG-ов</td></tr>
+          <tr class="grp"><th colspan="3">Orchestration and queues</th></tr>
+          <tr><td class="id">airflow_default</td><td class="type">Apache Airflow</td><td>38 DAGs, retries, SLAs, failure alerts</td></tr>
+          <tr><td class="id">celery_workers</td><td class="type">Celery</td><td>Background tasks, up to 200k a day</td></tr>
+          <tr><td class="id">redis_cache</td><td class="type">Redis</td><td>Internal API cache and queues</td></tr>
+          <tr class="grp"><th colspan="3">Storage and search</th></tr>
+          <tr><td class="id">postgres_core</td><td class="type">PostgreSQL</td><td>Schemas for 9 domains, partitioning, indexes</td></tr>
+          <tr><td class="id">clickhouse_dwh</td><td class="type">ClickHouse</td><td>Analytical warehouse of 900M+ rows, materialized views</td></tr>
+          <tr><td class="id">es_search</td><td class="type">Elasticsearch</td><td>Full-text search across citizen requests</td></tr>
+          <tr class="grp"><th colspan="3">Integrations and processing</th></tr>
+          <tr><td class="id">http_external</td><td class="type">REST API · JSON · XML</td><td>11 external services with schema validation</td></tr>
+          <tr><td class="id">ws_operators</td><td class="type">WebSocket</td><td>Real-time stream to the operators' dashboard</td></tr>
+          <tr><td class="id">python_etl</td><td class="type">Python · pandas · SQL</td><td>Transformations, quality checks, export automation</td></tr>
+          <tr class="grp"><th colspan="3">Infrastructure</th></tr>
+          <tr><td class="id">docker_runtime</td><td class="type">Docker Compose · Linux</td><td>14 services, environment up in 10 minutes</td></tr>
+          <tr><td class="id">vault_secrets</td><td class="type">HashiCorp Vault</td><td>Passwords and access keys outside the code</td></tr>
+          <tr><td class="id">aws_default</td><td class="type">AWS S3 · EC2</td><td>Raw data, backups, separate ETL jobs</td></tr>
+          <tr><td class="id">gitlab_ci</td><td class="type">Git · GitLab CI/CD</td><td>Linters, tests, automatic DAG deployment</td></tr>
         </tbody>
       </table>
     </div>
@@ -427,33 +425,33 @@ tbody tr.grp:first-child th{border-top:0}
 
   <section class="task wrap" id="projects">
     <div class="task-head">
-      <p class="ti"><b>publish_projects</b><span>BashOperator</span><span class="pill" data-task="publish_projects" data-state="success">success</span><span data-dur="publish_projects">0,7 с</span></p>
-      <h2>Пет-проекты</h2>
-      <p class="note">Проекты вне работы в виде списка DAG-ов.</p>
+      <p class="ti"><b>publish_projects</b><span>BashOperator</span><span class="pill" data-task="publish_projects" data-state="success">success</span><span data-dur="publish_projects">0.7 s</span></p>
+      <h2>Side projects</h2>
+      <p class="note">Work outside the job, listed as DAGs.</p>
     </div>
     <div class="tbl">
       <table class="t-dags">
-        <thead><tr><th>статус</th><th>dag_id</th><th>schedule</th><th>что делает</th><th>стек</th></tr></thead>
+        <thead><tr><th>status</th><th>dag_id</th><th>schedule</th><th>what it does</th><th>stack</th></tr></thead>
         <tbody>
           <tr>
             <td><span class="pill" data-state="paused">paused</span></td>
             <td class="id">cbu_rates_pipeline</td>
             <td class="id">@daily</td>
-            <td>Каждый день забирает курсы валют ЦБ Узбекистана, хранит историю в PostgreSQL и строит витрину в ClickHouse. На каждом запуске проверяет качество данных.</td>
+            <td>Pulls currency rates from the Central Bank of Uzbekistan every day, keeps the history in PostgreSQL and builds a mart in ClickHouse. Checks data quality on every run.</td>
             <td><span class="chips"><span class="chip">Airflow</span><span class="chip">PostgreSQL</span><span class="chip">ClickHouse</span><span class="chip">Docker</span></span></td>
           </tr>
           <tr>
             <td><span class="pill" data-state="paused">paused</span></td>
             <td class="id">realtime_events_stream</td>
             <td class="id">@continuous</td>
-            <td>Принимает события по WebSocket, буферизует их в Redis Streams и считает поминутные агрегаты в ClickHouse.</td>
+            <td>Takes events over WebSocket, buffers them in Redis Streams and computes per-minute aggregates in ClickHouse.</td>
             <td><span class="chips"><span class="chip">WebSocket</span><span class="chip">Redis</span><span class="chip">ClickHouse</span></span></td>
           </tr>
           <tr>
             <td><span class="pill" data-state="paused">paused</span></td>
             <td class="id">vacancy_search</td>
             <td class="id">@hourly</td>
-            <td>Парсит вакансии, обрабатывает их в очередях Celery и отдаёт поиск по Elasticsearch через REST API.</td>
+            <td>Crawls job postings, processes them in Celery queues and serves search over Elasticsearch through a REST API.</td>
             <td><span class="chips"><span class="chip">Celery</span><span class="chip">Elasticsearch</span><span class="chip">REST API</span></span></td>
           </tr>
         </tbody>
@@ -464,19 +462,19 @@ tbody tr.grp:first-child th{border-top:0}
   <div class="duo wrap">
     <section class="task" id="education">
       <div class="task-head">
-        <p class="ti"><b>check_education</b><span>SQLCheckOperator</span><span class="pill" data-task="check_education" data-state="success">success</span><span data-dur="check_education">0,4 с</span></p>
-        <h2>Образование и языки</h2>
+        <p class="ti"><b>check_education</b><span>SQLCheckOperator</span><span class="pill" data-task="check_education" data-state="success">success</span><span data-dur="check_education">0.4 s</span></p>
+        <h2>Education and languages</h2>
         <p class="note">Admin → Variables</p>
       </div>
       <div class="tbl">
         <table class="t-vars">
           <thead><tr><th>key</th><th>value</th></tr></thead>
           <tbody>
-            <tr><td class="id">education.degree</td><td>Бакалавр, информационные технологии в бизнесе</td></tr>
+            <tr><td class="id">education.degree</td><td>BSc, Business Information Technology</td></tr>
             <tr><td class="id">education.university</td><td>Kimyo International University in Tashkent (KIUT)</td></tr>
-            <tr><td class="id">education.period</td><td>2025–2029 <span class="pill" data-state="running">учусь</span></td></tr>
-            <tr><td class="id">languages.uz</td><td>родной</td></tr>
-            <tr><td class="id">languages.ru</td><td>свободно, C1</td></tr>
+            <tr><td class="id">education.period</td><td>2025–2029 <span class="pill" data-state="running">studying</span></td></tr>
+            <tr><td class="id">languages.uz</td><td>native</td></tr>
+            <tr><td class="id">languages.ru</td><td>fluent, C1</td></tr>
             <tr><td class="id">languages.en</td><td>B2</td></tr>
           </tbody>
         </table>
@@ -485,20 +483,20 @@ tbody tr.grp:first-child th{border-top:0}
 
     <section class="task" id="contacts">
       <div class="task-head">
-        <p class="ti"><b>sink_contacts</b><span>EmailOperator</span><span class="pill" data-task="sink_contacts" data-state="success">success</span><span data-dur="sink_contacts">0,3 с</span></p>
-        <h2>Контакты</h2>
-        <p class="note">Последняя задача DAG-а: доставить письмо.</p>
+        <p class="ti"><b>sink_contacts</b><span>EmailOperator</span><span class="pill" data-task="sink_contacts" data-state="success">success</span><span data-dur="sink_contacts">0.3 s</span></p>
+        <h2>Contacts</h2>
+        <p class="note">The DAG's last task: deliver the message.</p>
       </div>
       <div class="sink">
         <p class="sink-k">to</p>
         <a class="sink-to" href="mailto:ibroximovdilmurod44@gmail.com?subject=Data%20Engineer">ibroximovdilmurod44@gmail.com</a>
         <dl class="kv">
           <dt>phone</dt><dd class="num"><a href="tel:+998884104545">+998 88 410 45 45</a></dd>
-          <dt>город</dt><dd>Ташкент, Узбекистан</dd>
+          <dt>location</dt><dd>Tashkent, Uzbekistan</dd>
         </dl>
         <div class="actions" style="margin-top:4px">
-          <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=Data%20Engineer">Написать письмо</a>
-          <a class="btn" href="tel:+998884104545">Позвонить</a>
+          <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=Data%20Engineer">Send an email</a>
+          <a class="btn" href="tel:+998884104545">Call</a>
         </div>
       </div>
     </section>
@@ -506,8 +504,8 @@ tbody tr.grp:first-child th{border-top:0}
 </main>
 
 <footer class="foot wrap">
-  <span>DagRun ibroximov_dilmurod · state=<span class="run-text">success</span> · обновлено 11.09.2026</span>
-  <span>Собрано вручную: HTML, CSS, JavaScript</span>
+  <span>DagRun ibroximov_dilmurod · state=<span class="run-text">success</span> · updated 12.09.2026</span>
+  <span>Hand-built with HTML, CSS and JavaScript</span>
 </footer>
 
 <script>
@@ -515,20 +513,20 @@ tbody tr.grp:first-child th{border-top:0}
   const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  const fmt = (n) => n.toFixed(1).replace(".", ",");
-  const MO = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
+  const fmt = (n) => n.toFixed(1);
+  const MO = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   /* ---------- DAG ---------- */
   const TASKS = [
-    { id: "extract_profile", dur: 0.6, deps: [], logs: [["INFO", "Иброхимов Дилмурод · Data Engineer · Ташкент"]] },
+    { id: "extract_profile", dur: 0.6, deps: [], logs: [["INFO", "Dilmurod Ibroximov · Data Engineer · Tashkent"]] },
     { id: "transform_experience", dur: 1.4, deps: ["extract_profile"], logs: [
-      ["INFO", "Raqamli Rivojlanish Departamenti · ноябрь 2025 — сейчас"],
-      ["INFO", "38 DAG-ов · 17 источников · ~12 млн строк в сутки"],
-      ["INFO", "ClickHouse: отчёты за 1,5 с вместо 40"]] },
+      ["INFO", "Raqamli Rivojlanish Departamenti · November 2025 — present"],
+      ["INFO", "38 DAGs · 17 sources · ~12M rows a day"],
+      ["INFO", "ClickHouse: reports in 1.5 s instead of 40"]] },
     { id: "load_stack", dur: 0.9, deps: ["extract_profile"], logs: [["INFO", "14 connections: Airflow, PostgreSQL, ClickHouse, Celery, Redis, Docker…"]] },
-    { id: "check_education", dur: 0.4, deps: ["load_stack"], logs: [["INFO", "Бакалавр, ИТ в бизнесе · 2025–2029 · учится"]] },
-    { id: "publish_projects", dur: 0.7, deps: ["transform_experience", "load_stack"], logs: [["WARN", "3 пет-проекта на паузе: нет ссылок на репозитории"]] },
-    { id: "sink_contacts", dur: 0.3, deps: ["publish_projects", "check_education"], logs: [["INFO", "Готов к доставке → ibroximovdilmurod44@gmail.com"]] },
+    { id: "check_education", dur: 0.4, deps: ["load_stack"], logs: [["INFO", "BSc, Business IT · KIUT · 2025–2029 · studying"]] },
+    { id: "publish_projects", dur: 0.7, deps: ["transform_experience", "load_stack"], logs: [["WARN", "3 side projects paused: no repository links yet"]] },
+    { id: "sink_contacts", dur: 0.3, deps: ["publish_projects", "check_education"], logs: [["INFO", "Ready to deliver → ibroximovdilmurod44@gmail.com"]] },
   ];
   const EDGES = [
     ["extract_profile", "transform_experience"], ["extract_profile", "load_stack"],
@@ -603,9 +601,9 @@ tbody tr.grp:first-child th{border-top:0}
   function finishTask(t) {
     run.st[t.id] = "success";
     setState(t.id, "success");
-    setDur(t.id, `${fmt(t.dur)} с`);
+    setDur(t.id, `${fmt(t.dur)} s`);
     t.logs.forEach(([l, m]) => log(t.id, l, m));
-    log(t.id, "OK", `success за ${fmt(t.dur)} с`);
+    log(t.id, "OK", `success in ${fmt(t.dur)} s`);
   }
 
   let run = null, raf = 0, visible = true;
@@ -616,12 +614,12 @@ tbody tr.grp:first-child th{border-top:0}
     logEl.textContent = "";
     $("#run-id").textContent = `run_id: manual__${new Date().toISOString().slice(0, 19)}`;
     setRun("running");
-    log(null, "INFO", "Запуск DAG ibroximov_dilmurod: 6 задач");
+    log(null, "INFO", "Triggering DAG ibroximov_dilmurod: 6 tasks");
     if (RM) {
       TASKS.forEach(finishTask);
       run.done = true;
       setRun("success");
-      log(null, "OK", "DagRun завершён: state=success");
+      log(null, "OK", "DagRun finished: state=success");
       drawEdges(0);
       return;
     }
@@ -656,12 +654,12 @@ tbody tr.grp:first-child th{border-top:0}
         TASKS.forEach((t) => {
           if (run.st[t.id] === "queued" && t.deps.every((d) => run.st[d] === "success")) {
             run.st[t.id] = "running"; run.start[t.id] = el; setState(t.id, "running");
-            log(t.id, "INFO", "задача запущена");
+            log(t.id, "INFO", "task started");
           }
         });
         if (TASKS.every((t) => run.st[t.id] === "success")) {
           run.done = true; setRun("success");
-          log(null, "OK", `DagRun завершён: state=success, ${fmt(el)} с`);
+          log(null, "OK", `DagRun finished: state=success, ${fmt(el)} s`);
         }
       }
     }
@@ -677,15 +675,15 @@ tbody tr.grp:first-child th{border-top:0}
   layout();
   trigger();
 
-  /* ---------- Grid по месяцам ---------- */
+  /* ---------- Grid by month ---------- */
   const now = new Date();
   const cur = { y: now.getFullYear(), m: now.getMonth() + 1 };
   const idx = (p) => p.y * 12 + p.m - 1;
-  const durTxt = (m) => [Math.floor(m / 12) ? `${Math.floor(m / 12)} г.` : "", m % 12 ? `${m % 12} мес.` : ""].filter(Boolean).join(" ") || "0 мес.";
+  const durTxt = (m) => [Math.floor(m / 12) ? `${Math.floor(m / 12)} yr` : "", m % 12 ? `${m % 12} mo` : ""].filter(Boolean).join(" ") || "0 mo";
   const FROM = { y: 2025, m: 9 };
   const ROWS = [
     { title: "Data Engineer", sub: "Raqamli Rivojlanish Departamenti", from: { y: 2025, m: 11 }, to: null },
-    { title: "Бакалавр, ИТ в бизнесе", sub: "KIUT, Ташкент", from: { y: 2025, m: 9 }, to: { y: 2029, m: 6 } },
+    { title: "BSc, Business IT", sub: "KIUT, Tashkent", from: { y: 2025, m: 9 }, to: { y: 2029, m: 6 } },
   ];
   const N = Math.max(1, idx(cur) - idx(FROM) + 1);
   const gv = $("#gv");
@@ -703,8 +701,8 @@ tbody tr.grp:first-child th{border-top:0}
       html += `<i class="cell" data-state="${st}" title="${MO[k % 12]} ${Math.floor(k / 12)}: ${st}"></i>`;
     }
     html += r.to
-      ? `<span class="gv-tail"><i class="hatch"></i>ещё ${durTxt(idx(r.to) - idx(cur))} · до ${MO[r.to.m - 1]} ${r.to.y}</span>`
-      : `<span class="gv-tail">${durTxt(idx(cur) - idx(r.from))} · сейчас</span>`;
+      ? `<span class="gv-tail"><i class="hatch"></i>${durTxt(idx(r.to) - idx(cur))} left · until ${MO[r.to.m - 1]} ${r.to.y}</span>`
+      : `<span class="gv-tail">${durTxt(idx(cur) - idx(r.from))} · now</span>`;
   });
   gv.innerHTML = html;
   $("#job-dur").textContent = durTxt(idx(cur) - idx(ROWS[0].from));
