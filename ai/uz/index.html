@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ibroximov Dilmurod — AI Engineer</title>
+<meta name="description" content="AI Engineer rezyumesi: avtonom agentlar, Vertex AI, vazifaga mos model tanlash, prodda ishlayotgan MIRYAS AI.">
+<meta property="og:title" content="Ibroximov Dilmurod — AI Engineer">
+<meta property="og:description" content="Avtonom AI agentlar, Vertex AI, Claude, Gemini, GLM, Kimi. MIRYAS AI prodda.">
+<meta property="og:type" content="profile">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230A0B0F'/%3E%3Ctext x='16' y='22' font-family='ui-monospace,monospace' font-size='15' font-weight='700' fill='%23FF8A3D' text-anchor='middle'%3EDI%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400..800&family=Manrope:wght@400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0A0B0F;
+  --panel:#111319;
+  --panel-2:#171A22;
+  --ink:#EDEFF5;
+  --ink-2:#A2A8B8;
+  --ink-3:#6C7285;
+  --rule:#232735;
+  --accent:#FF8A3D;
+  --accent-soft:rgba(255,138,61,.14);
+  --ok:#3FD68C;
+  --warn:#FFC24B;
+  --cool:#6EA8FF;
+  --display:"Unbounded",system-ui,sans-serif;
+  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --pad:clamp(18px,4vw,56px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--ground);scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p,ul,dl,dd{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:var(--pad)}
+.num{font-variant-numeric:tabular-nums}
+mark{background:var(--accent-soft);color:var(--accent);padding:0 .18em;border-radius:3px}
+
+/* bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(10,11,15,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;white-space:nowrap}
+.brand i{width:34px;height:34px;display:grid;place-items:center;background:var(--panel-2);border:1px solid var(--rule);border-radius:9px;color:var(--accent);font:600 13px/1 var(--mono);font-style:normal}
+.brand b{font:600 14px/1.2 var(--sans)}
+.brand span{display:block;font:400 11px/1.3 var(--mono);color:var(--ink-3)}
+.lang{display:inline-flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.lang a{padding:6px 10px;font:600 11px/1 var(--mono);color:var(--ink-3);text-decoration:none}
+.lang a.is-on{background:var(--accent);color:#12130F}
+.lang a:hover:not(.is-on){background:var(--panel-2);color:var(--ink)}
+.nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{padding:9px 11px;font:500 12.5px/1 var(--mono);color:var(--ink-2);text-decoration:none;border-radius:7px;white-space:nowrap}
+.nav a:hover{background:var(--panel-2);color:var(--ink)}
+
+/* hero */
+.hero{padding:clamp(34px,5vw,72px) 0 clamp(20px,3vw,34px)}
+.eyebrow{font:500 12px/1 var(--mono);color:var(--accent);letter-spacing:.08em;margin-bottom:18px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,5.2vw,64px);line-height:1.02;letter-spacing:-.03em;text-wrap:balance}
+.role{margin-top:16px;font:500 clamp(16px,1.5vw,19px)/1.5 var(--mono);color:var(--accent)}
+.lead{margin-top:18px;max-width:64ch;font-size:17.5px;color:var(--ink-2);text-wrap:pretty}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 17px;border-radius:9px;border:1px solid var(--rule);background:var(--panel);color:var(--ink);font:600 13.5px/1 var(--sans);text-decoration:none;cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#12130F}
+.btn-primary:hover{filter:brightness(1.1);color:#12130F}
+
+/* bench */
+.bench{margin-top:clamp(24px,3vw,36px);border:1px solid var(--rule);border-radius:14px;background:var(--panel);overflow:hidden}
+.bench-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:13px 16px;border-bottom:1px solid var(--rule);font:500 12px/1.4 var(--mono);color:var(--ink-3)}
+.bench-bar b{color:var(--ink);font-weight:600}
+.bench-bar .sp{margin-left:auto}
+.task{color:var(--ink);font-weight:500}
+.bench-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,.42fr)}
+.cands{padding:14px 16px;display:grid;gap:9px;border-right:1px solid var(--rule);min-width:0}
+.cand{display:grid;grid-template-columns:minmax(96px,132px) minmax(0,1fr) 44px 52px 18px;gap:10px;align-items:center;font:500 12px/1.4 var(--mono);color:var(--ink-2)}
+.cand .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cand .track{position:relative;height:9px;border-radius:4px;background:var(--panel-2);overflow:hidden}
+.cand .fill{position:absolute;inset:0 auto 0 0;width:0;border-radius:4px;background:var(--cool);transition:width .18s linear}
+.cand[data-win="1"] .fill{background:var(--accent)}
+.cand .ms,.cand .usd{text-align:right;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.cand .pick{color:var(--accent);opacity:0;font-weight:600}
+.cand[data-win="1"] .pick{opacity:1}
+.cand[data-win="1"] .nm{color:var(--ink)}
+.tools{padding:14px 16px;display:grid;gap:8px;align-content:start;min-width:0}
+.tools p{font:500 10.5px/1 var(--mono);color:var(--ink-3);letter-spacing:.06em}
+.tool{display:flex;align-items:center;gap:8px;padding:7px 9px;border:1px solid var(--rule);border-radius:8px;font:500 11.5px/1.3 var(--mono);color:var(--ink-3);opacity:.5;transition:opacity .2s,border-color .2s,color .2s}
+.tool.on{opacity:1;color:var(--ink);border-color:color-mix(in srgb,var(--accent) 45%,var(--rule))}
+.tool i{width:6px;height:6px;border-radius:50%;background:var(--ink-3);flex:none}
+.tool.on i{background:var(--accent)}
+.guard{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:12px 16px;border-top:1px solid var(--rule);font:500 11.5px/1.5 var(--mono);color:var(--ink-3)}
+.guard.on{color:var(--warn)}
+.guard i{width:8px;height:8px;border-radius:50%;background:var(--rule);flex:none}
+.guard.on i{background:var(--warn)}
+
+/* sections */
+section{padding-top:clamp(50px,6.5vw,92px)}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin-bottom:clamp(18px,2.4vw,30px);padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.head h2{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.6vw,32px);letter-spacing:-.02em}
+.head span{font:500 11.5px/1 var(--mono);color:var(--ink-3)}
+.adv{display:grid;gap:0}
+.adv div{padding:17px 0;border-top:1px solid var(--rule)}
+.adv div:first-child{border-top:0;padding-top:0}
+.adv b{display:block;font-size:16.5px;font-weight:700;margin-bottom:5px}
+.adv p{color:var(--ink-2);font-size:15.5px;max-width:78ch}
+
+.job{padding:22px 0;border-top:1px solid var(--rule)}
+.job:first-child{border-top:0;padding-top:0}
+.job-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.job-h h3{font-size:19px;font-weight:700}
+.job-h .org{color:var(--ink-2);font-weight:600}
+.job-h .when{margin-left:auto;font:500 12px/1.4 var(--mono);color:var(--ink-3)}
+.job a.url{font:500 12px/1.5 var(--mono);color:var(--accent);text-decoration:none;overflow-wrap:anywhere}
+.job a.url:hover{text-decoration:underline}
+.job ul{list-style:none;padding:0;margin-top:12px;display:grid;gap:0}
+.job li{position:relative;padding:10px 0 10px 20px;border-top:1px solid var(--rule);color:var(--ink-2);font-size:15.5px;max-width:82ch}
+.job li::before{content:"";position:absolute;left:2px;top:19px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.job li b{color:var(--ink);font-weight:600}
+
+.rows{display:grid;gap:0}
+.row{display:grid;grid-template-columns:minmax(120px,190px) minmax(0,1fr);gap:8px 20px;padding:13px 0;border-top:1px solid var(--rule)}
+.row:first-child{border-top:0;padding-top:0}
+.row dt{font:500 12px/1.6 var(--mono);color:var(--ink-3)}
+.row dd{margin:0;font-size:15.5px;color:var(--ink-2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:5px 9px;border-radius:7px;background:var(--panel-2);border:1px solid var(--rule);font:500 12px/1 var(--mono);color:var(--ink-2);white-space:nowrap}
+.chip.hi{border-color:color-mix(in srgb,var(--accent) 50%,var(--rule));color:var(--accent)}
+
+.sink{margin-top:clamp(28px,3vw,40px);border:1px solid var(--rule);border-radius:14px;background:var(--panel);padding:clamp(20px,2.6vw,30px);display:grid;gap:16px}
+.sink a.big{font:600 clamp(18px,2.2vw,26px)/1.25 var(--mono);color:var(--ink);text-decoration:none;overflow-wrap:anywhere}
+.sink a.big:hover{color:var(--accent)}
+.foot{padding:clamp(40px,5vw,72px) 0 44px;font:400 12px/1.7 var(--mono);color:var(--ink-3);display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between}
+
+@media (max-width:860px){
+  .bench-body{grid-template-columns:minmax(0,1fr)}
+  .cands{border-right:0;border-bottom:1px solid var(--rule)}
+  .cand{grid-template-columns:minmax(84px,110px) minmax(0,1fr) 40px 46px 16px;gap:8px;font-size:11px}
+  .job-h .when{margin-left:0;flex-basis:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+@media print{
+  .bar,.bench,.actions{display:none!important}
+  body{background:#fff;color:#000;font-size:11pt}
+  .wrap{max-width:none;padding-inline:0}
+  .hero{padding:0 0 10px}
+  h1{font-size:24pt}
+  .role{color:#000;font-size:11pt;margin-top:6px}
+  .lead{color:#000;max-width:none}
+  section{padding-top:12px;break-inside:auto}
+  .head{margin-bottom:10px;padding-bottom:6px;break-after:avoid;page-break-after:avoid}
+  .head h2{font-size:15pt}
+  .job,.rows,.adv{break-inside:auto}
+  .job li,.adv div,.row{break-inside:avoid}
+  .job-h{break-after:avoid;page-break-after:avoid}
+  .chip{border-color:#999;color:#000}
+  .sink{border-color:#999;padding:10px 0;break-inside:avoid}
+  .sink a.big{color:#000}
+  .foot{display:none!important}
+  a{color:#000;text-decoration:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar" aria-label="Bo'limlar">
+  <div class="wrap">
+    <a class="brand" href="#top"><i aria-hidden="true">DI</i><span><b>Ibroximov Dilmurod</b><span>ai engineer</span></span></a>
+    <div class="lang" role="group" aria-label="Sahifa tili">
+      <a href="../">RU</a>
+      <a href="../en/">EN</a>
+      <a class="is-on" href="./" aria-current="page">UZ</a>
+    </div>
+    <div class="nav">
+      <a href="#advantages">Kuchli tomonlar</a>
+      <a href="#experience">Tajriba</a>
+      <a href="#models">Modellar</a>
+      <a href="#stack">Stek</a>
+      <a href="#contacts">Aloqa</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <p class="eyebrow">AI ENGINEER · AVTONOM AGENTLAR</p>
+  <h1>Ishni o'zi bajaradigan, lekin birovning pulini so'rovsiz sarflamaydigan agentlar quraman</h1>
+  <p class="role">Vertex AI · Claude · Gemini · GLM · Kimi · Python · Google Cloud</p>
+  <p class="lead">Mening mahsulotim MIRYAS AI — avtonom agent: mijozning Instagram'ini o'zi o'rganadi, e'lonlar yozadi va Meta'da haqiqiy kampaniyani ishga tushiradi. U Meta Marketing API funksiyalarini asbob sifatida chaqiradi va qattiq cheklovlar ichida ishlaydi: <mark>kuniga $50 limit</mark>, pauzadan start, odam tasdiqlashi. Ostida esa oddiy muhandislik: Python, FastAPI, navbatlar, PostgreSQL va BigQuery — barchasi Google Cloud'da.</p>
+  <div class="actions">
+    <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=AI%20Engineer">Email yozish</a>
+    <a class="btn num" href="tel:+998884104545">+998 88 410 45 45</a>
+    <a class="btn" href="https://meta-ads-agent-v7dho4qhxa-uc.a.run.app" target="_blank" rel="noopener">MIRYAS AI ni ochish</a>
+    <a class="btn" href="../Ibroximov-Dilmurod-AI-UZ.pdf" download>↓ PDF yuklab olish</a>
+  </div>
+
+  <figure class="bench" aria-label="Model tanlash stendi">
+    <figcaption class="bench-bar">
+      <b>inference bench</b>
+      <span class="task" id="bench-task">vazifa: Toshkentdagi kofexona uchun kampaniya yig'ish</span>
+      <span class="sp"></span>
+      <span id="bench-state">marshrutlash…</span>
+    </figcaption>
+    <div class="bench-body">
+      <div class="cands" id="cands"></div>
+      <div class="tools">
+        <p>ASBOB CHAQIRUVLARI</p>
+        <div class="tool" data-t="0"><i aria-hidden="true"></i>analyze_profile</div>
+        <div class="tool" data-t="1"><i aria-hidden="true"></i>generate_creatives</div>
+        <div class="tool" data-t="2"><i aria-hidden="true"></i>pick_audience</div>
+        <div class="tool" data-t="3"><i aria-hidden="true"></i>create_campaign</div>
+      </div>
+    </div>
+    <div class="guard" id="guard"><i aria-hidden="true"></i><span id="guard-text">cheklovlar: kuniga $50 · pauzadan boshlanadi · odam tasdiqlaydi</span></div>
+  </figure>
+</header>
+
+<main>
+  <section class="wrap" id="advantages">
+    <div class="head"><h2>Kuchli tomonlar</h2><span>nega meni olish kerak</span></div>
+    <div class="adv">
+      <div><b>AI mahsulotni tirik foydalanuvchilargacha yetkazdim</b><p>MIRYAS AI ni boshidan oxirigacha o'zim qildim: baza sxemasi, API, Cloud Run'dagi prod, haqiqiy mijozlar. Bu noutbukdagi demo emas, ichida pul aylanadigan ishlaydigan servis.</p></div>
+      <div><b>Agentga faqat prompt emas, chegara ham qo'yaman</b><p>Agent o'zi qaror qiladi va funksiyalarni chaqiradi, lekin odamsiz pul sarflay olmaydi: kunlik limit, kampaniya pauzadan boshlanadi, aniq tasdiq. Cheklovlar arxitekturaga kiritilgan, ustidan yopishtirilmagan.</p></div>
+      <div><b>Vazifaga mos modelni tanlayman</b><p>Nomzodlarni javob sifati, kechikish va chaqiruv narxi bo'yicha solishtiraman: qayerdadir eng kuchli fikrlash kerak, qayerdadir arzon va tez model ham xuddi shunday uddalaydi.</p></div>
+      <div><b>Agent ma'lumot ustida yashashini bilaman</b><p>Kampaniya metrikalari jadval bo'yicha yig'iladi, Cloud SQL va BigQuery'ga tushadi, bo'shliq va dublikatlarga tekshiriladi. Agent xom API javoblari emas, tekshirilgan ma'lumot asosida qaror qiladi.</p></div>
+      <div><b>Agent yozibgina qolmay, ular bilan ishlayman ham</b><p>Ishlanmani agent muhitlari orqali olib boraman: Claude Code, Codex, Hermes, Antigravity. Vazifani agent uddalaydigan qilib bo'laklay olaman, uning o'zgarishlarini tekshiraman va o'ylab topganini prodga o'tkazmayman.</p></div>
+      <div><b>Xavfsizlik — sukut bo'yicha</b><p>Parol o'rniga OAuth, tokenlar Secret Manager'da, kalitlar kod va .env fayllardan tashqarida.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap" id="experience">
+    <div class="head"><h2>Tajriba</h2><span>2023 — hozir</span></div>
+
+    <article class="job">
+      <div class="job-h"><h3>MIRYAS AI</h3><span class="org">o'z mahsulotim</span><span class="when">2026 — hozir</span></div>
+      <a class="url" href="https://meta-ads-agent-v7dho4qhxa-uc.a.run.app" target="_blank" rel="noopener">meta-ads-agent-v7dho4qhxa-uc.a.run.app ↗</a>
+      <ul>
+        <li><b>Vertex AI</b> orqali LLM ustida avtonom agentni loyihalab ishga tushirdim: mijoz profili va mahsulotini tahlil qiladi, e'lon matnlarini yozadi, auditoriyani tanlaydi va Meta Marketing API funksiyalarini asbob sifatida chaqiradi.</li>
+        <li>Cheklovlarni arxitekturaga kiritdim: <b>kunlik $50 limit</b>, har kampaniya pauzadan boshlanadi, mijoz tasdiqlamaguncha pul sarflanmaydi.</li>
+        <li>Facebook OAuth orqali kirishni qildim: mijoz paroli servis orqali o'tmaydi, kirish tokenlari Secret Manager'da saqlanadi.</li>
+        <li>Metrika yig'ishni yig'dim: vazifalarni Cloud Scheduler ishga tushiradi, Meta'ning xom javoblari Cloud Storage'ga, ajratilgan metrikalar Cloud SQL'ga, kampaniya va kreativlar vitrinasi BigQuery'ga tushadi.</li>
+        <li>Agent qaror qilishidan oldin ma'lumot tekshiruvlarini qo'shdim: hisobotlardagi bo'shliqlar, campaign_id bo'yicha dublikatlar, xarajatning limitga mos kelmasligi.</li>
+        <li>Google Cloud'da joylashtirdim: avtomatik masshtablash bilan Cloud Run, Cloud Build va Artifact Registry orqali yig'ish, fon vazifalari Cloud Tasks'da, loglar va ogohlantirishlar Cloud Logging va Monitoring'da. Interfeys uch tilda.</li>
+      </ul>
+    </article>
+
+    <article class="job">
+      <div class="job-h"><h3>Backend va data muhandis</h3><span class="org">Raqamli Rivojlanish Departamenti, Toshkent</span><span class="when">2025 — hozir</span></div>
+      <ul>
+        <li>FastAPI'da REST API yurataman: 14 ta servis, eng yuqori nuqtada ~350 so'rov/sek, p95 <b>150 ms</b>, uptime 99,9%.</li>
+        <li>Analitika yashaydigan pipeline'larni quraman: Apache Airflow'dagi 38 ta DAG kuniga 17 ta manbadan ~12 mln qator yig'adi.</li>
+        <li>9 ta predmet sohasi uchun PostgreSQL sxemalarini loyihaladim, analitikani ClickHouse'ga ko'chirdim (900+ mln qator): hisobotlar <b>40 soniya o'rniga 1,5 soniyada</b> quriladi.</li>
+        <li>Og'ir amallarni Celery navbatlariga chiqardim (kuniga 200 mingtagacha vazifa), Redis keshi API javobini 1,2 soniyadan 150 ms gacha qisqartirdi.</li>
+        <li>Kiruvchi ma'lumot sifatini tekshiraman: to'liqlik, dublikatlar, sxemaga muvofiqlik. Buzuq yozuvlar ulushi 4% dan 0,3% gacha tushdi.</li>
+      </ul>
+    </article>
+
+    <article class="job">
+      <div class="job-h"><h3>Python dasturchi</h3><span class="org">frilans, masofaviy</span><span class="when">2023 — 2024</span></div>
+      <ul>
+        <li>Parserlar va ma'lumot yig'ish skriptlarini yozdim, pandas'da tozaladim va PostgreSQL, Excel hamda Google Sheets'ga yukladim.</li>
+        <li>Mijozlarning ichki ishlari uchun REST API integratsiyalari va Telegram botlar qildim.</li>
+        <li>Mijozlar bilan to'g'ridan-to'g'ri ishladim: talablarni yig'dim, muddatni baholadim va natijani topshirdim.</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="wrap" id="models">
+    <div class="head"><h2>Modellar</h2><span>vazifaga qarab: sifat, kechikish, narx</span></div>
+    <dl class="rows">
+      <div class="row"><dt>kuchli fikrlash</dt><dd class="chips"><span class="chip hi">Claude Opus</span><span class="chip">Claude Fable</span><span class="chip">Gemini Pro</span></dd></div>
+      <div class="row"><dt>tez va arzon</dt><dd class="chips"><span class="chip">GLM</span><span class="chip">Kimi</span><span class="chip">Solar Pro</span><span class="chip">Nemotron</span></dd></div>
+      <div class="row"><dt>kod va asboblar</dt><dd class="chips"><span class="chip">Codex</span><span class="chip">GPT</span></dd></div>
+      <div class="row"><dt>platforma</dt><dd class="chips"><span class="chip hi">Vertex AI</span></dd></div>
+      <div class="row"><dt>agent muhitlari</dt><dd class="chips"><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Hermes</span><span class="chip">Antigravity</span></dd></div>
+    </dl>
+  </section>
+
+  <section class="wrap" id="stack">
+    <div class="head"><h2>Stek</h2><span>mahsulotni nima bilan yig'aman</span></div>
+    <dl class="rows">
+      <div class="row"><dt>ai</dt><dd>Avtonom agentlar, funksiyalarni asbob sifatida chaqirish, prompt loyihalash, cheklovlar va odam tasdig'i</dd></div>
+      <div class="row"><dt>tillar</dt><dd class="chips"><span class="chip hi">Python</span><span class="chip hi">SQL</span></dd></div>
+      <div class="row"><dt>backend</dt><dd class="chips"><span class="chip">FastAPI</span><span class="chip">pydantic</span><span class="chip">Celery</span><span class="chip">REST API</span><span class="chip">WebSocket</span><span class="chip">OAuth 2.0</span></dd></div>
+      <div class="row"><dt>ma'lumot</dt><dd class="chips"><span class="chip">PostgreSQL</span><span class="chip">BigQuery</span><span class="chip">ClickHouse</span><span class="chip">Redis</span><span class="chip">Airflow</span><span class="chip">pandas</span></dd></div>
+      <div class="row"><dt>google cloud</dt><dd class="chips"><span class="chip">Cloud Run</span><span class="chip">Cloud SQL</span><span class="chip">Cloud Storage</span><span class="chip">Cloud Build</span><span class="chip">Artifact Registry</span><span class="chip">Cloud Tasks</span><span class="chip">Cloud Scheduler</span><span class="chip">Secret Manager</span><span class="chip">Logging va Monitoring</span><span class="chip">IAM</span></dd></div>
+      <div class="row"><dt>infratuzilma</dt><dd class="chips"><span class="chip">Docker</span><span class="chip">Nginx</span><span class="chip">Linux</span><span class="chip">GitLab CI/CD</span><span class="chip">Vault</span></dd></div>
+      <div class="row"><dt>ta'lim</dt><dd>Bakalavr, biznesdagi axborot texnologiyalari · Kimyo International University in Tashkent (KIUT) · 2025–2029</dd></div>
+      <div class="row"><dt>muloqot tillari</dt><dd>O'zbek — ona tili · Rus — C1 · Ingliz — B2</dd></div>
+    </dl>
+  </section>
+
+  <section class="wrap" id="contacts">
+    <div class="head"><h2>Aloqa</h2><span>bir kun ichida javob beraman</span></div>
+    <div class="sink">
+      <a class="big" href="mailto:ibroximovdilmurod44@gmail.com?subject=AI%20Engineer">ibroximovdilmurod44@gmail.com</a>
+      <a class="big num" href="tel:+998884104545">+998 88 410 45 45</a>
+      <p style="color:var(--ink-2);font-size:15.5px">Toshkent, O'zbekiston. Ofis, gibrid va masofaviy ishga tayyorman. AI agentlar va LLM mahsulotlari atrofidagi rollar qiziq.</p>
+      <div class="actions" style="margin-top:0">
+        <a class="btn btn-primary" href="mailto:ibroximovdilmurod44@gmail.com?subject=AI%20Engineer">Email yozish</a>
+        <a class="btn" href="tel:+998884104545">Qo'ng'iroq qilish</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot wrap">
+  <span>Yangilangan 12.09.2026 · qo'lda yig'ilgan: HTML, CSS, JavaScript</span>
+  <span>Ibroximov Dilmurod · AI Engineer</span>
+</footer>
+
+<script>
+(() => {
+  const RMO = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  const cands = document.getElementById("cands");
+  if (!cands) return;
+  const stateEl = document.getElementById("bench-state");
+  const taskEl = document.getElementById("bench-task");
+  const guard = document.getElementById("guard");
+  const tools = [...document.querySelectorAll(".tool")];
+
+  const MODELS = [
+    { id: "claude-opus", ms: 1800, usd: "0.021", q: 100 },
+    { id: "gemini-pro",  ms: 1200, usd: "0.008", q: 88 },
+    { id: "glm",         ms: 900,  usd: "0.002", q: 74 },
+    { id: "kimi",        ms: 1100, usd: "0.003", q: 79 },
+    { id: "solar-pro",   ms: 1000, usd: "0.003", q: 71 },
+  ];
+  const TASKS = [
+    { t: "vazifa: Toshkentdagi kofexona uchun kampaniya yig'ish", win: "claude-opus" },
+    { t: "vazifa: 3 ta e'lonni o'zbek tiliga qayta yozish", win: "gemini-pro" },
+    { t: "vazifa: 2 000 ta izohni kayfiyat bo'yicha belgilash", win: "glm" },
+    { t: "vazifa: chatda mijozga qisqa javob", win: "kimi" },
+  ];
+
+  cands.innerHTML = MODELS.map((m) => (
+    '<div class="cand" data-m="' + m.id + '">' +
+      '<span class="nm">' + m.id + '</span>' +
+      '<span class="track"><span class="fill"></span></span>' +
+      '<span class="ms"></span><span class="usd"></span><span class="pick">✓</span>' +
+    '</div>'
+  )).join("");
+  const rows = Object.fromEntries([...cands.children].map((el) => [el.dataset.m, el]));
+
+  function reset() {
+    MODELS.forEach((m) => {
+      const r = rows[m.id];
+      r.removeAttribute("data-win");
+      r.querySelector(".fill").style.width = "0";
+      r.querySelector(".ms").textContent = "";
+      r.querySelector(".usd").textContent = "";
+    });
+    tools.forEach((t) => t.classList.remove("on"));
+    guard.classList.remove("on");
+  }
+
+  async function run(scenario) {
+    reset();
+    taskEl.textContent = scenario.t;
+    stateEl.textContent = "marshrutlash…";
+    await wait(400);
+    stateEl.textContent = "modellar javob bermoqda";
+    MODELS.forEach((m) => {
+      const r = rows[m.id];
+      r.querySelector(".fill").style.transitionDuration = Math.round(m.ms * 0.6) + "ms";
+      r.querySelector(".fill").style.width = m.q + "%";
+      setTimeout(() => {
+        r.querySelector(".ms").textContent = (m.ms / 1000).toFixed(1).replace(".", ",") + " s";
+        r.querySelector(".usd").textContent = "$" + m.usd;
+      }, m.ms * 0.6);
+    });
+    await wait(1400);
+    rows[scenario.win].dataset.win = "1";
+    stateEl.textContent = "tanlandi: " + scenario.win;
+    await wait(500);
+    for (const t of tools) { t.classList.add("on"); await wait(320); }
+    guard.classList.add("on");
+    stateEl.textContent = "kampaniya yaratildi · odamni kutmoqda";
+    await wait(2600);
+  }
+
+  if (RMO) {
+    taskEl.textContent = TASKS[0].t;
+    MODELS.forEach((m) => {
+      const r = rows[m.id];
+      r.querySelector(".fill").style.width = m.q + "%";
+      r.querySelector(".ms").textContent = (m.ms / 1000).toFixed(1).replace(".", ",") + " s";
+      r.querySelector(".usd").textContent = "$" + m.usd;
+    });
+    rows[TASKS[0].win].dataset.win = "1";
+    tools.forEach((t) => t.classList.add("on"));
+    guard.classList.add("on");
+    stateEl.textContent = "kampaniya yaratildi · odamni kutmoqda";
+    return;
+  }
+
+  (async () => {
+    let i = 0;
+    for (;;) {
+      while (document.hidden) await wait(500);
+      await run(TASKS[i++ % TASKS.length]);
+    }
+  })();
+})();
+</script>
+</body>
+</html>
