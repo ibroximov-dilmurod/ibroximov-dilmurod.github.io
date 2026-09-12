@@ -351,12 +351,16 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
   .shell{display:block;max-width:none}
   .main{padding:0}
   body{background:#fff;color:#000;font-size:11.5pt}
-  .ep{padding-top:16px;break-inside:avoid}
+  .ep{padding-top:14px;break-inside:auto}
+  .ep-head{break-after:avoid;page-break-after:avoid}
   .ep-body{grid-template-columns:1fr;margin-top:10px}
-  .svc,.product,.role,.adv div,.prj article{break-inside:avoid}
+  .role,.product,.ep-doc{break-inside:auto}
+  .svc,.adv div,.prj article,.guards,.group li,.rows .row{break-inside:avoid}
+  .group h4{break-after:avoid;page-break-after:avoid}
+  .group{break-inside:auto}
   .slo{grid-template-columns:repeat(4,1fr)}
   h1{font-size:26pt}
-  .ep h2{font-size:16pt}
+  .ep h2{font-size:16pt;break-after:avoid;page-break-after:avoid}
   a{color:#000;text-decoration:none}
 }
 </style>
