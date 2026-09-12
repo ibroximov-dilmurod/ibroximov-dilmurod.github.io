@@ -8,7 +8,7 @@
 <meta property="og:title" content="Dilmurod Ibroximov — Senior Backend Developer">
 <meta property="og:description" content="Python, FastAPI, Google Cloud, autonomous AI agents. 150 ms p95 at 350 requests per second.">
 <meta property="og:type" content="profile">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230B111C'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='19' font-weight='700' fill='%2362A0FF' text-anchor='middle'%3E%7B%7D%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B111C'/%3E%3Cg stroke='%2362A0FF' stroke-width='2' fill='none'%3E%3Crect x='6' y='6' width='20' height='7' rx='2.4'/%3E%3Crect x='6' y='19' width='20' height='7' rx='2.4'/%3E%3C/g%3E%3Ccircle cx='10.5' cy='9.5' r='1.6' fill='%2362A0FF'/%3E%3Ccircle cx='10.5' cy='22.5' r='1.6' fill='%2362A0FF'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -224,41 +224,53 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
   html{scroll-behavior:auto}
   *{transition:none!important;animation:none!important}
 }
+.side{display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;margin-bottom:2px}
+.brand-mark{width:36px;height:36px;flex:none;display:grid;place-items:center;background:var(--accent);color:#fff;border-radius:10px}
+.brand b{display:block;font-size:14.5px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.brand span span{display:block;font:400 11px/1.4 var(--mono);color:var(--ink-3);letter-spacing:.01em}
+.side-ver{display:flex;align-items:center;gap:7px;margin:16px 0 12px;padding:7px 9px;border:1px solid var(--rule);border-radius:8px;font:500 11px/1 var(--mono);color:var(--ink-3)}
+.side-ver i{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:none}
+.side-ver b{color:var(--ink-2);font-weight:600}
+.nav-grp{font:600 10.5px/1 var(--mono);letter-spacing:.09em;color:var(--ink-3);margin:18px 0 7px;padding-left:9px}
+.nav a{position:relative;display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:7px;text-decoration:none;font:500 12.5px/1.3 var(--mono);color:var(--ink-2)}
+.nav a::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:0;background:var(--accent);border-radius:2px;transition:height .18s}
+.nav a:hover{background:var(--surface-2);color:var(--ink)}
+.nav a.is-on{background:var(--surface-2);color:var(--ink);font-weight:600}
+.nav a.is-on::before{height:18px}
+.side-foot{margin-top:auto;padding-top:20px;display:grid;gap:7px}
+.side-dl{display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--ground);font:600 12px/1 var(--mono);color:var(--ink);text-decoration:none}
+.side-dl:hover{border-color:var(--accent);color:var(--accent)}
+.side-c{font:400 11.5px/1.6 var(--mono);color:var(--ink-3);text-decoration:none;overflow-wrap:anywhere}
+.side-c:hover{color:var(--accent)}
+
 .rq{margin-top:14px;border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow:hidden}
-.rq-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:11px 14px;border-bottom:1px solid var(--rule);font:500 12px/1.4 var(--mono);color:var(--ink-3)}
-.rq-bar b{color:var(--ink);font-weight:600}
+.rq-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:11px 14px;border-bottom:1px solid var(--rule);font:500 12px/1.4 var(--mono);color:var(--ink-3)}
 .rq-bar .spacer{margin-left:auto}
-.rq-total{font:600 12px/1 var(--mono);color:var(--ink)}
-.rq-map{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px clamp(20px,3.5vw,58px);padding:clamp(18px,2.6vw,30px)}
-.rq-edges{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-.rq-edge{fill:none;stroke:var(--rule);stroke-width:1.5;transition:stroke .2s}
-.rq-edge.on{stroke:var(--accent)}
-.rq-pkt{fill:var(--accent)}
-.rq-node{position:relative;z-index:1;display:grid;gap:2px;padding:11px 12px;border:1.5px solid var(--rule);border-radius:9px;background:var(--ground);min-width:0;transition:border-color .2s,box-shadow .2s}
-.rq-node.done{border-color:color-mix(in srgb,var(--accent) 45%,var(--rule))}
-.rq-node.hit{border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)}
-.rq-node b{font:600 12.5px/1.3 var(--mono);overflow-wrap:anywhere}
-.rq-node span{font:400 11px/1.3 var(--mono);color:var(--ink-3)}
-.rq-node i{font:500 11px/1.3 var(--mono);color:var(--accent);font-style:normal;min-height:14px}
-.rq-map [data-n="client"]{grid-column:1;grid-row:2}
-.rq-map [data-n="nginx"]{grid-column:2;grid-row:2}
-.rq-map [data-n="fastapi"]{grid-column:3;grid-row:2}
-.rq-map [data-n="redis"]{grid-column:4;grid-row:1}
-.rq-map [data-n="postgres"]{grid-column:4;grid-row:2}
-.rq-map [data-n="celery"]{grid-column:4;grid-row:3}
+.rq-m{font:700 10.5px/1 var(--mono);letter-spacing:.05em;padding:5px 7px;border-radius:5px;background:var(--get);color:#fff}
+.rq-m[data-m="POST"]{background:var(--post)}
+.rq-req{font:600 12.5px/1.4 var(--mono);color:var(--ink)}
+.rq-status{font:600 11.5px/1 var(--mono);padding:5px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-3)}
+.rq-status[data-s="200"]{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
+.rq-status[data-s="202"]{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.rq-wf{padding:clamp(14px,2vw,20px) clamp(14px,2vw,18px);display:grid;gap:8px}
+.wf-row{display:grid;grid-template-columns:minmax(92px,148px) minmax(0,1fr) 46px;gap:12px;align-items:center;font:500 11.5px/1.4 var(--mono)}
+.wf-row .lb{color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wf-track{position:relative;height:11px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.wf-bar{position:absolute;top:0;bottom:0;width:0;border-radius:3px;background:var(--accent);transition:width .22s linear}
+.wf-bar[data-k="db"]{background:var(--post)}
+.wf-bar[data-k="cache"]{background:var(--warn)}
+.wf-bar[data-k="queue"]{background:color-mix(in srgb,var(--accent) 50%,var(--post))}
+.wf-ms{text-align:right;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.wf-sum{display:flex;justify-content:space-between;gap:12px;margin-top:2px;padding-top:9px;border-top:1px dashed var(--rule);font:500 11.5px/1.4 var(--mono);color:var(--ink-3)}
+.wf-sum b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
 .rq-log{border-top:1px solid var(--rule);background:var(--code-bg);color:var(--code-ink-2);font:400 11.5px/1.9 var(--mono);padding:10px 0;height:126px;overflow:hidden}
 .rq-log div{padding:0 14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rq-log .c-ok{color:var(--post)}
 .rq-log .c-acc{color:var(--tk-num)}
 .rq-log .c-m{color:var(--tk-key)}
 @media (max-width:700px){
-  .rq-map{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 12px}
-  .rq-map [data-n="client"]{grid-column:1;grid-row:1}
-  .rq-map [data-n="nginx"]{grid-column:2;grid-row:1}
-  .rq-map [data-n="fastapi"]{grid-column:1;grid-row:2}
-  .rq-map [data-n="redis"]{grid-column:2;grid-row:2}
-  .rq-map [data-n="postgres"]{grid-column:1;grid-row:3}
-  .rq-map [data-n="celery"]{grid-column:2;grid-row:3}
+  .wf-row{grid-template-columns:minmax(78px,110px) minmax(0,1fr) 42px;gap:8px;font-size:11px}
   .rq-log{height:106px}
 }
 
@@ -282,10 +294,10 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
 <div class="shell">
   <aside class="side">
     <a class="brand" href="#overview">
-      <span class="brand-mark" aria-hidden="true">{}</span>
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none"><rect x="3" y="3.6" width="18" height="6.2" rx="1.9" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="14.2" width="18" height="6.2" rx="1.9" stroke="currentColor" stroke-width="1.7"/><circle cx="6.9" cy="6.7" r="1.15" fill="currentColor"/><circle cx="6.9" cy="17.3" r="1.15" fill="currentColor"/><path d="M12 9.8v4.4" stroke="currentColor" stroke-width="1.7"/></svg></span>
       <span><b>Dilmurod Ibroximov</b><span>senior backend developer</span></span>
     </a>
-    <p class="side-ver"><i aria-hidden="true"></i>API v1 · healthy</p>
+    <p class="side-ver"><i aria-hidden="true"></i><b>API v1</b> · healthy</p>
     <div class="lang" role="group" aria-label="Page language">
       <a href="../">RU</a>
       <a class="is-on" href="./" aria-current="page">EN</a>
@@ -306,6 +318,11 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
       <a href="#contacts"><span class="m" data-m="post">POST</span>/contacts</a>
     </nav>
 
+    <div class="side-foot">
+      <a class="side-dl" href="../Ibroximov-Dilmurod-Backend-EN.pdf" download>↓ download PDF</a>
+      <a class="side-c" href="mailto:ibroximovdilmurod44@gmail.com">ibroximovdilmurod44@gmail.com</a>
+      <a class="side-c" href="tel:+998884104545">+998 88 410 45 45</a>
+    </div>
   </aside>
 
   <main class="main">
@@ -337,22 +354,15 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
         </div>
       </section>
 
-      <figure class="rq" aria-label="Request path through the services">
+      <figure class="rq" aria-label="HTTP request trace">
         <figcaption class="rq-bar">
-          <b id="rq-req">GET /profile</b>
+          <span class="rq-m" id="rq-m" data-m="GET">GET</span>
+          <b class="rq-req" id="rq-req">/profile</b>
           <span id="rq-note">served from cache</span>
           <span class="spacer"></span>
-          <span class="rq-total" id="rq-total">—</span>
+          <span class="rq-status" id="rq-status">…</span>
         </figcaption>
-        <div class="rq-map" id="rq-map">
-          <svg class="rq-edges" id="rq-edges" aria-hidden="true"></svg>
-          <div class="rq-node" data-n="client"><b>client</b><span>browser</span><i></i></div>
-          <div class="rq-node" data-n="nginx"><b>nginx</b><span>reverse proxy</span><i></i></div>
-          <div class="rq-node" data-n="fastapi"><b>fastapi</b><span>application</span><i></i></div>
-          <div class="rq-node" data-n="redis"><b>redis</b><span>cache</span><i></i></div>
-          <div class="rq-node" data-n="postgres"><b>postgres</b><span>database</span><i></i></div>
-          <div class="rq-node" data-n="celery"><b>celery</b><span>queue</span><i></i></div>
-        </div>
+        <div class="rq-wf" id="rq-wf"></div>
         <div class="rq-log" id="rq-log" aria-hidden="true"></div>
       </figure>
     </header>
@@ -804,145 +814,96 @@ h1{font-size:clamp(32px,4.2vw,52px);font-weight:800;letter-spacing:-.035em;line-
   document.getElementById("trace-axis").innerHTML = ["2023", "2024", "2025", "2026", "2027", "2028", "2029"].map((y) => `<span>${y}</span>`).join("");
   document.getElementById("trace-now").textContent = `now: ${String(cur.m).padStart(2, "0")}.${cur.y}`;
 
-  /* live request path */
+  /* live request trace */
   (() => {
-    const map = document.getElementById("rq-map");
-    if (!map) return;
-    const svg = document.getElementById("rq-edges");
-    const NS = "http://www.w3.org/2000/svg";
+    const wf = document.getElementById("rq-wf");
+    if (!wf) return;
+    const elM = document.getElementById("rq-m");
     const elReq = document.getElementById("rq-req");
     const elNote = document.getElementById("rq-note");
-    const elTotal = document.getElementById("rq-total");
+    const elStatus = document.getElementById("rq-status");
     const elLog = document.getElementById("rq-log");
     const RMO = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const n = (id) => map.querySelector('[data-n="' + id + '"]');
-
-    const EDGES = [["client","nginx"],["nginx","fastapi"],["fastapi","redis"],["fastapi","postgres"],["fastapi","celery"]]
-      .map(([a, b]) => ({ a, b, path: document.createElementNS(NS, "path"), len: 0 }));
-    EDGES.forEach((e) => { e.path.setAttribute("class", "rq-edge"); svg.appendChild(e.path); });
-    const pkt = document.createElementNS(NS, "circle");
-    pkt.setAttribute("class", "rq-pkt"); pkt.setAttribute("r", "4.5"); pkt.style.display = "none";
-    svg.appendChild(pkt);
-
-    function layout() {
-      const box = map.getBoundingClientRect();
-      svg.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`);
-      EDGES.forEach((e) => {
-        const A = n(e.a).getBoundingClientRect(), B = n(e.b).getBoundingClientRect();
-        let d;
-        if (B.left >= A.right - 2) {
-          const x1 = A.right - box.left, y1 = A.top + A.height / 2 - box.top;
-          const x2 = B.left - box.left, y2 = B.top + B.height / 2 - box.top, mx = (x1 + x2) / 2;
-          d = `M${x1} ${y1}C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`;
-        } else {
-          const x1 = A.left + A.width / 2 - box.left, y1 = A.bottom - box.top;
-          const x2 = B.left + B.width / 2 - box.left, y2 = B.top - box.top, my = (y1 + y2) / 2;
-          d = `M${x1} ${y1}C${x1} ${my} ${x2} ${my} ${x2} ${y2}`;
-        }
-        e.path.setAttribute("d", d);
-        e.len = e.path.getTotalLength();
-      });
-    }
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
     const SCEN = [
-      { req: "GET /profile", note: "served from cache", code: "200 OK", total: 12,
-        hops: [{ to: "nginx", ms: 1 }, { to: "fastapi", ms: 4 }, { to: "redis", ms: 2 }] },
-      { req: "GET /experience", note: "read from the main database", code: "200 OK", total: 34,
-        hops: [{ to: "nginx", ms: 1 }, { to: "fastapi", ms: 5 }, { to: "postgres", ms: 26 }] },
-      { req: "POST /contacts", note: "heavy work goes to the queue", code: "202 Accepted", total: 8,
-        hops: [{ to: "nginx", ms: 1 }, { to: "fastapi", ms: 4 }, { to: "celery", ms: 2 }] },
-      { req: "GET /products/miryas-ai", note: "assembled from the database", code: "200 OK", total: 27,
-        hops: [{ to: "nginx", ms: 1 }, { to: "fastapi", ms: 6 }, { to: "postgres", ms: 18 }] }
+      { m: "GET", path: "/profile", note: "served from cache", code: "200 OK", spans: [
+        { lb: "nginx", ms: 1, k: "app" }, { lb: "jwt auth", ms: 1, k: "app" },
+        { lb: "handler", ms: 5, k: "app" }, { lb: "redis get", ms: 3, k: "cache" },
+        { lb: "serialize", ms: 2, k: "app" } ] },
+      { m: "GET", path: "/experience", note: "read from the main database", code: "200 OK", spans: [
+        { lb: "nginx", ms: 1, k: "app" }, { lb: "jwt auth", ms: 1, k: "app" },
+        { lb: "handler", ms: 4, k: "app" }, { lb: "postgres select", ms: 26, k: "db" },
+        { lb: "serialize", ms: 2, k: "app" } ] },
+      { m: "POST", path: "/contacts", note: "heavy work goes to the queue", code: "202 Accepted", spans: [
+        { lb: "nginx", ms: 1, k: "app" }, { lb: "jwt auth", ms: 1, k: "app" },
+        { lb: "validate", ms: 2, k: "app" }, { lb: "celery enqueue", ms: 3, k: "queue" },
+        { lb: "respond", ms: 1, k: "app" } ] },
+      { m: "GET", path: "/products/miryas-ai", note: "assembled from the database", code: "200 OK", spans: [
+        { lb: "nginx", ms: 1, k: "app" }, { lb: "jwt auth", ms: 1, k: "app" },
+        { lb: "handler", ms: 5, k: "app" }, { lb: "postgres select", ms: 18, k: "db" },
+        { lb: "serialize", ms: 2, k: "app" } ] }
     ];
 
-    const edgeOf = (a, b) => EDGES.find((e) => (e.a === a && e.b === b) || (e.a === b && e.b === a));
-    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-    function reset() {
-      map.querySelectorAll(".rq-node").forEach((el) => {
-        el.classList.remove("hit", "done");
-        el.querySelector("i").textContent = "";
-      });
-      EDGES.forEach((e) => e.path.classList.remove("on"));
-      pkt.style.display = "none";
-      elTotal.textContent = "—";
+    function build(s) {
+      const total = s.spans.reduce((a, x) => a + x.ms, 0);
+      let acc = 0;
+      wf.innerHTML = s.spans.map((x) => {
+        const left = (acc / total) * 100, w = (x.ms / total) * 100;
+        acc += x.ms;
+        return `<div class="wf-row"><span class="lb">${x.lb}</span>` +
+          `<span class="wf-track"><span class="wf-bar" data-k="${x.k}" data-w="${w}" style="left:${left}%"></span></span>` +
+          `<span class="wf-ms"></span></div>`;
+      }).join("") +
+        `<div class="wf-sum"><span>total</span><b id="wf-total">0 ms</b></div>`;
+      return total;
     }
-    function logLine(s) {
+    function logLine(s, total) {
       const code = s.code.split(" ")[0];
       const div = document.createElement("div");
       div.innerHTML = `<span class="${code === "200" ? "c-ok" : "c-acc"}">${code}</span> ` +
-        `<span class="c-m">${s.req.split(" ")[0]}</span> ${s.req.split(" ")[1]} ` +
-        `${s.total}ms · ${s.note}`;
+        `<span class="c-m">${s.m}</span> ${s.path} ${total}ms · ${s.note}`;
       elLog.appendChild(div);
       while (elLog.children.length > 6) elLog.removeChild(elLog.firstChild);
     }
-    function travel(edge, reverse) {
-      return new Promise((res) => {
-        const dur = 400, t0 = performance.now();
-        let finished = false;
-        const place = (t) => {
-          const p = edge.path.getPointAtLength((reverse ? 1 - t : t) * edge.len);
-          pkt.setAttribute("cx", p.x); pkt.setAttribute("cy", p.y);
-        };
-        const finish = () => { if (finished) return; finished = true; place(1); res(); };
-        edge.path.classList.add("on");
-        pkt.style.display = "";
-        const step = (now) => {
-          if (finished) return;
-          const t = Math.min((now - t0) / dur, 1);
-          place(t);
-          if (t < 1) requestAnimationFrame(step); else finish();
-        };
-        requestAnimationFrame(step);
-        setTimeout(finish, dur + 250);
-      });
-    }
-
-    let visible = true;
-    new IntersectionObserver(([en]) => { visible = en.isIntersecting; }).observe(map);
-    new ResizeObserver(layout).observe(map);
-    if (document.fonts) document.fonts.ready.then(layout);
-    layout();
 
     if (RMO) {
-      const s = SCEN[0];
-      elReq.textContent = s.req; elNote.textContent = s.note;
-      s.hops.forEach((h) => { const el = n(h.to); el.classList.add("done"); el.querySelector("i").textContent = h.ms + " ms"; });
-      n("client").classList.add("done");
-      elTotal.textContent = s.total + " ms · " + s.code;
-      SCEN.forEach(logLine);
+      const s = SCEN[0], total = build(s);
+      wf.querySelectorAll(".wf-bar").forEach((b) => (b.style.width = b.dataset.w + "%"));
+      wf.querySelectorAll(".wf-ms").forEach((el, i) => (el.textContent = s.spans[i].ms + " ms"));
+      document.getElementById("wf-total").textContent = total + " ms";
+      elStatus.textContent = s.code; elStatus.dataset.s = s.code.split(" ")[0];
+      SCEN.forEach((x) => logLine(x, x.spans.reduce((a, y) => a + y.ms, 0)));
       return;
     }
 
     (async () => {
       let i = 0;
       for (;;) {
-        while (!visible || document.hidden) await wait(400);
+        while (document.hidden) await wait(500);
         const s = SCEN[i++ % SCEN.length];
-        reset();
-        elReq.textContent = s.req;
+        elM.textContent = s.m; elM.dataset.m = s.m;
+        elReq.textContent = s.path;
         elNote.textContent = s.note;
-        n("client").classList.add("done");
-        let cur = "client";
-        for (const h of s.hops) {
-          const e = edgeOf(cur, h.to);
-          await travel(e, e.a !== cur);
-          const el = n(h.to);
-          el.classList.add("hit", "done");
-          el.querySelector("i").textContent = h.ms + " ms";
-          await wait(150);
-          el.classList.remove("hit");
-          cur = h.to;
+        elStatus.textContent = "…"; elStatus.removeAttribute("data-s");
+        const total = build(s);
+        const bars = [...wf.querySelectorAll(".wf-bar")];
+        const mss = [...wf.querySelectorAll(".wf-ms")];
+        const elTotal = document.getElementById("wf-total");
+        let shown = 0;
+        for (let k = 0; k < bars.length; k++) {
+          const dur = Math.min(Math.max(s.spans[k].ms * 11, 170), 520);
+          bars[k].style.transitionDuration = dur + "ms";
+          bars[k].style.width = bars[k].dataset.w + "%";
+          await wait(dur);
+          mss[k].textContent = s.spans[k].ms + " ms";
+          shown += s.spans[k].ms;
+          elTotal.textContent = shown + " ms";
         }
-        const backPath = s.hops.slice(0, -1).reverse().map((h) => h.to).concat("client");
-        for (const to of backPath) {
-          const e = edgeOf(cur, to);
-          await travel(e, e.a !== cur);
-          cur = to;
-        }
-        pkt.style.display = "none";
-        elTotal.textContent = s.total + " ms · " + s.code;
-        logLine(s);
-        await wait(1100);
+        elStatus.textContent = s.code;
+        elStatus.dataset.s = s.code.split(" ")[0];
+        logLine(s, total);
+        await wait(1500);
       }
     })();
   })();
