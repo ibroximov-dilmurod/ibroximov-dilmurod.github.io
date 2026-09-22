@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UZB IT — Engineering the Digital Future</title>
+<meta name="description" content="UZB IT builds software, cloud and AI systems for organizations that refuse to be ordinary.">
+<link rel="canonical" href="https://ibroximov-dilmurod.github.io/uzb-it/">
+<meta name="theme-color" content="#05070a">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="UZB IT">
+<meta property="og:url" content="https://ibroximov-dilmurod.github.io/uzb-it/">
+<meta property="og:title" content="UZB IT — Engineering the Digital Future">
+<meta property="og:description" content="Software, cloud and AI systems engineered in Tashkent for organizations that refuse to be ordinary.">
+<meta property="og:image" content="https://ibroximov-dilmurod.github.io/uzb-it/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"UZB IT","url":"https://ibroximov-dilmurod.github.io/uzb-it/","logo":"https://ibroximov-dilmurod.github.io/uzb-it/apple-touch-icon.png","email":"uzbit777@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Tashkent","addressCountry":"UZ"}}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-20 -5 153 205'%3E%3Crect x='-20' y='-5' width='153' height='205' fill='%2305070a'/%3E%3Cg fill='%23fff'%3E%3Cpath d='M0,36 L56,0 L113,36 L113,44 L99,51 L56,24 L22,46 L22,52 L0,63 Z'/%3E%3Cpath d='M113,55 L113,85 L0,140 L0,110 Z'/%3E%3Cpath d='M113,159 L57,195 L0,159 L0,151 L14,144 L57,171 L91,149 L91,143 L113,132 Z'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;800&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#05070a;
+  --bg-2:#0a0f13;
+  --ink:#eef3f2;
+  --muted:#7d8a89;
+  --line:rgba(238,243,242,.09);
+  --turq:#19e3d0;
+  --turq-d:#0c8f84;
+  --gold:#d9b56b;
+  --glass:rgba(12,18,22,.55);
+  --display:'Unbounded',system-ui,sans-serif;
+  --body:'Manrope',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --gutter:clamp(16px,4vw,56px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+section[id]{scroll-margin-top:70px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.loading{overflow:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--turq);color:#001613}
+
+/* ---------- 3D canvas + veil ---------- */
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+#veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 50% 50%,rgba(5,7,10,.35),rgba(5,7,10,.92));opacity:0;transition:opacity .2s linear}
+.grain{position:fixed;inset:-50%;z-index:2;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-4%,3%)}50%{transform:translate(3%,-5%)}75%{transform:translate(-2%,-3%)}100%{transform:translate(4%,2%)}}
+main,footer,nav{position:relative;z-index:3}
+
+/* ---------- Cursor ---------- */
+.cursor,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:100;border-radius:50%;transform:translate3d(-100px,-100px,0)}
+.cursor{width:6px;height:6px;background:var(--turq);margin:-3px 0 0 -3px}
+.cursor-ring{width:38px;height:38px;margin:-19px 0 0 -19px;border:1px solid rgba(25,227,208,.5);transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),background .35s,border-color .35s}
+.cursor-ring.hover{width:74px;height:74px;margin:-37px 0 0 -37px;background:rgba(25,227,208,.08);border-color:var(--turq)}
+@media (hover:none){.cursor,.cursor-ring{display:none}}
+
+/* ---------- Preloader ---------- */
+#loader{position:fixed;inset:0;z-index:200;background:var(--bg);display:grid;place-items:center;transition:opacity 1s var(--ease),visibility 1s}
+#loader.done{opacity:0;visibility:hidden}
+.loader-inner{display:flex;flex-direction:column;align-items:center;gap:28px;transition:transform 1.1s var(--ease),filter 1.1s var(--ease)}
+#loader.done .loader-inner{transform:scale(1.6);filter:blur(12px)}
+.loader-logo{width:70px;height:auto;overflow:visible}
+.loader-logo path{fill:transparent;stroke:var(--turq);stroke-width:1.4;stroke-dasharray:420;stroke-dashoffset:420;animation:draw 1.6s var(--ease) forwards,fillin .8s 1.3s forwards}
+.loader-logo path:nth-child(2){animation-delay:.15s,1.4s}
+.loader-logo path:nth-child(3){animation-delay:.3s,1.5s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fillin{to{fill:var(--ink);stroke:transparent}}
+.loader-meta{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;display:flex;gap:18px}
+.loader-meta b{color:var(--turq);font-weight:500;min-width:3ch;text-align:right}
+.loader-bar{width:180px;height:1px;background:var(--line);overflow:hidden}
+.loader-bar i{display:block;height:100%;width:100%;background:var(--turq);transform-origin:left;transform:scaleX(0)}
+
+/* ---------- Nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px var(--gutter);transition:padding .5s var(--ease),background .5s}
+nav.scrolled{padding:14px var(--gutter);background:rgba(5,7,10,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.08em}
+.brand svg{width:18px;height:auto;fill:var(--ink)}
+.brand span em{font-style:normal;color:var(--turq)}
+.nav-links{display:flex;gap:34px;font-size:13px;letter-spacing:.04em;color:var(--muted)}
+.nav-links a{position:relative;transition:color .3s}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:1px;background:var(--turq);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+@media (max-width:860px){.nav-links{display:none}}
+
+.nav-right{display:flex;align-items:center;gap:12px}
+.menu-btn{display:none;position:relative;width:42px;height:42px;flex:none;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.03);cursor:pointer}
+.menu-btn i{position:absolute;left:13px;right:13px;height:1.5px;background:var(--ink);transition:transform .5s var(--ease),top .5s var(--ease)}
+.menu-btn i:first-child{top:17px}.menu-btn i:last-child{top:24px}
+body.menu-open .menu-btn i:first-child{top:20px;transform:rotate(45deg)}
+body.menu-open .menu-btn i:last-child{top:20px;transform:rotate(-45deg)}
+@media (max-width:860px){.menu-btn{display:block}}
+.mobile-menu{position:fixed;inset:0;z-index:45;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:90px var(--gutter) 40px;background:rgba(5,7,10,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility .5s}
+body.menu-open{overflow:hidden}
+body.menu-open .mobile-menu{opacity:1;visibility:visible}
+.mobile-menu>a{font-family:var(--display);font-weight:300;font-size:clamp(30px,9vw,52px);letter-spacing:-.03em;padding:6px 0;opacity:0;transform:translateY(24px);transition:opacity .6s var(--ease),transform .6s var(--ease),color .3s}
+.mobile-menu>a:active,.mobile-menu>a:hover{color:var(--turq)}
+body.menu-open .mobile-menu>a{opacity:1;transform:none}
+.mobile-menu>a:nth-child(2){transition-delay:.05s}.mobile-menu>a:nth-child(3){transition-delay:.1s}.mobile-menu>a:nth-child(4){transition-delay:.15s}.mobile-menu>a:nth-child(5){transition-delay:.2s}
+.mm-foot{margin-top:36px;padding-top:24px;border-top:1px solid var(--line);font-family:var(--mono);font-size:13px;color:var(--muted)}
+.lang{display:flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:100px;background:rgba(255,255,255,.02);font-family:var(--mono);font-size:11px;letter-spacing:.08em}
+.lang button{background:none;border:0;color:var(--muted);font:inherit;padding:7px 11px;border-radius:100px;cursor:pointer;transition:color .3s,background .3s}
+.lang button:hover{color:var(--ink)}
+.lang button.on{background:var(--ink);color:var(--bg)}
+@media (max-width:520px){nav .btn.sm{display:none}}
+main,footer{transition:opacity .28s ease}
+body.lang-fade main,body.lang-fade footer{opacity:0}
+
+/* ---------- Buttons ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;gap:12px;padding:15px 26px;border-radius:100px;font-family:var(--body);font-weight:600;font-size:14px;letter-spacing:.02em;border:1px solid var(--line);color:var(--ink);background:rgba(255,255,255,.02);overflow:hidden;cursor:pointer;transition:border-color .4s,color .4s;will-change:transform}
+.btn::before{content:"";position:absolute;inset:0;background:var(--turq);border-radius:inherit;transform:translateY(101%);transition:transform .6s var(--ease)}
+.btn:hover::before{transform:translateY(0)}
+.btn:hover{color:#00201c;border-color:var(--turq)}
+.btn>*{position:relative}
+.btn .arr{display:inline-block;transition:transform .5s var(--ease)}
+.btn:hover .arr{transform:translateX(4px) rotate(-45deg)}
+.btn.solid{background:var(--turq);color:#00201c;border-color:var(--turq)}
+.btn.solid::before{background:var(--ink)}
+.btn.sm{padding:10px 18px;font-size:13px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:grid;grid-template-rows:1fr auto;padding:120px var(--gutter) 34px}
+.hero-content{align-self:center;max-width:760px}
+@media (max-width:900px){.hero{padding-top:calc(44vh + 20px)}.hero-content{align-self:start}.hero h1{font-size:clamp(38px,11vw,72px)}.hero-cta .btn{flex:1 1 auto;justify-content:center}}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--turq);display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--turq)}
+.hero h1{font-family:var(--display);font-weight:300;font-size:clamp(40px,7.2vw,112px);line-height:.98;letter-spacing:-.035em}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .line>span{display:inline-block;transform:translateY(110%) rotate(4deg);transform-origin:left bottom;transition:transform 1.4s var(--ease);transition-delay:calc(var(--i)*.1s + .5s)}
+.hero h1 strong{font-weight:800}
+.hero h1 .accent{background:linear-gradient(100deg,var(--turq) 10%,#9ff7ee 45%,var(--gold) 90%);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:sheen 6s ease-in-out infinite alternate}
+@keyframes sheen{to{background-position:100% 0}}
+.hero p.lead{margin-top:30px;max-width:470px;color:var(--muted);font-size:clamp(15px,1.3vw,18px);opacity:0;transform:translateY(20px);transition:all 1.2s var(--ease) 1.1s}
+.hero-cta{margin-top:40px;display:flex;flex-wrap:wrap;gap:14px;opacity:0;transform:translateY(20px);transition:all 1.2s var(--ease) 1.25s}
+body.ready .hero h1 .line>span{transform:none}
+body.ready .hero p.lead,body.ready .hero-cta{opacity:1;transform:none}
+
+.hero-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;opacity:0;transition:opacity 1.5s 1.6s}
+body.ready .hero-foot{opacity:1}
+.scroll-cue{display:flex;align-items:center;gap:14px}
+.scroll-cue i{width:1px;height:46px;background:var(--line);position:relative;overflow:hidden}
+.scroll-cue i::after{content:"";position:absolute;left:0;top:-50%;width:100%;height:50%;background:var(--turq);animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{to{top:110%}}
+.geo b{color:var(--ink);font-weight:500}
+
+/* HUD chips floating around the 3D mark */
+.hud{position:absolute;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:10px 14px;border:1px solid var(--line);background:rgba(8,12,15,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:10px;opacity:0;transform:translateY(10px);transition:all 1.2s var(--ease)}
+.hud b{display:block;color:var(--ink);font-weight:500;font-size:12.5px;letter-spacing:.06em;margin-top:3px}
+.hud .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--turq);margin-right:8px;box-shadow:0 0 10px var(--turq);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.3}}
+.hud.h1{right:calc(var(--gutter) + 2%);top:24%;transition-delay:2.6s}
+.hud.h2{right:calc(var(--gutter) + 26%);bottom:20%;transition-delay:2.8s}
+.hud.h3{right:calc(var(--gutter) + 1%);bottom:30%;transition-delay:3s}
+body.ready .hud{opacity:1;transform:none}
+@media (max-width:980px){.hud{display:none}}
+
+/* ---------- Marquee ---------- */
+.marquee{position:relative;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(5,7,10,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);overflow:hidden;padding:26px 0}
+.marquee-track{display:flex;width:max-content;animation:mq 38s linear infinite}
+.marquee span{font-family:var(--display);font-size:clamp(22px,3vw,40px);font-weight:300;letter-spacing:-.02em;white-space:nowrap;padding:0 28px;display:flex;align-items:center;gap:56px}
+.marquee span::after{content:"";width:14px;height:14px;background:var(--turq);clip-path:polygon(50% 0,61% 35%,100% 50%,61% 65%,50% 100%,39% 65%,0 50%,39% 35%)}
+.marquee span:nth-child(even){-webkit-text-stroke:1px rgba(238,243,242,.5);color:transparent}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- Generic section ---------- */
+section{position:relative}
+.wrap{padding:clamp(90px,14vh,170px) var(--gutter)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:64px}
+.sec-head h2{font-family:var(--display);font-weight:300;font-size:clamp(32px,4.6vw,68px);line-height:1.02;letter-spacing:-.03em;max-width:800px}
+.sec-head h2 strong{font-weight:700}
+.sec-head p{max-width:360px;color:var(--muted)}
+.idx{font-family:var(--mono);font-size:11px;letter-spacing:.25em;color:var(--turq);text-transform:uppercase;margin-bottom:22px;display:block}
+
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease);transition-delay:calc(var(--d,0)*1s)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- Manifesto ---------- */
+.manifesto .wrap{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+.manifesto p.big{font-family:var(--display);font-weight:300;font-size:clamp(26px,3.8vw,58px);line-height:1.18;letter-spacing:-.025em;max-width:1200px}
+.manifesto .w{opacity:.14;transition:opacity .4s,color .4s}
+.manifesto .w.on{opacity:1}
+.manifesto .w.hl.on{color:var(--turq)}
+
+/* ---------- Services ---------- */
+.services{background:linear-gradient(180deg,transparent,rgba(5,7,10,.85) 12%,rgba(5,7,10,.85) 88%,transparent)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;perspective:1400px}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.grid{grid-template-columns:1fr}}
+.card{position:relative;min-height:340px;padding:34px 30px;border-radius:22px;background:linear-gradient(160deg,rgba(20,30,34,.7),rgba(8,12,15,.75));border:1px solid var(--line);overflow:hidden;transform-style:preserve-3d;transition:transform .7s var(--ease),border-color .5s;display:flex;flex-direction:column;justify-content:space-between;--mx:50%;--my:50%}
+.card:hover{border-color:rgba(25,227,208,.35);transition:transform .15s linear,border-color .5s}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(25,227,208,.16),transparent 45%);opacity:0;transition:opacity .5s}
+.card:hover::before{opacity:1}
+.card::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;opacity:.08;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%2319e3d0' stroke-width='1'%3E%3Cpath d='M50 2 L61 39 L98 50 L61 61 L50 98 L39 61 L2 50 L39 39Z'/%3E%3Cpath d='M16 16 L56 32 L84 16 L68 56 L84 84 L44 68 L16 84 L32 44Z'/%3E%3Ccircle cx='50' cy='50' r='14'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;transition:transform 1.2s var(--ease),opacity .6s}
+.card:hover::after{transform:rotate(45deg) scale(1.15);opacity:.3}
+.card>*{position:relative;transform:translateZ(40px)}
+.card .num{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.2em;display:flex;justify-content:space-between}
+.card .ico{width:54px;height:54px;border-radius:14px;border:1px solid rgba(25,227,208,.25);display:grid;place-items:center;margin:34px 0 26px;background:rgba(25,227,208,.05)}
+.card .ico svg{width:24px;height:24px;stroke:var(--turq);fill:none;stroke-width:1.5}
+.card h3{font-family:var(--display);font-weight:400;font-size:22px;letter-spacing:-.01em;margin-bottom:12px}
+.card p{color:var(--muted);font-size:14.5px}
+.card .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.card .tags i{font-style:normal;font-family:var(--mono);font-size:10.5px;padding:5px 10px;border-radius:100px;border:1px solid var(--line);color:#aeb9b8}
+
+/* ---------- Process (horizontal) ---------- */
+.process{height:340vh}
+.process-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.process .sec-head{padding:0 var(--gutter);margin-bottom:48px}
+.track{display:flex;gap:22px;padding:0 var(--gutter);will-change:transform}
+.step{flex:0 0 clamp(300px,34vw,480px);height:clamp(320px,46vh,440px);border-radius:26px;padding:36px;border:1px solid var(--line);background:rgba(8,12,15,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.step .big-n{font-family:var(--display);font-weight:800;font-size:150px;line-height:.8;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px rgba(25,227,208,.35);position:absolute;right:22px;bottom:18px}
+.step h3{font-family:var(--display);font-weight:400;font-size:clamp(24px,2.4vw,34px);letter-spacing:-.02em;margin:14px 0 14px}
+.step p{color:var(--muted);max-width:320px;font-size:15px}
+.step .dur{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.progress-line{margin:48px var(--gutter) 0;height:1px;background:var(--line);position:relative}
+.progress-line i{position:absolute;left:0;top:0;height:100%;width:100%;background:linear-gradient(90deg,var(--turq),var(--gold));transform-origin:left;transform:scaleX(0)}
+@media (max-width:760px){
+  .process{height:auto}
+  .process-sticky{position:relative;height:auto;padding:90px 0}
+  .track{flex-direction:column;transform:none!important}
+  .step{flex:none;height:auto;min-height:280px}
+  .progress-line{display:none}
+}
+
+/* ---------- Stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(5,7,10,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.stat{padding:56px var(--gutter);border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat .v{font-family:var(--display);font-weight:300;font-size:clamp(40px,5vw,76px);letter-spacing:-.04em;line-height:1}
+.stat .v sup{font-size:.4em;color:var(--turq);vertical-align:top;margin-left:4px}
+.stat .l{margin-top:14px;color:var(--muted);font-size:14px}
+@media (max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+/* ---------- Projects ---------- */
+.projects{background:linear-gradient(180deg,transparent,rgba(5,7,10,.88) 10%,rgba(5,7,10,.88) 90%,transparent)}
+.proj-filter{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px}
+.proj-filter button{font:inherit;font-size:13px;padding:9px 18px;border-radius:100px;border:1px solid var(--line);background:transparent;color:#aeb9b8;cursor:pointer;transition:all .3s}
+.proj-filter button:hover{border-color:rgba(25,227,208,.4);color:var(--ink)}
+.proj-filter button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px 24px}
+.proj-grid .proj:nth-child(even){transform:translateY(90px)}
+.proj-grid.filtered{padding-bottom:0}
+.proj-grid.filtered .proj:nth-child(even),.proj-grid.filtered .proj:nth-child(even).reveal:not(.in){transform:none}
+.proj-grid .proj:nth-child(even).reveal:not(.in){transform:translateY(130px)}
+.proj-grid{padding-bottom:90px}
+@media (max-width:860px){.proj-grid{grid-template-columns:1fr;padding-bottom:0}.proj-grid .proj:nth-child(even),.proj-grid .proj:nth-child(even).reveal:not(.in){transform:none}}
+.proj{display:block;transition:opacity .5s}
+.proj.hide{display:none!important}
+.proj-visual{position:relative;aspect-ratio:16/11;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#0b1115}
+.proj-visual svg{position:absolute;inset:0;width:100%;height:100%;transition:transform 1.2s var(--ease)}
+.proj:hover .proj-visual svg{transform:scale(1.04)}
+.proj-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(5,7,10,.75));pointer-events:none}
+.proj-badge{position:absolute;left:18px;top:18px;z-index:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;padding:7px 12px;border-radius:100px;background:rgba(5,7,10,.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);color:#c4cecd}
+.proj-view{position:absolute;right:18px;bottom:18px;z-index:2;width:52px;height:52px;border-radius:50%;background:var(--turq);color:#00201c;display:grid;place-items:center;font-size:20px;transform:scale(0) rotate(-45deg);transition:transform .6s var(--ease)}
+.proj:hover .proj-view{transform:scale(1) rotate(-45deg)}
+.proj-info{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:24px 4px 0}
+.proj-info h3{font-family:var(--display);font-weight:400;font-size:clamp(20px,2vw,28px);letter-spacing:-.02em;margin-bottom:6px;transition:color .4s}
+.proj:hover .proj-info h3{color:var(--turq)}
+.proj-info p{color:var(--muted);font-size:14.5px;max-width:420px}
+.proj-year{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap;padding-top:8px}
+.proj-metrics{display:flex;gap:28px;margin:18px 4px 0;padding-top:18px;border-top:1px solid var(--line)}
+.proj-metrics div{font-family:var(--display);font-size:20px;font-weight:400;letter-spacing:-.02em}
+.proj-metrics span{display:block;font-family:var(--body);font-size:12px;color:var(--muted);letter-spacing:0;margin-top:2px}
+.proj-more{margin-top:70px;display:flex;justify-content:center}
+.proj.featured{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;align-items:center;margin-bottom:56px;padding:18px;border-radius:30px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(212,255,58,.05),rgba(8,12,15,.6) 45%)}
+.proj.featured .proj-info{display:block;padding:10px 18px 10px 0}
+.proj.featured .proj-info h3{font-size:clamp(28px,3vw,44px);margin:14px 0 14px}
+.proj.featured .proj-info p{max-width:none;font-size:15.5px}
+.proj.featured .proj-metrics{margin:24px 0 0}
+.proj.featured:hover .proj-info h3{color:#d4ff3a}
+.kicker{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.live{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:100px;border:1px solid rgba(212,255,58,.35);color:#d4ff3a;letter-spacing:.14em}
+.live::before{content:"";width:6px;height:6px;border-radius:50%;background:#d4ff3a;box-shadow:0 0 10px #d4ff3a;animation:pulse 1.6s infinite}
+.proj.featured .open{margin-top:28px}
+.proj.featured .open .btn{pointer-events:none}
+.proj.featured:hover .open .btn{color:#00201c;border-color:var(--turq)}
+.proj.featured:hover .open .btn::before{transform:translateY(0)}
+@media (max-width:860px){.proj.featured{grid-template-columns:1fr;gap:10px;padding:12px}.proj.featured .proj-info{padding:14px 6px 8px}}
+
+/* ---------- Stack ---------- */
+.stack-list{border-top:1px solid var(--line)}
+.stack-row{display:grid;grid-template-columns:80px 1fr 1.3fr 40px;gap:24px;align-items:center;padding:30px 0;border-bottom:1px solid var(--line);position:relative;cursor:pointer}
+.stack-row::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(25,227,208,.1),transparent 70%);transform:scaleY(0);transform-origin:bottom;transition:transform .6s var(--ease)}
+.stack-row:hover::before{transform:scaleY(1)}
+.stack-row>*{position:relative}
+.stack-row .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.stack-row h4{font-family:var(--display);font-weight:400;font-size:clamp(20px,2.4vw,34px);letter-spacing:-.02em;transition:transform .6s var(--ease),color .4s}
+.stack-row:hover h4{transform:translateX(14px);color:var(--turq)}
+.stack-row p{color:var(--muted);font-size:14.5px}
+.stack-row .go{font-size:22px;transition:transform .5s var(--ease)}
+.stack-row:hover .go{transform:rotate(-45deg);color:var(--turq)}
+@media (max-width:760px){.stack-row{grid-template-columns:40px 1fr 30px}.stack-row p{grid-column:2/3}}
+
+/* ---------- Contact ---------- */
+.contact .wrap{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+@media (max-width:900px){.contact .wrap{grid-template-columns:1fr}}
+.contact h2{font-family:var(--display);font-weight:300;font-size:clamp(44px,7vw,110px);line-height:.95;letter-spacing:-.045em}
+.contact h2 strong{font-weight:800;display:block}
+.contact .mail{display:inline-block;margin-top:34px;font-family:var(--display);font-size:clamp(16px,1.8vw,24px);border-bottom:1px solid var(--turq);padding-bottom:4px;transition:color .3s}
+.contact .mail:hover{color:var(--turq)}
+form{padding:36px;border-radius:26px;border:1px solid var(--line);background:rgba(8,12,15,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:grid;gap:22px}
+.field{position:relative}
+.field input,.field textarea,.field select{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);padding:22px 0 10px;color:var(--ink);font:inherit;font-size:15px;outline:none;transition:border-color .4s;resize:none;appearance:none;-webkit-appearance:none;border-radius:0}
+.field select option{background:var(--bg-2)}
+.field label{position:absolute;left:0;top:22px;color:var(--muted);font-size:14px;pointer-events:none;transition:all .4s var(--ease)}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--turq)}
+.field input:focus+label,.field input:not(:placeholder-shown)+label,.field textarea:focus+label,.field textarea:not(:placeholder-shown)+label,.field select+label{top:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--turq);font-family:var(--mono)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips input{display:none}
+.chips label{padding:9px 15px;border-radius:100px;border:1px solid var(--line);font-size:13px;color:#aeb9b8;cursor:pointer;transition:all .3s}
+.chips input:checked+label{background:var(--turq);color:#00201c;border-color:var(--turq)}
+.form-msg{display:none;font-size:13.5px;line-height:1.5;padding:12px 14px;border-radius:12px}
+.form-msg.ok{color:var(--turq);background:rgba(25,227,208,.08);border:1px solid rgba(25,227,208,.25)}
+.form-msg.bad{color:#ff9a8a;background:rgba(255,110,90,.07);border:1px solid rgba(255,110,90,.25)}
+form[data-state="ok"] .form-msg.ok,form[data-state="err"] .form-msg.err,form[data-state="invalid"] .form-msg.invalid{display:block}
+form[data-state="sending"] button[type=submit]{opacity:.6;pointer-events:none}
+.hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);background:linear-gradient(180deg,rgba(5,7,10,.35),rgba(5,7,10,.85));padding:60px var(--gutter) 30px}
+.foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px}
+.foot-cols{display:flex;gap:70px;flex-wrap:wrap;font-size:14px}
+.foot-cols h5{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.foot-cols a{display:block;margin-bottom:8px;color:#c4cecd;transition:color .3s}
+.foot-cols a:hover{color:var(--turq)}
+.foot-word{font-family:var(--display);font-weight:800;font-size:clamp(70px,19vw,300px);letter-spacing:-.06em;line-height:.8;margin:60px 0 30px;background:linear-gradient(180deg,rgba(238,243,242,.14),rgba(238,243,242,0));-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none;white-space:nowrap}
+.foot-bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em}
+
+/* ---------- Fallback when WebGL unavailable ---------- */
+.fallback-logo{display:none}
+body.no-webgl .fallback-logo{display:block;position:fixed;right:12vw;top:50%;width:min(22vw,220px);transform:translateY(-50%);z-index:0;fill:var(--ink);filter:drop-shadow(0 0 40px rgba(25,227,208,.3))}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.3s!important}
+}
+</style>
+</head>
+<body class="loading">
+<noscript><style>#loader,.cursor,.cursor-ring,.lang,.menu-btn{display:none!important}body.loading{overflow:auto}.reveal,.hero p.lead,.hero-cta,.hero-foot{opacity:1!important;transform:none!important}.hero h1 .line>span{transform:none!important}.fallback-logo{display:block!important;position:fixed;right:12vw;top:50%;width:min(22vw,220px);transform:translateY(-50%);fill:#eef3f2}</style></noscript>
+
+<!-- Preloader -->
+<div id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <svg class="loader-logo" viewBox="0 0 113 195">
+      <path d="M0,36 L56,0 L113,36 L113,44 L99,51 L56,24 L22,46 L22,52 L0,63 Z"/>
+      <path d="M113,55 L113,85 L0,140 L0,110 Z"/>
+      <path d="M113,159 L57,195 L0,159 L0,151 L14,144 L57,171 L91,149 L91,143 L113,132 Z"/>
+    </svg>
+    <div class="loader-bar"><i id="lbar"></i></div>
+    <div class="loader-meta"><span data-i18n="loader">Initializing</span><b id="lnum">0</b></div>
+  </div>
+</div>
+
+<canvas id="gl"></canvas>
+<div id="veil"></div>
+<div class="grain"></div>
+<svg class="fallback-logo" viewBox="0 0 113 195" aria-hidden="true">
+  <path d="M0,36 L56,0 L113,36 L113,44 L99,51 L56,24 L22,46 L22,52 L0,63 Z"/>
+  <path d="M113,55 L113,85 L0,140 L0,110 Z"/>
+  <path d="M113,159 L57,195 L0,159 L0,151 L14,144 L57,171 L91,149 L91,143 L113,132 Z"/>
+</svg>
+
+<div class="cursor"></div><div class="cursor-ring"></div>
+
+<nav id="nav">
+  <a href="#top" class="brand" data-hover>
+    <svg viewBox="0 0 113 195"><path d="M0,36 L56,0 L113,36 L113,44 L99,51 L56,24 L22,46 L22,52 L0,63 Z"/><path d="M113,55 L113,85 L0,140 L0,110 Z"/><path d="M113,159 L57,195 L0,159 L0,151 L14,144 L57,171 L91,149 L91,143 L113,132 Z"/></svg>
+    <span>UZB<em>·</em>IT</span>
+  </a>
+  <div class="nav-links">
+    <a href="#services" data-hover data-i18n="nav.services">Services</a>
+    <a href="#process" data-hover data-i18n="nav.process">Process</a>
+    <a href="#projects" data-hover data-i18n="nav.projects">Projects</a>
+    <a href="#stack" data-hover data-i18n="nav.expertise">Expertise</a>
+    <a href="#contact" data-hover data-i18n="nav.contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" data-hover>EN</button>
+      <button type="button" data-lang="uz" data-hover>UZ</button>
+      <button type="button" data-lang="ru" data-hover>RU</button>
+    </div>
+    <button type="button" class="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><i></i><i></i></button>
+    <a href="#contact" class="btn sm magnetic" data-hover><span data-i18n="cta.start">Start a project</span><span class="arr">→</span></a>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <a href="#services" data-i18n="nav.services">Services</a>
+  <a href="#process" data-i18n="nav.process">Process</a>
+  <a href="#projects" data-i18n="nav.projects">Projects</a>
+  <a href="#stack" data-i18n="nav.expertise">Expertise</a>
+  <a href="#contact" data-i18n="nav.contact">Contact</a>
+  <div class="mm-foot"><a href="mailto:uzbit777@gmail.com">uzbit777@gmail.com</a></div>
+</div>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow" data-i18n="hero.eyebrow">Tashkent · Est. for the next decade</div>
+      <h1>
+        <span class="line"><span style="--i:0" data-i18n="hero.l1">We engineer</span></span>
+        <span class="line"><span style="--i:1" data-i18n="hero.l2">the <strong class="accent">digital</strong></span></span>
+        <span class="line"><span style="--i:2" data-i18n="hero.l3"><strong>future.</strong></span></span>
+      </h1>
+      <p class="lead" data-i18n="hero.lead">UZB IT designs and builds software, cloud and AI systems for organizations that refuse to be ordinary — from the Silk Road to the global stage.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn solid magnetic" data-hover><span data-i18n="cta.start">Start a project</span><span class="arr">→</span></a>
+        <a href="#services" class="btn magnetic" data-hover><span data-i18n="hero.explore">Explore capabilities</span></a>
+      </div>
+    </div>
+
+    <div class="hud h1"><span class="dot"></span><span data-i18n="hud.status">System status</span><b data-i18n="hud.online">All nodes online</b></div>
+    <div class="hud h2"><span data-i18n="hud.tz">Tashkent · UTC+5</span><b id="clock">--:--:--</b></div>
+    <div class="hud h3"><span data-i18n="hud.render">Render pipeline</span><b id="fps">60 FPS · WebGL</b></div>
+
+    <div class="hero-foot">
+      <div class="scroll-cue"><i></i><span data-i18n="hero.scroll">Scroll to explore</span></div>
+      <div class="geo" data-i18n="geo"><b>41.2995° N</b> / <b>69.2401° E</b></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span data-i18n="mq1">Software Engineering</span><span data-i18n="mq2">Cloud Infrastructure</span><span data-i18n="mq3">Artificial Intelligence</span><span data-i18n="mq4">Cybersecurity</span><span data-i18n="mq5">Product Design</span><span data-i18n="mq6">Data Platforms</span>
+      <span data-i18n="mq1">Software Engineering</span><span data-i18n="mq2">Cloud Infrastructure</span><span data-i18n="mq3">Artificial Intelligence</span><span data-i18n="mq4">Cybersecurity</span><span data-i18n="mq5">Product Design</span><span data-i18n="mq6">Data Platforms</span>
+    </div>
+  </div>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto">
+    <div class="wrap">
+      <span class="idx" data-i18n="man.idx">( 01 ) — Manifesto</span>
+      <p class="big" id="manifesto" data-i18n="man.text">Great technology is like great architecture. It is *precise* where it matters, *beautiful* where it's seen, and *built* to outlast the people who made it. We bring the geometry of Samarkand to the systems of tomorrow.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="idx reveal" data-i18n="svc.idx">( 02 ) — Capabilities</span>
+          <h2 class="reveal" style="--d:.1" data-i18n="svc.h2">Six disciplines.<br><strong>One standard.</strong></h2>
+        </div>
+        <p class="reveal" style="--d:.2" data-i18n="svc.p">End-to-end engineering teams that move from strategy to production without handoffs, delays or compromise.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card tilt reveal" data-hover>
+          <div class="num"><span>01</span><span data-i18n="s1.tag">ENGINEERING</span></div>
+          <div>
+            <div class="ico"><svg viewBox="0 0 24 24"><path d="M8 6 2 12l6 6M16 6l6 6-6 6M14 4l-4 16"/></svg></div>
+            <h3 data-i18n="s1.h">Custom Software</h3>
+            <p data-i18n="s1.p">Web platforms, mobile apps and enterprise systems engineered for scale from day one.</p>
+            <div class="tags"><i>React</i><i>Go</i><i>Kotlin</i><i>Swift</i></div>
+          </div>
+        </article>
+        <article class="card tilt reveal" style="--d:.1" data-hover>
+          <div class="num"><span>02</span><span data-i18n="s2.tag">INFRASTRUCTURE</span></div>
+          <div>
+            <div class="ico"><svg viewBox="0 0 24 24"><path d="M7 18a5 5 0 1 1 1-9.9A6 6 0 0 1 19 10a4 4 0 0 1-1 8H7Z"/></svg></div>
+            <h3 data-i18n="s2.h">Cloud & DevOps</h3>
+            <p data-i18n="s2.p">Resilient, observable, cost-tuned infrastructure with CI/CD pipelines that ship daily.</p>
+            <div class="tags"><i>Kubernetes</i><i>AWS</i><i>Terraform</i></div>
+          </div>
+        </article>
+        <article class="card tilt reveal" style="--d:.2" data-hover>
+          <div class="num"><span>03</span><span data-i18n="s3.tag">INTELLIGENCE</span></div>
+          <div>
+            <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
+            <h3 data-i18n="s3.h">AI & Machine Learning</h3>
+            <p data-i18n="s3.p">LLM agents, computer vision and predictive models that turn data into decisions.</p>
+            <div class="tags"><i>LLMs</i><i>RAG</i><i>PyTorch</i></div>
+          </div>
+        </article>
+        <article class="card tilt reveal" data-hover>
+          <div class="num"><span>04</span><span data-i18n="s4.tag">SECURITY</span></div>
+          <div>
+            <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3 data-i18n="mq4">Cybersecurity</h3>
+            <p data-i18n="s4.p">Audits, penetration testing and zero-trust architecture that protects what matters.</p>
+            <div class="tags"><i>SOC</i><i>ISO 27001</i><i data-i18n="tag.pentest">Pentest</i></div>
+          </div>
+        </article>
+        <article class="card tilt reveal" style="--d:.1" data-hover>
+          <div class="num"><span>05</span><span data-i18n="s5.tag">DATA</span></div>
+          <div>
+            <div class="ico"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
+            <h3 data-i18n="mq6">Data Platforms</h3>
+            <p data-i18n="s5.p">Warehouses, real-time pipelines and dashboards leadership actually uses.</p>
+            <div class="tags"><i>Kafka</i><i>ClickHouse</i><i>dbt</i></div>
+          </div>
+        </article>
+        <article class="card tilt reveal" style="--d:.2" data-hover>
+          <div class="num"><span>06</span><span data-i18n="s6.tag">EXPERIENCE</span></div>
+          <div>
+            <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+            <h3 data-i18n="s6.h">Product & 3D Design</h3>
+            <p data-i18n="s6.p">Interfaces, brand systems and immersive WebGL experiences — like the one you're in.</p>
+            <div class="tags"><i>UX</i><i>WebGL</i><i data-i18n="tag.motion">Motion</i></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="process-sticky">
+      <div class="sec-head">
+        <div>
+          <span class="idx" data-i18n="proc.idx">( 03 ) — Method</span>
+          <h2 data-i18n="proc.h2">From first sketch<br>to <strong>global scale.</strong></h2>
+        </div>
+        <p data-i18n="proc.p">A four-phase method refined across every engagement. Transparent, measurable, relentless.</p>
+      </div>
+      <div class="track" id="track">
+        <div class="step"><div><span class="dur" data-i18n="p1.d">Weeks 1–2</span><h3 data-i18n="p1.h">Discover</h3><p data-i18n="p1.p">Workshops, audits and user research to define the real problem — and what success looks like in numbers.</p></div><span class="big-n">01</span></div>
+        <div class="step"><div><span class="dur" data-i18n="p2.d">Weeks 2–4</span><h3 data-i18n="p2.h">Architect</h3><p data-i18n="p2.p">System design, technology selection and interactive prototypes validated with real users.</p></div><span class="big-n">02</span></div>
+        <div class="step"><div><span class="dur" data-i18n="p3.d">Sprint-based</span><h3 data-i18n="p3.h">Engineer</h3><p data-i18n="p3.p">Two-week sprints, live demos and production-grade code with automated testing throughout.</p></div><span class="big-n">03</span></div>
+        <div class="step"><div><span class="dur" data-i18n="p4.d">Ongoing</span><h3 data-i18n="p4.h">Scale</h3><p data-i18n="p4.p">Launch, monitor, optimize. 24/7 support and continuous improvement as your business grows.</p></div><span class="big-n">04</span></div>
+      </div>
+      <div class="progress-line"><i id="pline"></i></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat reveal"><div class="v"><span class="count" data-to="120">0</span><sup>+</sup></div><div class="l" data-i18n="st1">Products delivered</div></div>
+    <div class="stat reveal" style="--d:.1"><div class="v"><span class="count" data-to="60">0</span><sup>+</sup></div><div class="l" data-i18n="st2">Engineers & designers</div></div>
+    <div class="stat reveal" style="--d:.2"><div class="v"><span class="count" data-to="12">0</span></div><div class="l" data-i18n="st3">Countries served</div></div>
+    <div class="stat reveal" style="--d:.3"><div class="v"><span class="count" data-to="99.9" data-dec="1">0</span><sup>%</sup></div><div class="l" data-i18n="st4">Uptime across systems</div></div>
+  </div>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="idx reveal" data-i18n="prj.idx">( 04 ) — Our Projects</span>
+          <h2 class="reveal" style="--d:.1" data-i18n="prj.h2">Selected work,<br><strong>measurable results.</strong></h2>
+        </div>
+        <p class="reveal" style="--d:.2" data-i18n="prj.p">A selection of platforms we've designed, engineered and continue to operate for clients in finance, government, logistics and healthcare.</p>
+      </div>
+
+      <div class="proj-filter reveal" role="group" aria-label="Filter projects">
+        <button class="on" data-f="all" data-hover data-i18n="f.all">All work</button>
+        <button data-f="ai" data-hover data-i18n="f.ai">AI & Marketing</button>
+        <button data-f="fintech" data-hover data-i18n="f.fin">FinTech</button>
+        <button data-f="gov" data-hover data-i18n="f.gov">GovTech</button>
+        <button data-f="logistics" data-hover data-i18n="f.log">Logistics</button>
+        <button data-f="health" data-hover data-i18n="f.health">Healthcare</button>
+      </div>
+
+      <!-- FEATURED: MIRYAS AI (live product) -->
+      <a href="https://meta-ads-agent-v7dho4qhxa-uc.a.run.app/" target="_blank" rel="noopener" class="proj featured reveal" data-cat="ai" data-hover>
+        <div class="proj-visual">
+          <span class="proj-badge" data-i18n="mi.badge">AI · Marketing automation</span>
+          <svg viewBox="0 0 640 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <radialGradient id="g5" cx="50%" cy="85%" r="75%"><stop offset="0" stop-color="#232a10"/><stop offset=".55" stop-color="#0c0e0a"/><stop offset="1" stop-color="#070808"/></radialGradient>
+              <linearGradient id="fade5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070808" stop-opacity="1"/><stop offset=".45" stop-color="#070808" stop-opacity="0"/></linearGradient>
+            </defs>
+            <rect width="640" height="440" fill="url(#g5)"/>
+            <!-- perspective floor -->
+            <g stroke="#d4ff3a" stroke-opacity=".18" fill="none">
+              <path d="M320 250 L-200 440 M320 250 L-40 440 M320 250 L120 440 M320 250 L240 440 M320 250 L400 440 M320 250 L520 440 M320 250 L680 440 M320 250 L840 440"/>
+              <path d="M0 272 H640 M0 296 H640 M0 328 H640 M0 370 H640 M0 425 H640"/>
+            </g>
+            <rect width="640" height="440" fill="url(#fade5)"/>
+            <!-- target rings -->
+            <g fill="none" stroke="#d4ff3a"><ellipse cx="320" cy="372" rx="150" ry="30" stroke-opacity=".35"/><ellipse cx="320" cy="372" rx="100" ry="19" stroke-opacity=".55"/><ellipse cx="320" cy="372" rx="44" ry="8" stroke-opacity=".8"/></g>
+            <ellipse cx="320" cy="372" rx="12" ry="3" fill="#d4ff3a"/>
+            <path d="M320 372 V170" stroke="#d4ff3a" stroke-opacity=".5" stroke-dasharray="4 5"/>
+            <!-- ad preview card -->
+            <g transform="translate(70 70)">
+              <rect width="200" height="250" rx="18" fill="#101310" stroke="#2c3322"/>
+              <circle cx="26" cy="26" r="11" fill="#d4ff3a"/><text x="21" y="31" font-family="Unbounded" font-size="11" font-weight="800" fill="#101310">M</text>
+              <rect x="46" y="19" width="80" height="6" rx="3" fill="#3a4230"/><rect x="46" y="30" width="50" height="5" rx="2.5" fill="#262c1f"/>
+              <rect x="14" y="48" width="172" height="124" rx="10" fill="#1a1f14"/>
+              <path d="M14 150 L66 104 L104 136 L136 112 L186 150 V162 A10 10 0 0 1 176 172 H24 A10 10 0 0 1 14 162Z" fill="#d4ff3a" opacity=".22"/>
+              <circle cx="146" cy="82" r="14" fill="#d4ff3a" opacity=".35"/>
+              <rect x="14" y="184" width="120" height="7" rx="3.5" fill="#3a4230"/><rect x="14" y="198" width="90" height="6" rx="3" fill="#262c1f"/>
+              <rect x="14" y="216" width="172" height="22" rx="7" fill="#1877f2"/>
+            </g>
+            <!-- campaign panel -->
+            <g transform="translate(330 64)">
+              <rect width="250" height="176" rx="18" fill="rgba(16,19,16,.92)" stroke="#2c3322"/>
+              <text x="18" y="30" fill="#8a927c" font-family="JetBrains Mono" font-size="9" data-i18n="mi.svg.status">CAMPAIGN · AWAITING APPROVAL</text>
+              <text x="18" y="62" fill="#8a927c" font-family="Manrope" font-size="11" data-i18n="mi.svg.limit">Daily limit</text>
+              <text x="232" y="62" fill="#eef3f2" font-family="Unbounded" font-size="14" text-anchor="end">$50</text>
+              <rect x="18" y="72" width="214" height="5" rx="2.5" fill="#262c1f"/><rect x="18" y="72" width="64" height="5" rx="2.5" fill="#d4ff3a"/>
+              <text x="18" y="102" fill="#8a927c" font-family="Manrope" font-size="11" data-i18n="mi.svg.aud">Audience</text>
+              <text x="232" y="102" fill="#eef3f2" font-family="JetBrains Mono" font-size="10" text-anchor="end">18–34 · UZ</text>
+              <rect x="18" y="126" width="104" height="32" rx="9" fill="none" stroke="#3a4230"/>
+              <text x="70" y="146" fill="#8a927c" font-family="JetBrains Mono" font-size="11" text-anchor="middle">❚❚</text>
+              <rect x="128" y="126" width="104" height="32" rx="9" fill="#d4ff3a"/>
+              <text x="180" y="146" fill="#101310" font-family="Manrope" font-size="11" font-weight="700" text-anchor="middle" data-i18n="mi.svg.approve">Approve</text>
+            </g>
+          </svg>
+          <span class="proj-view">↗</span>
+        </div>
+        <div class="proj-info">
+          <div class="kicker"><span data-i18n="mi.kicker">Featured project</span><span class="live" data-i18n="mi.live">Live</span></div>
+          <h3>MIRYAS AI Target</h3>
+          <p data-i18n="mi.p">An AI platform that plans, creates and launches Meta &amp; Instagram ad campaigns on its own. A business owner signs in once with Facebook — the AI studies their Instagram, builds a targeted campaign and waits for approval before spending a cent.</p>
+          <div class="proj-metrics"><div>1<span data-i18n="mi.m1">click Facebook sign-in</span></div><div>$50<span data-i18n="mi.m2">daily spend cap</span></div><div>3<span data-i18n="mi.m3">languages: UZ · RU · EN</span></div></div>
+          <div class="open"><span class="btn sm"><span data-i18n="mi.open">Open live project</span><span class="arr">↗</span></span></div>
+        </div>
+      </a>
+
+      <div class="proj-grid">
+        <!-- 1. Mobile banking -->
+        <a href="#contact" class="proj reveal" data-cat="fintech" data-hover>
+          <div class="proj-visual">
+            <span class="proj-badge" data-i18n="pr1.badge">FinTech · Mobile</span>
+            <svg viewBox="0 0 640 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <radialGradient id="g1" cx="70%" cy="20%" r="80%"><stop offset="0" stop-color="#0f3b37"/><stop offset="1" stop-color="#070b0e"/></radialGradient>
+                <linearGradient id="nbCardGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#19e3d0"/><stop offset="1" stop-color="#0c6f67"/></linearGradient>
+              </defs>
+              <rect width="640" height="440" fill="url(#g1)"/>
+              <g opacity=".08" stroke="#fff"><path d="M0 110H640M0 220H640M0 330H640M160 0V440M320 0V440M480 0V440"/></g>
+              <g transform="translate(120 46) rotate(-8)">
+                <rect width="180" height="370" rx="28" fill="#0b1216" stroke="#2a3a3e"/>
+                <rect x="14" y="40" width="152" height="92" rx="14" fill="url(#nbCardGrad)"/>
+                <text x="28" y="66" fill="#00201c" font-family="JetBrains Mono" font-size="9" data-i18n="svg.balance">BALANCE</text>
+                <text x="28" y="96" fill="#00201c" font-family="Unbounded" font-size="19" font-weight="600">24 580 000</text>
+                <text x="28" y="118" fill="#00201c" font-family="JetBrains Mono" font-size="9">UZS  ·  •••• 4417</text>
+                <g fill="#16232a"><rect x="14" y="146" width="44" height="44" rx="12"/><rect x="68" y="146" width="44" height="44" rx="12"/><rect x="122" y="146" width="44" height="44" rx="12"/></g>
+                <g fill="#19e3d0"><circle cx="36" cy="168" r="6"/><circle cx="90" cy="168" r="6" opacity=".6"/><circle cx="144" cy="168" r="6" opacity=".35"/></g>
+                <g fill="#16232a"><rect x="14" y="206" width="152" height="36" rx="10"/><rect x="14" y="250" width="152" height="36" rx="10"/><rect x="14" y="294" width="152" height="36" rx="10"/></g>
+                <g fill="#3a4b50"><rect x="50" y="216" width="70" height="6" rx="3"/><rect x="50" y="260" width="56" height="6" rx="3"/><rect x="50" y="304" width="80" height="6" rx="3"/></g>
+                <g fill="#19e3d0" opacity=".7"><circle cx="32" cy="224" r="8"/><circle cx="32" cy="268" r="8"/><circle cx="32" cy="312" r="8"/></g>
+              </g>
+              <g transform="translate(360 120)">
+                <rect width="220" height="150" rx="18" fill="#0b1216" stroke="#22323a"/>
+                <text x="18" y="30" fill="#7d8a89" font-family="JetBrains Mono" font-size="9" data-i18n="svg.mau">MONTHLY ACTIVE USERS</text>
+                <text x="18" y="58" fill="#eef3f2" font-family="Unbounded" font-size="20">1.2M</text>
+                <path d="M18 128 L50 116 L82 120 L114 98 L146 102 L178 78 L204 70" fill="none" stroke="#19e3d0" stroke-width="2"/>
+                <path d="M18 128 L50 116 L82 120 L114 98 L146 102 L178 78 L204 70 V136 H18Z" fill="#19e3d0" opacity=".1"/>
+              </g>
+            </svg>
+            <span class="proj-view">→</span>
+          </div>
+          <div class="proj-info">
+            <div><h3>Nova Bank Mobile</h3><p data-i18n="pr1.p">Retail banking app with instant P2P transfers, card management and biometric login.</p></div>
+            <span class="proj-year">2025</span>
+          </div>
+          <div class="proj-metrics"><div>1.2M<span data-i18n="pr1.m1">active users</span></div><div>4.8★<span data-i18n="pr1.m2">store rating</span></div><div>&lt;300ms<span data-i18n="pr1.m3">transfer time</span></div></div>
+        </a>
+
+        <!-- 2. Government portal -->
+        <a href="#contact" class="proj reveal" style="--d:.1" data-cat="gov" data-hover>
+          <div class="proj-visual">
+            <span class="proj-badge" data-i18n="pr2.badge">GovTech · Web platform</span>
+            <svg viewBox="0 0 640 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs><radialGradient id="g2" cx="20%" cy="10%" r="90%"><stop offset="0" stop-color="#1b2a33"/><stop offset="1" stop-color="#070b0e"/></radialGradient></defs>
+              <rect width="640" height="440" fill="url(#g2)"/>
+              <g transform="translate(70 60)">
+                <rect width="500" height="330" rx="16" fill="#0b1216" stroke="#26363c"/>
+                <path d="M0 34H500" stroke="#26363c"/>
+                <g fill="#3a4b50"><circle cx="18" cy="17" r="5"/><circle cx="34" cy="17" r="5"/><circle cx="50" cy="17" r="5"/></g>
+                <rect x="160" y="10" width="180" height="14" rx="7" fill="#16232a"/>
+                <rect x="0" y="34" width="110" height="296" fill="#0d161b"/>
+                <g fill="#2a3a40"><rect x="16" y="56" width="76" height="8" rx="4"/><rect x="16" y="80" width="60" height="8" rx="4"/><rect x="16" y="104" width="70" height="8" rx="4"/><rect x="16" y="128" width="52" height="8" rx="4"/></g>
+                <rect x="10" y="74" width="4" height="20" rx="2" fill="#19e3d0"/>
+                <text x="130" y="72" fill="#eef3f2" font-family="Unbounded" font-size="16" data-i18n="svg.public">Public services</text>
+                <rect x="130" y="86" width="200" height="8" rx="4" fill="#26363c"/>
+                <g>
+                  <rect x="130" y="110" width="110" height="90" rx="12" fill="#12202a"/><rect x="250" y="110" width="110" height="90" rx="12" fill="#12202a"/><rect x="370" y="110" width="110" height="90" rx="12" fill="#12202a"/>
+                  <g fill="none" stroke="#19e3d0" stroke-width="1.6"><rect x="146" y="126" width="22" height="22" rx="5"/><circle cx="277" cy="137" r="11"/><path d="M386 148 L397 126 L408 148Z"/></g>
+                  <g fill="#3a4b50"><rect x="146" y="164" width="70" height="7" rx="3.5"/><rect x="266" y="164" width="60" height="7" rx="3.5"/><rect x="386" y="164" width="76" height="7" rx="3.5"/></g>
+                  <g fill="#26363c"><rect x="146" y="178" width="46" height="6" rx="3"/><rect x="266" y="178" width="56" height="6" rx="3"/><rect x="386" y="178" width="40" height="6" rx="3"/></g>
+                </g>
+                <rect x="130" y="216" width="350" height="96" rx="12" fill="#12202a"/>
+                <g fill="#19e3d0"><rect x="150" y="280" width="18" height="20" rx="3" opacity=".4"/><rect x="178" y="266" width="18" height="34" rx="3" opacity=".5"/><rect x="206" y="256" width="18" height="44" rx="3" opacity=".6"/><rect x="234" y="246" width="18" height="54" rx="3" opacity=".75"/><rect x="262" y="234" width="18" height="66" rx="3"/></g>
+                <text x="306" y="252" fill="#7d8a89" font-family="JetBrains Mono" font-size="9" data-i18n="svg.apps">APPLICATIONS PROCESSED</text>
+                <text x="306" y="282" fill="#eef3f2" font-family="Unbounded" font-size="20">3.4M</text>
+              </g>
+            </svg>
+            <span class="proj-view">→</span>
+          </div>
+          <div class="proj-info">
+            <div><h3 data-i18n="pr2.h">E-Xizmat Services Portal</h3><p data-i18n="pr2.p">Unified citizen portal bringing 140+ public services online with secure digital identity.</p></div>
+            <span class="proj-year">2024</span>
+          </div>
+          <div class="proj-metrics"><div>140+<span data-i18n="pr2.m1">services online</span></div><div>−62%<span data-i18n="pr2.m2">processing time</span></div><div>99.95%<span data-i18n="pr2.m3">uptime</span></div></div>
+        </a>
+
+        <!-- 3. Logistics -->
+        <a href="#contact" class="proj reveal" data-cat="logistics" data-hover>
+          <div class="proj-visual">
+            <span class="proj-badge" data-i18n="pr3.badge">Logistics · AI & Data</span>
+            <svg viewBox="0 0 640 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs><radialGradient id="g3" cx="50%" cy="50%" r="70%"><stop offset="0" stop-color="#0e2b2a"/><stop offset="1" stop-color="#060a0d"/></radialGradient>
+                <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#2c4144"/></pattern></defs>
+              <rect width="640" height="440" fill="url(#g3)"/>
+              <rect width="640" height="440" fill="url(#dots)"/>
+              <path d="M60 330 C160 250 200 300 280 220 S420 150 470 190 S560 120 600 90" fill="none" stroke="#19e3d0" stroke-width="2.5"/>
+              <path d="M90 120 C170 160 230 130 280 220 S350 330 440 340 S540 300 580 330" fill="none" stroke="#d9b56b" stroke-width="1.6" stroke-dasharray="6 6" opacity=".8"/>
+              <path d="M280 220 L200 90 M280 220 L380 380" stroke="#eef3f2" stroke-width="1" opacity=".25"/>
+              <g fill="#05070a" stroke="#19e3d0" stroke-width="2"><circle cx="60" cy="330" r="7"/><circle cx="470" cy="190" r="7"/><circle cx="600" cy="90" r="7"/></g>
+              <circle cx="280" cy="220" r="12" fill="#19e3d0"/><circle cx="280" cy="220" r="26" fill="none" stroke="#19e3d0" opacity=".35"/><circle cx="280" cy="220" r="44" fill="none" stroke="#19e3d0" opacity=".15"/>
+              <g fill="#d9b56b"><circle cx="90" cy="120" r="5"/><circle cx="440" cy="340" r="5"/><circle cx="580" cy="330" r="5"/></g>
+              <g transform="translate(40 40)">
+                <rect width="190" height="64" rx="14" fill="rgba(11,18,22,.85)" stroke="#26363c"/>
+                <text x="16" y="26" fill="#7d8a89" font-family="JetBrains Mono" font-size="9" data-i18n="svg.ship">ACTIVE SHIPMENTS</text>
+                <text x="16" y="50" fill="#eef3f2" font-family="Unbounded" font-size="17">8 214</text>
+                <text x="118" y="50" fill="#19e3d0" font-family="JetBrains Mono" font-size="10">▲ 12.4%</text>
+              </g>
+              <g transform="translate(410 370)">
+                <rect width="190" height="44" rx="12" fill="rgba(11,18,22,.85)" stroke="#26363c"/>
+                <text x="16" y="27" fill="#eef3f2" font-family="JetBrains Mono" font-size="10" data-i18n="svg.eta">ETA Tashkent → Almaty  18h</text>
+              </g>
+            </svg>
+            <span class="proj-view">→</span>
+          </div>
+          <div class="proj-info">
+            <div><h3>SilkWay Fleet Intelligence</h3><p data-i18n="pr3.p">Real-time tracking and AI route optimization for a cross-border fleet across Central Asia.</p></div>
+            <span class="proj-year">2025</span>
+          </div>
+          <div class="proj-metrics"><div>−21%<span data-i18n="pr3.m1">fuel costs</span></div><div>1 400<span data-i18n="pr3.m2">vehicles tracked</span></div><div>5<span data-i18n="pr3.m3">countries</span></div></div>
+        </a>
+
+        <!-- 4. Healthcare -->
+        <a href="#contact" class="proj reveal" style="--d:.1" data-cat="health" data-hover>
+          <div class="proj-visual">
+            <span class="proj-badge" data-i18n="pr4.badge">Healthcare · SaaS</span>
+            <svg viewBox="0 0 640 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs><radialGradient id="g4" cx="80%" cy="90%" r="90%"><stop offset="0" stop-color="#2a2414"/><stop offset=".6" stop-color="#0a0f12"/><stop offset="1" stop-color="#070b0e"/></radialGradient></defs>
+              <rect width="640" height="440" fill="url(#g4)"/>
+              <g transform="translate(60 60)">
+                <rect width="250" height="150" rx="16" fill="#0b1216" stroke="#26363c"/>
+                <text x="18" y="30" fill="#7d8a89" font-family="JetBrains Mono" font-size="9" data-i18n="svg.vitals">PATIENT VITALS · LIVE</text>
+                <path d="M18 96 H70 L82 70 L96 124 L110 50 L124 108 L136 96 H232" fill="none" stroke="#19e3d0" stroke-width="2"/>
+                <text x="18" y="136" fill="#eef3f2" font-family="Unbounded" font-size="15" data-i18n="svg.bpm">72 bpm</text>
+                <text x="130" y="136" fill="#d9b56b" font-family="JetBrains Mono" font-size="10">SpO₂ 98%</text>
+              </g>
+              <g transform="translate(330 60)">
+                <rect width="250" height="150" rx="16" fill="#0b1216" stroke="#26363c"/>
+                <circle cx="80" cy="76" r="44" fill="none" stroke="#16232a" stroke-width="14"/>
+                <circle cx="80" cy="76" r="44" fill="none" stroke="#19e3d0" stroke-width="14" stroke-dasharray="200 277" transform="rotate(-90 80 76)"/>
+                <circle cx="80" cy="76" r="44" fill="none" stroke="#d9b56b" stroke-width="14" stroke-dasharray="50 277" stroke-dashoffset="-204" transform="rotate(-90 80 76)"/>
+                <text x="64" y="81" fill="#eef3f2" font-family="Unbounded" font-size="13">72%</text>
+                <g fill="#3a4b50"><rect x="146" y="52" width="80" height="7" rx="3.5"/><rect x="146" y="74" width="62" height="7" rx="3.5"/><rect x="146" y="96" width="72" height="7" rx="3.5"/></g>
+                <g><circle cx="136" cy="55" r="4" fill="#19e3d0"/><circle cx="136" cy="77" r="4" fill="#d9b56b"/><circle cx="136" cy="99" r="4" fill="#3a4b50"/></g>
+              </g>
+              <g transform="translate(60 230)">
+                <rect width="520" height="150" rx="16" fill="#0b1216" stroke="#26363c"/>
+                <text x="18" y="30" fill="#7d8a89" font-family="JetBrains Mono" font-size="9" data-i18n="svg.appt">APPOINTMENTS TODAY</text>
+                <g fill="#12202a"><rect x="18" y="46" width="484" height="26" rx="8"/><rect x="18" y="80" width="484" height="26" rx="8"/><rect x="18" y="114" width="484" height="26" rx="8"/></g>
+                <g fill="#3a4b50"><rect x="54" y="56" width="120" height="6" rx="3"/><rect x="54" y="90" width="90" height="6" rx="3"/><rect x="54" y="124" width="140" height="6" rx="3"/></g>
+                <g fill="#19e3d0"><circle cx="36" cy="59" r="6"/><circle cx="36" cy="93" r="6" opacity=".5"/><circle cx="36" cy="127" r="6" opacity=".3"/></g>
+                <g font-family="JetBrains Mono" font-size="9" fill="#7d8a89"><text x="440" y="62">09:30</text><text x="440" y="96">10:15</text><text x="440" y="130">11:00</text></g>
+              </g>
+            </svg>
+            <span class="proj-view">→</span>
+          </div>
+          <div class="proj-info">
+            <div><h3>Mediq Clinic Cloud</h3><p data-i18n="pr4.p">Clinic management SaaS: electronic records, scheduling, telemedicine and lab integrations.</p></div>
+            <span class="proj-year">2024</span>
+          </div>
+          <div class="proj-metrics"><div>85<span data-i18n="pr4.m1">clinics</span></div><div>2.3M<span data-i18n="pr4.m2">records secured</span></div><div>−35%<span data-i18n="pr4.m3">wait times</span></div></div>
+        </a>
+      </div>
+
+      <div class="proj-more reveal"><a href="#contact" class="btn magnetic" data-hover><span data-i18n="prj.more">Discuss your project</span><span class="arr">→</span></a></div>
+    </div>
+  </section>
+
+  <!-- STACK / EXPERTISE -->
+  <section id="stack" class="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="idx reveal" data-i18n="ind.idx">( 05 ) — Industries</span>
+          <h2 class="reveal" style="--d:.1" data-i18n="ind.h2">Where we <strong>move the needle.</strong></h2>
+        </div>
+      </div>
+      <div class="stack-list">
+        <div class="stack-row reveal" data-hover><span class="n">/01</span><h4 data-i18n="i1.h">FinTech & Banking</h4><p data-i18n="i1.p">Core banking modules, payment gateways and mobile banking at national scale.</p><span class="go">→</span></div>
+        <div class="stack-row reveal" data-hover><span class="n">/02</span><h4 data-i18n="i2.h">GovTech</h4><p data-i18n="i2.p">Secure citizen-facing e-services and inter-agency data exchange.</p><span class="go">→</span></div>
+        <div class="stack-row reveal" data-hover><span class="n">/03</span><h4 data-i18n="i3.h">Telecom</h4><p data-i18n="i3.p">BSS/OSS platforms, self-care apps and network analytics.</p><span class="go">→</span></div>
+        <div class="stack-row reveal" data-hover><span class="n">/04</span><h4 data-i18n="i4.h">Retail & Logistics</h4><p data-i18n="i4.p">E-commerce, warehouse automation and last-mile route optimization.</p><span class="go">→</span></div>
+        <div class="stack-row reveal" data-hover><span class="n">/05</span><h4 data-i18n="i5.h">Healthcare & EdTech</h4><p data-i18n="i5.p">Clinical systems, telemedicine and learning platforms for millions.</p><span class="go">→</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div>
+        <span class="idx reveal" data-i18n="ct.idx">( 06 ) — Let's talk</span>
+        <h2 class="reveal" style="--d:.1" data-i18n="ct.h2">Let's build<strong>what's next.</strong></h2>
+        <a class="mail reveal" style="--d:.2" href="mailto:uzbit777@gmail.com" data-hover>uzbit777@gmail.com</a>
+      </div>
+      <form id="form" class="reveal" style="--d:.2" novalidate>
+        <div class="field"><input id="f-name" type="text" placeholder=" " required><label for="f-name" data-i18n="fm.name">Your name</label></div>
+        <div class="field"><input id="f-mail" type="email" placeholder=" " required><label for="f-mail" data-i18n="fm.mail">Work email</label></div>
+        <div>
+          <div class="idx" style="margin-bottom:12px;color:var(--muted)" data-i18n="fm.int">Interested in</div>
+          <div class="chips">
+            <input type="checkbox" id="c1"><label for="c1" data-hover data-i18n="fm.c1">Software</label>
+            <input type="checkbox" id="c2"><label for="c2" data-hover data-i18n="fm.c2">Cloud</label>
+            <input type="checkbox" id="c3"><label for="c3" data-hover data-i18n="fm.c3">AI</label>
+            <input type="checkbox" id="c4"><label for="c4" data-hover data-i18n="fm.c4">Security</label>
+            <input type="checkbox" id="c5"><label for="c5" data-hover data-i18n="fm.c5">Design</label>
+          </div>
+        </div>
+        <div class="field"><textarea id="f-msg" rows="3" placeholder=" "></textarea><label for="f-msg" data-i18n="fm.msg">Tell us about your project</label></div>
+        <button class="btn solid magnetic" type="submit" data-hover style="justify-self:start"><span data-i18n="fm.send">Send request</span><span class="arr">→</span></button>
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form-msg ok" role="status" data-i18n="fm.ok">✓ Thank you! Your request has been sent — we'll reply within one business day.</div>
+        <div class="form-msg bad err" role="alert" data-i18n="fm.err">Couldn't send right now. Please email us directly at uzbit777@gmail.com.</div>
+        <div class="form-msg bad invalid" role="alert" data-i18n="fm.invalid">Please enter your name and a valid email.</div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-top">
+    <a href="#top" class="brand" data-hover>
+      <svg viewBox="0 0 113 195"><path d="M0,36 L56,0 L113,36 L113,44 L99,51 L56,24 L22,46 L22,52 L0,63 Z"/><path d="M113,55 L113,85 L0,140 L0,110 Z"/><path d="M113,159 L57,195 L0,159 L0,151 L14,144 L57,171 L91,149 L91,143 L113,132 Z"/></svg>
+      <span>UZB<em>·</em>IT</span>
+    </a>
+    <div class="foot-cols">
+      <div><h5 data-i18n="ft.company">Company</h5><a href="#services" data-hover data-i18n="nav.services">Services</a><a href="#process" data-hover data-i18n="nav.process">Process</a><a href="#projects" data-hover data-i18n="nav.projects">Projects</a><a href="#stack" data-hover data-i18n="ft.industries">Industries</a></div>
+      <!-- Social links: add real URLs, then uncomment
+      <div><h5 data-i18n="ft.connect">Connect</h5><a href="https://t.me/…" target="_blank" rel="noopener" data-hover>Telegram</a><a href="https://instagram.com/…" target="_blank" rel="noopener" data-hover>Instagram</a></div>
+      -->
+      <div><h5 data-i18n="ft.office">Office</h5><a href="https://maps.google.com/?q=Tashkent,+Uzbekistan" target="_blank" rel="noopener" data-hover data-i18n="ft.city">Tashkent, Uzbekistan</a><a href="mailto:uzbit777@gmail.com" data-hover>uzbit777@gmail.com</a></div>
+    </div>
+  </div>
+  <div class="foot-word">UZB IT</div>
+  <div class="foot-bot"><span>© <span id="yr"></span> UZB IT. <span data-i18n="ft.rights">All rights reserved.</span></span><span data-i18n="ft.crafted">Crafted in Tashkent</span></div>
+</footer>
+
+<!-- ================= UI / interaction (classic script) ================= -->
+<script>
+(() => {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!location.hash) scrollTo({ top: 0, behavior: 'instant' });
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const body = document.body;
+  $('#yr').textContent = new Date().getFullYear();
+
+  /* ---------- Preloader ---------- */
+  let loadP = 0, glReady = false, started = performance.now();
+  let loaderDone = false;
+  window.__onGLReady = () => {
+    glReady = true;
+    // 3D arrived after the timeout fallback: switch the fallback off and play the intro anyway
+    if (loaderDone){ body.classList.remove('no-webgl'); window.__startIntro && window.__startIntro(); }
+  };
+  const hasGL = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } })();
+  if (!hasGL){ body.classList.add('no-webgl'); glReady = true; }
+  const lnum = $('#lnum'), lbar = $('#lbar');
+  function tickLoader(){
+    const elapsed = performance.now() - started;
+    const target = glReady ? 100 : Math.min(90, elapsed / 20);
+    loadP += (target - loadP) * 0.08;
+    if (elapsed > 6000 && !glReady) { body.classList.add('no-webgl'); glReady = true; }
+    lnum.textContent = Math.round(loadP);
+    lbar.style.transform = `scaleX(${loadP/100})`;
+    if (loadP > 99.4 && elapsed > 1900) return finish();
+    requestAnimationFrame(tickLoader);
+  }
+  function finish(){
+    loaderDone = true;
+    lnum.textContent = 100;
+    $('#loader').classList.add('done');
+    body.classList.remove('loading');
+    body.classList.add('ready');
+    window.__startIntro && window.__startIntro();
+  }
+  requestAnimationFrame(tickLoader);
+
+  /* ---------- Cursor ---------- */
+  const dot = $('.cursor'), ring = $('.cursor-ring');
+  let mx = -100, my = -100, rx = -100, ry = -100;
+  addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate3d(${mx}px,${my}px,0)`; });
+  (function loop(){ rx += (mx-rx)*.18; ry += (my-ry)*.18; ring.style.transform = `translate3d(${rx}px,${ry}px,0)`; requestAnimationFrame(loop); })();
+  document.addEventListener('pointerover', e => { if (e.target.closest('[data-hover]')) ring.classList.add('hover'); });
+  document.addEventListener('pointerout', e => { if (e.target.closest('[data-hover]')) ring.classList.remove('hover'); });
+
+  /* ---------- Magnetic buttons ---------- */
+  $$('.magnetic').forEach(el => {
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width/2, y = e.clientY - r.top - r.height/2;
+      el.style.transform = `translate(${x*.25}px,${y*.35}px)`;
+    });
+    el.addEventListener('pointerleave', () => { el.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)'; el.style.transform = ''; setTimeout(()=>el.style.transition='',600); });
+  });
+
+  /* ---------- 3D tilt cards ---------- */
+  $$('.tilt').forEach(el => {
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      el.style.transform = `rotateY(${(px-.5)*14}deg) rotateX(${(.5-py)*14}deg) translateZ(10px)`;
+      el.style.setProperty('--mx', px*100+'%'); el.style.setProperty('--my', py*100+'%');
+    });
+    el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+  });
+
+  /* ---------- Reveal on view ---------- */
+  const io = new IntersectionObserver(ents => ents.forEach(en => {
+    if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+  }), { threshold: .15 });
+  $$('.reveal').forEach(el => io.observe(el));
+
+  /* ---------- Counters ---------- */
+  const cio = new IntersectionObserver(ents => ents.forEach(en => {
+    if (!en.isIntersecting) return;
+    const el = en.target, to = parseFloat(el.dataset.to), dec = +(el.dataset.dec||0), t0 = performance.now();
+    (function step(now){
+      const p = Math.min(1, (now - t0) / 2000), e = 1 - Math.pow(1-p, 4);
+      el.textContent = (to*e).toFixed(dec);
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+    cio.unobserve(el);
+  }), { threshold: .6 });
+  $$('.count').forEach(el => cio.observe(el));
+
+  /* ---------- Manifesto word split ---------- */
+  const man = $('#manifesto');
+  let words = [];
+  function splitManifesto(text){
+    man.innerHTML = text.trim().split(/\s+/).map(w => {
+      const hl = /^\*.*\*[,.]?$/.test(w);
+      return `<span class="w${hl?' hl':''}">${w.replace(/\*/g,'')}</span>`;
+    }).join(' ');
+    words = $$('.w', man);
+  }
+
+  /* ---------- Languages: EN (default, from markup) · UZ · RU ---------- */
+  const I18N = {
+"meta.title": {
+"uz": "UZB IT — Raqamli kelajakni quramiz",
+"ru": "UZB IT — Создаём цифровое будущее"
+},
+"loader": {
+"uz": "Yuklanmoqda",
+"ru": "Загрузка"
+},
+"nav.services": {
+"uz": "Xizmatlar",
+"ru": "Услуги"
+},
+"nav.process": {
+"uz": "Jarayon",
+"ru": "Процесс"
+},
+"nav.projects": {
+"uz": "Loyihalar",
+"ru": "Проекты"
+},
+"nav.expertise": {
+"uz": "Sohalar",
+"ru": "Отрасли"
+},
+"nav.contact": {
+"uz": "Aloqa",
+"ru": "Контакты"
+},
+"cta.start": {
+"uz": "Loyihani boshlash",
+"ru": "Начать проект"
+},
+"hero.eyebrow": {
+"uz": "Toshkent · Keyingi o‘n yillik uchun",
+"ru": "Ташкент · Для следующего десятилетия"
+},
+"hero.l1": {
+"uz": "Raqamli",
+"ru": "Мы создаём"
+},
+"hero.l2": {
+"uz": "<strong class='accent'>kelajakni</strong>",
+"ru": "<strong class='accent'>цифровое</strong>"
+},
+"hero.l3": {
+"uz": "<strong>quramiz.</strong>",
+"ru": "<strong>будущее.</strong>"
+},
+"hero.lead": {
+"uz": "UZB IT oddiylik bilan cheklanmaydigan tashkilotlar uchun dasturiy ta’minot, bulut va sun’iy intellekt tizimlarini loyihalaydi va yaratadi — Buyuk Ipak yo‘lidan global maydongacha.",
+"ru": "UZB IT проектирует и создаёт программное обеспечение, облачные и AI-системы для компаний, которые не согласны на обычное — от Великого шёлкового пути до мировой сцены."
+},
+"hero.explore": {
+"uz": "Imkoniyatlarimiz",
+"ru": "Наши возможности"
+},
+"hud.status": {
+"uz": "Tizim holati",
+"ru": "Статус системы"
+},
+"hud.online": {
+"uz": "Barcha tugunlar faol",
+"ru": "Все узлы в сети"
+},
+"hud.tz": {
+"uz": "Toshkent · UTC+5",
+"ru": "Ташкент · UTC+5"
+},
+"hud.render": {
+"uz": "Render konveyeri",
+"ru": "Рендер-конвейер"
+},
+"hero.scroll": {
+"uz": "Pastga aylantiring",
+"ru": "Листайте вниз"
+},
+"mq1": {
+"uz": "Dasturiy injiniring",
+"ru": "Разработка ПО"
+},
+"mq2": {
+"uz": "Bulut infratuzilmasi",
+"ru": "Облачная инфраструктура"
+},
+"mq3": {
+"uz": "Sun’iy intellekt",
+"ru": "Искусственный интеллект"
+},
+"mq4": {
+"uz": "Kiberxavfsizlik",
+"ru": "Кибербезопасность"
+},
+"mq5": {
+"uz": "Mahsulot dizayni",
+"ru": "Продуктовый дизайн"
+},
+"mq6": {
+"uz": "Ma’lumotlar platformalari",
+"ru": "Платформы данных"
+},
+"man.idx": {
+"uz": "( 01 ) — Manifest",
+"ru": "( 01 ) — Манифест"
+},
+"man.text": {
+"uz": "Buyuk texnologiya buyuk me’morchilikka o‘xshaydi. U muhim joyda *aniq*, ko‘z tushgan joyda *go‘zal* va yaratuvchilaridan ham uzoq yashashi uchun *qurilgan*. Biz Samarqand geometriyasini ertangi kun tizimlariga olib kiramiz.",
+"ru": "Великие технологии подобны великой архитектуре. Они *точны* там, где это важно, *красивы* там, где их видят, и *построены* так, чтобы пережить своих создателей. Мы переносим геометрию Самарканда в системы завтрашнего дня."
+},
+"svc.idx": {
+"uz": "( 02 ) — Imkoniyatlar",
+"ru": "( 02 ) — Компетенции"
+},
+"svc.h2": {
+"uz": "Olti yo‘nalish.<br><strong>Yagona standart.</strong>",
+"ru": "Шесть направлений.<br><strong>Один стандарт.</strong>"
+},
+"svc.p": {
+"uz": "Strategiyadan ishga tushirishgacha — kechikishlar va murosalarsiz ishlaydigan to‘liq sikl muhandislik jamoalari.",
+"ru": "Команды полного цикла, которые проходят путь от стратегии до продакшна без задержек и компромиссов."
+},
+"s1.tag": {
+"uz": "MUHANDISLIK",
+"ru": "РАЗРАБОТКА"
+},
+"s1.h": {
+"uz": "Maxsus dasturiy ta’minot",
+"ru": "Заказное ПО"
+},
+"s1.p": {
+"uz": "Birinchi kundanoq kengayish uchun yaratilgan veb-platformalar, mobil ilovalar va korporativ tizimlar.",
+"ru": "Веб-платформы, мобильные приложения и корпоративные системы, спроектированные для масштаба с первого дня."
+},
+"s2.tag": {
+"uz": "INFRATUZILMA",
+"ru": "ИНФРАСТРУКТУРА"
+},
+"s2.h": {
+"uz": "Bulut va DevOps",
+"ru": "Облако и DevOps"
+},
+"s2.p": {
+"uz": "Har kuni reliz chiqarish imkonini beruvchi CI/CD bilan barqaror, kuzatiladigan va tejamkor infratuzilma.",
+"ru": "Отказоустойчивая, наблюдаемая и экономичная инфраструктура с CI/CD для ежедневных релизов."
+},
+"s3.tag": {
+"uz": "INTELLEKT",
+"ru": "ИНТЕЛЛЕКТ"
+},
+"s3.h": {
+"uz": "Sun’iy intellekt va ML",
+"ru": "ИИ и машинное обучение"
+},
+"s3.p": {
+"uz": "Ma’lumotlarni qarorlarga aylantiradigan LLM agentlari, kompyuter ko‘rishi va bashoratli modellar.",
+"ru": "LLM-агенты, компьютерное зрение и предиктивные модели, превращающие данные в решения."
+},
+"s4.tag": {
+"uz": "XAVFSIZLIK",
+"ru": "БЕЗОПАСНОСТЬ"
+},
+"s4.h": {
+"uz": "Kiberxavfsizlik",
+"ru": "Кибербезопасность"
+},
+"s4.p": {
+"uz": "Eng muhim narsalarni himoya qiladigan audit, penetratsion testlar va zero-trust arxitekturasi.",
+"ru": "Аудит, тестирование на проникновение и архитектура zero-trust для защиты самого важного."
+},
+"s5.tag": {
+"uz": "MA’LUMOTLAR",
+"ru": "ДАННЫЕ"
+},
+"s5.h": {
+"uz": "Ma’lumotlar platformalari",
+"ru": "Платформы данных"
+},
+"s5.p": {
+"uz": "Ma’lumotlar omborlari, real vaqt konveyerlari va rahbariyat haqiqatan foydalanadigan dashbordlar.",
+"ru": "Хранилища данных, потоковые конвейеры и дашборды, которыми руководство действительно пользуется."
+},
+"s6.tag": {
+"uz": "TAJRIBA",
+"ru": "ОПЫТ"
+},
+"s6.h": {
+"uz": "Mahsulot va 3D dizayn",
+"ru": "Продуктовый и 3D-дизайн"
+},
+"s6.p": {
+"uz": "Interfeyslar, brend tizimlari va immersiv WebGL tajribalari — xuddi siz hozir ko‘rib turganingizdek.",
+"ru": "Интерфейсы, бренд-системы и иммерсивные WebGL-проекты — как тот, что вы видите сейчас."
+},
+"proc.idx": {
+"uz": "( 03 ) — Uslub",
+"ru": "( 03 ) — Метод"
+},
+"proc.h2": {
+"uz": "Birinchi eskizdan<br><strong>global miqyosgacha.</strong>",
+"ru": "От первого эскиза<br>до <strong>глобального масштаба.</strong>"
+},
+"proc.p": {
+"uz": "Har bir loyihada sayqallangan to‘rt bosqichli uslub. Shaffof, o‘lchanadigan, izchil.",
+"ru": "Четырёхэтапный метод, отточенный в каждом проекте. Прозрачно, измеримо, неуклонно."
+},
+"p1.d": {
+"uz": "1–2-haftalar",
+"ru": "Недели 1–2"
+},
+"p1.h": {
+"uz": "Tadqiqot",
+"ru": "Исследование"
+},
+"p1.p": {
+"uz": "Haqiqiy muammoni va muvaffaqiyat raqamlarda qanday ko‘rinishini aniqlash uchun seminarlar, audit va foydalanuvchi tadqiqotlari.",
+"ru": "Воркшопы, аудит и исследования пользователей, чтобы определить реальную проблему и измеримые критерии успеха."
+},
+"p2.d": {
+"uz": "2–4-haftalar",
+"ru": "Недели 2–4"
+},
+"p2.h": {
+"uz": "Arxitektura",
+"ru": "Архитектура"
+},
+"p2.p": {
+"uz": "Tizim dizayni, texnologiyalarni tanlash va real foydalanuvchilar bilan sinalgan interaktiv prototiplar.",
+"ru": "Проектирование системы, выбор технологий и интерактивные прототипы, проверенные на реальных пользователях."
+},
+"p3.d": {
+"uz": "Sprintlar asosida",
+"ru": "Спринты"
+},
+"p3.h": {
+"uz": "Ishlab chiqish",
+"ru": "Разработка"
+},
+"p3.p": {
+"uz": "Ikki haftalik sprintlar, jonli namoyishlar va avtomatlashtirilgan testlar bilan yuqori sifatli kod.",
+"ru": "Двухнедельные спринты, живые демо и production-код с автоматическим тестированием на каждом этапе."
+},
+"p4.d": {
+"uz": "Doimiy",
+"ru": "Постоянно"
+},
+"p4.h": {
+"uz": "Kengaytirish",
+"ru": "Масштаб"
+},
+"p4.p": {
+"uz": "Ishga tushirish, monitoring, optimallashtirish. Biznesingiz o‘sishi bilan 24/7 qo‘llab-quvvatlash va doimiy takomillashtirish.",
+"ru": "Запуск, мониторинг, оптимизация. Поддержка 24/7 и постоянное развитие вместе с ростом вашего бизнеса."
+},
+"st1": {
+"uz": "Topshirilgan mahsulotlar",
+"ru": "Реализованных продуктов"
+},
+"st2": {
+"uz": "Muhandis va dizaynerlar",
+"ru": "Инженеров и дизайнеров"
+},
+"st3": {
+"uz": "Mijozlarimiz bor mamlakatlar",
+"ru": "Стран присутствия"
+},
+"st4": {
+"uz": "Tizimlarning uzluksiz ishlashi",
+"ru": "Безотказная работа систем"
+},
+"prj.idx": {
+"uz": "( 04 ) — Loyihalarimiz",
+"ru": "( 04 ) — Наши проекты"
+},
+"prj.h2": {
+"uz": "Tanlangan ishlar,<br><strong>o‘lchanadigan natijalar.</strong>",
+"ru": "Избранные работы,<br><strong>измеримые результаты.</strong>"
+},
+"prj.p": {
+"uz": "Moliya, davlat sektori, logistika va sog‘liqni saqlash sohasidagi mijozlar uchun biz loyihalagan, yaratgan va qo‘llab-quvvatlayotgan platformalardan namunalar.",
+"ru": "Подборка платформ, которые мы спроектировали, разработали и продолжаем сопровождать для клиентов в финансах, госсекторе, логистике и здравоохранении."
+},
+"f.all": {
+"uz": "Barchasi",
+"ru": "Все работы"
+},
+"f.log": {
+"uz": "Logistika",
+"ru": "Логистика"
+},
+"f.health": {
+"uz": "Sog‘liqni saqlash",
+"ru": "Здравоохранение"
+},
+"pr1.badge": {
+"uz": "FinTech · Mobil",
+"ru": "FinTech · Мобильное"
+},
+"pr1.p": {
+"uz": "Tezkor P2P o‘tkazmalar, kartalarni boshqarish va biometrik kirishga ega chakana bank ilovasi.",
+"ru": "Банковское приложение с мгновенными P2P-переводами, управлением картами и биометрическим входом."
+},
+"pr1.m1": {
+"uz": "faol foydalanuvchi",
+"ru": "активных пользователей"
+},
+"pr1.m2": {
+"uz": "do‘kon reytingi",
+"ru": "рейтинг в сторах"
+},
+"pr1.m3": {
+"uz": "o‘tkazma vaqti",
+"ru": "время перевода"
+},
+"pr2.badge": {
+"uz": "GovTech · Veb-platforma",
+"ru": "GovTech · Веб-платформа"
+},
+"pr2.h": {
+"uz": "E-Xizmat xizmatlar portali",
+"ru": "Портал услуг E-Xizmat"
+},
+"pr2.p": {
+"uz": "Xavfsiz raqamli identifikatsiya bilan 140 dan ortiq davlat xizmatini onlayn taqdim etuvchi yagona portal.",
+"ru": "Единый портал для граждан: более 140 госуслуг онлайн с защищённой цифровой идентификацией."
+},
+"pr2.m1": {
+"uz": "onlayn xizmat",
+"ru": "услуг онлайн"
+},
+"pr2.m2": {
+"uz": "ko‘rib chiqish vaqti",
+"ru": "время обработки"
+},
+"pr2.m3": {
+"uz": "uzluksiz ishlash",
+"ru": "аптайм"
+},
+"pr3.badge": {
+"uz": "Logistika · AI va ma’lumotlar",
+"ru": "Логистика · ИИ и данные"
+},
+"pr3.p": {
+"uz": "Markaziy Osiyo bo‘ylab xalqaro avtopark uchun real vaqtda kuzatuv va sun’iy intellekt yordamida marshrut optimallashtirish.",
+"ru": "Мониторинг в реальном времени и оптимизация маршрутов на базе ИИ для международного автопарка в Центральной Азии."
+},
+"pr3.m1": {
+"uz": "yoqilg‘i xarajatlari",
+"ru": "затраты на топливо"
+},
+"pr3.m2": {
+"uz": "kuzatiladigan transport",
+"ru": "транспортных средств"
+},
+"pr3.m3": {
+"uz": "mamlakat",
+"ru": "стран"
+},
+"pr4.badge": {
+"uz": "Sog‘liqni saqlash · SaaS",
+"ru": "Здравоохранение · SaaS"
+},
+"pr4.p": {
+"uz": "Klinikalarni boshqarish uchun SaaS: elektron tibbiy kartalar, qabulga yozilish, telemeditsina va laboratoriya integratsiyasi.",
+"ru": "SaaS для управления клиниками: электронные медкарты, запись на приём, телемедицина и интеграция с лабораториями."
+},
+"pr4.m1": {
+"uz": "klinika",
+"ru": "клиник"
+},
+"pr4.m2": {
+"uz": "himoyalangan yozuv",
+"ru": "защищённых записей"
+},
+"pr4.m3": {
+"uz": "kutish vaqti",
+"ru": "время ожидания"
+},
+"prj.more": {
+"uz": "Loyihangizni muhokama qilamiz",
+"ru": "Обсудить ваш проект"
+},
+"ind.idx": {
+"uz": "( 05 ) — Sohalar",
+"ru": "( 05 ) — Отрасли"
+},
+"ind.h2": {
+"uz": "Biz <strong>natija beradigan sohalar.</strong>",
+"ru": "Где мы <strong>меняем правила игры.</strong>"
+},
+"i1.h": {
+"uz": "FinTech va bank sohasi",
+"ru": "Финтех и банки"
+},
+"i1.p": {
+"uz": "Asosiy bank modullari, to‘lov shlyuzlari va milliy miqyosdagi mobil banking.",
+"ru": "Модули АБС, платёжные шлюзы и мобильный банкинг национального масштаба."
+},
+"i2.p": {
+"uz": "Fuqarolar uchun xavfsiz elektron xizmatlar va idoralararo ma’lumot almashinuvi.",
+"ru": "Защищённые электронные услуги для граждан и межведомственный обмен данными."
+},
+"i3.h": {
+"uz": "Telekom",
+"ru": "Телеком"
+},
+"i3.p": {
+"uz": "BSS/OSS platformalari, shaxsiy kabinet ilovalari va tarmoq analitikasi.",
+"ru": "BSS/OSS-платформы, приложения самообслуживания и сетевая аналитика."
+},
+"i4.h": {
+"uz": "Chakana savdo va logistika",
+"ru": "Ритейл и логистика"
+},
+"i4.p": {
+"uz": "Elektron tijorat, omborlarni avtomatlashtirish va oxirgi milya marshrutlarini optimallashtirish.",
+"ru": "Электронная коммерция, автоматизация складов и оптимизация маршрутов последней мили."
+},
+"i5.h": {
+"uz": "Sog‘liqni saqlash va EdTech",
+"ru": "Медицина и EdTech"
+},
+"i5.p": {
+"uz": "Millionlab foydalanuvchilar uchun klinik tizimlar, telemeditsina va ta’lim platformalari.",
+"ru": "Клинические системы, телемедицина и образовательные платформы для миллионов."
+},
+"ct.idx": {
+"uz": "( 06 ) — Keling, gaplashamiz",
+"ru": "( 06 ) — Давайте обсудим"
+},
+"ct.h2": {
+"uz": "Keling,<strong>kelajakni quramiz.</strong>",
+"ru": "Давайте создадим<strong>будущее.</strong>"
+},
+"fm.name": {
+"uz": "Ismingiz",
+"ru": "Ваше имя"
+},
+"fm.mail": {
+"uz": "Ish e-pochtangiz",
+"ru": "Рабочий email"
+},
+"fm.int": {
+"uz": "Qiziqish sohasi",
+"ru": "Интересует"
+},
+"fm.c1": {
+"uz": "Dasturlash",
+"ru": "Разработка"
+},
+"fm.c2": {
+"uz": "Bulut",
+"ru": "Облако"
+},
+"fm.c3": {
+"uz": "AI",
+"ru": "ИИ"
+},
+"fm.c4": {
+"uz": "Xavfsizlik",
+"ru": "Безопасность"
+},
+"fm.c5": {
+"uz": "Dizayn",
+"ru": "Дизайн"
+},
+"fm.msg": {
+"uz": "Loyihangiz haqida gapirib bering",
+"ru": "Расскажите о вашем проекте"
+},
+"fm.send": {
+"uz": "So‘rov yuborish",
+"ru": "Отправить заявку"
+},
+"fm.ok": {
+"uz": "✓ Pochta ilovangiz so‘rov bilan ochildi — faqat «Yuborish» tugmasini bosing. Bir ish kuni ichida javob beramiz.",
+"ru": "✓ Почтовое приложение открыто с вашей заявкой — просто нажмите «Отправить». Мы ответим в течение одного рабочего дня."
+},
+"ft.company": {
+"uz": "Kompaniya",
+"ru": "Компания"
+},
+"ft.connect": {
+"uz": "Ijtimoiy tarmoqlar",
+"ru": "Соцсети"
+},
+"ft.office": {
+"uz": "Ofis",
+"ru": "Офис"
+},
+"ft.industries": {
+"uz": "Sohalar",
+"ru": "Отрасли"
+},
+"ft.city": {
+"uz": "Toshkent, O‘zbekiston",
+"ru": "Ташкент, Узбекистан"
+},
+"ft.rights": {
+"uz": "Barcha huquqlar himoyalangan.",
+"ru": "Все права защищены."
+},
+"ft.crafted": {
+"uz": "Toshkentda yaratilgan",
+"ru": "Сделано в Ташкенте"
+}
+};
+  Object.assign(I18N, {"svg.balance": {"uz": "BALANS", "ru": "БАЛАНС"}, "svg.mau": {"uz": "OYLIK FAOL FOYDALANUVCHILAR", "ru": "АКТИВНЫХ ЗА МЕСЯЦ"}, "svg.public": {"uz": "Davlat xizmatlari", "ru": "Госуслуги"}, "svg.apps": {"uz": "KO‘RIB CHIQILGAN ARIZALAR", "ru": "ОБРАБОТАНО ЗАЯВОК"}, "svg.ship": {"uz": "FAOL YUKLAR", "ru": "АКТИВНЫЕ ПЕРЕВОЗКИ"}, "svg.eta": {"uz": "Toshkent → Olmaota  18 soat", "ru": "Ташкент → Алматы  18 ч"}, "svg.vitals": {"uz": "BEMOR KO‘RSATKICHLARI · JONLI", "ru": "ПОКАЗАТЕЛИ ПАЦИЕНТА · ОНЛАЙН"}, "svg.bpm": {"uz": "72 zarba/daq", "ru": "72 уд/мин"}, "svg.appt": {"uz": "BUGUNGI QABULLAR", "ru": "ЗАПИСИ НА СЕГОДНЯ"}, "f.fin": {"uz": "Fintex", "ru": "Финтех"}, "f.gov": {"uz": "Davlat sektori", "ru": "Госсектор"}, "f.ai": {"uz": "AI va marketing", "ru": "ИИ и маркетинг"}, "i2.h": {"uz": "Davlat sektori", "ru": "Госсектор"}, "tag.pentest": {"uz": "Pentest", "ru": "Пентест"}, "tag.motion": {"uz": "Animatsiya", "ru": "Моушн-дизайн"}, "geo": {"uz": "<b>41.2995° sh.k.</b> / <b>69.2401° sh.u.</b>", "ru": "<b>41.2995° с. ш.</b> / <b>69.2401° в. д.</b>"}, "hud.fps.label": {"uz": "60 FPS · WebGL", "ru": "60 FPS · WebGL"}, "mi.badge": {"uz": "AI · Marketing avtomatizatsiyasi", "ru": "ИИ · Автоматизация маркетинга"}, "mi.live": {"uz": "Ishlayapti", "ru": "Работает"}, "mi.kicker": {"uz": "Asosiy loyiha", "ru": "Флагманский проект"}, "mi.p": {"uz": "Meta va Instagram uchun reklama kampaniyalarini mustaqil rejalashtiradigan, yaratadigan va ishga tushiradigan sun’iy intellekt platformasi. Tadbirkor Facebook orqali bir marta kiradi — AI uning Instagram sahifasini o‘rganadi, maqsadli kampaniya tuzadi va pul sarflashdan oldin tasdiqni kutadi.", "ru": "Платформа на базе ИИ, которая сама планирует, создаёт и запускает рекламные кампании в Meta и Instagram. Предприниматель один раз входит через Facebook — ИИ изучает его Instagram, собирает таргетированную кампанию и ждёт подтверждения, прежде чем тратить деньги."}, "mi.m1": {"uz": "Facebook orqali kirish", "ru": "вход через Facebook"}, "mi.m2": {"uz": "kunlik xarajat limiti", "ru": "дневной лимит расходов"}, "mi.m3": {"uz": "UZ · RU · EN tillari", "ru": "языка: UZ · RU · EN"}, "mi.open": {"uz": "Loyihani ochish", "ru": "Открыть проект"}, "mi.svg.status": {"uz": "KAMPANIYA · TASDIQNI KUTMOQDA", "ru": "КАМПАНИЯ · ЖДЁТ ПОДТВЕРЖДЕНИЯ"}, "mi.svg.limit": {"uz": "Kunlik limit", "ru": "Дневной лимит"}, "mi.svg.aud": {"uz": "Auditoriya", "ru": "Аудитория"}, "mi.svg.approve": {"uz": "Tasdiqlash", "ru": "Подтвердить"}, "fm.sending": {"uz": "Yuborilmoqda…", "ru": "Отправка…"}, "fm.ok": {"uz": "✓ Rahmat! So‘rovingiz yuborildi — bir ish kuni ichida javob beramiz.", "ru": "✓ Спасибо! Заявка отправлена — мы ответим в течение одного рабочего дня."}, "fm.err": {"uz": "Hozircha yuborib bo‘lmadi. Iltimos, to‘g‘ridan-to‘g‘ri uzbit777@gmail.com manziliga yozing.", "ru": "Не удалось отправить. Пожалуйста, напишите нам напрямую на uzbit777@gmail.com."}, "fm.invalid": {"uz": "Iltimos, ismingiz va to‘g‘ri e-pochta manzilini kiriting.", "ru": "Пожалуйста, укажите имя и корректный email."}});
+  const LANGS = ['en', 'uz', 'ru'];
+  const i18nEls = $$('[data-i18n]');
+  i18nEls.forEach(el => { el.dataset.en = el === man ? el.textContent : el.innerHTML; });
+  const enTitle = document.title;
+  function applyLang(lang){
+    if (!LANGS.includes(lang)) lang = 'en';
+    document.documentElement.lang = lang;
+    i18nEls.forEach(el => {
+      const k = el.dataset.i18n;
+      const v = lang === 'en' ? el.dataset.en : (I18N[k] && I18N[k][lang]) || el.dataset.en;
+      if (el === man) splitManifesto(v); else el.innerHTML = v;
+    });
+    document.title = lang === 'en' ? enTitle : I18N['meta.title'][lang];
+    $$('.lang button').forEach(b => { b.classList.toggle('on', b.dataset.lang === lang); b.setAttribute('aria-pressed', b.dataset.lang === lang); });
+  }
+  // Every visit opens in English; UZ/RU only when the visitor picks them.
+  try { localStorage.removeItem('uzbit-lang'); } catch (e) {}
+  applyLang('en');
+  $$('.lang button').forEach(b => b.addEventListener('click', () => {
+    if (b.classList.contains('on')) return;
+    body.classList.add('lang-fade');
+    setTimeout(() => { applyLang(b.dataset.lang); onScroll(); body.classList.remove('lang-fade'); }, 280);
+  }));
+
+  /* ---------- Scroll-driven UI ---------- */
+  const nav = $('#nav'), track = $('#track'), proc = $('#process'), pline = $('#pline');
+  const mqMobile = matchMedia('(max-width:760px)');
+  function onScroll(){
+    const y = scrollY, vh = innerHeight;
+    nav.classList.toggle('scrolled', y > 40);
+
+    // manifesto
+    const mr = man.getBoundingClientRect();
+    const mp = Math.min(1, Math.max(0, (vh*.85 - mr.top) / (mr.height + vh*.35)));
+    const n = Math.floor(mp * words.length * 1.05);
+    words.forEach((w,i) => w.classList.toggle('on', i < n));
+
+    // horizontal process
+    if (!mqMobile.matches){
+      const pr = proc.getBoundingClientRect();
+      const total = proc.offsetHeight - vh;
+      const p = Math.min(1, Math.max(0, -pr.top / total));
+      const maxX = Math.max(0, track.scrollWidth - innerWidth);
+      track.style.transform = `translate3d(${-p*maxX}px,0,0)`;
+      pline.style.transform = `scaleX(${p})`;
+    }
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Mobile menu ---------- */
+  const menuBtn = $('.menu-btn'), menu = $('#mobile-menu');
+  const setMenu = open => {
+    body.classList.toggle('menu-open', open);
+    menuBtn.setAttribute('aria-expanded', open);
+    menu.setAttribute('aria-hidden', !open);
+  };
+  menuBtn.addEventListener('click', () => setMenu(!body.classList.contains('menu-open')));
+  $$('a', menu).forEach(a => a.addEventListener('click', () => setMenu(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  matchMedia('(min-width:861px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
+
+  /* ---------- Project filter ---------- */
+  $$('.proj-filter button').forEach(b => b.addEventListener('click', () => {
+    $$('.proj-filter button').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
+    $$('.proj').forEach(p => p.classList.toggle('hide', b.dataset.f !== 'all' && p.dataset.cat !== b.dataset.f));
+    $('.proj-grid').classList.toggle('filtered', b.dataset.f !== 'all');
+  }));
+
+  /* ---------- Clock ---------- */
+  const clock = $('#clock');
+  const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Tashkent', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+  const tickClock = () => { clock.textContent = fmt.format(new Date()); };
+  tickClock(); setInterval(tickClock, 1000);
+
+  /* ---------- Form → email (delivered by FormSubmit to uzbit777@gmail.com) ---------- */
+  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/uzbit777@gmail.com';
+  const form = $('#form');
+  const sendLabel = form.querySelector('[data-i18n="fm.send"]');
+  const tr = k => {
+    const L = document.documentElement.lang;
+    if (L !== 'en' && I18N[k]) return I18N[k][L];
+    return k === 'fm.sending' ? 'Sending…' : (document.querySelector(`[data-i18n="${k}"]`) || {}).dataset?.en || '';
+  };
+  form.addEventListener('input', () => { if (form.dataset.state === 'invalid' || form.dataset.state === 'err') form.dataset.state = ''; });
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (form.dataset.state === 'sending') return;
+    const name = $('#f-name').value.trim(), mail = $('#f-mail').value.trim(), msg = $('#f-msg').value.trim();
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) {
+      form.dataset.state = 'invalid';
+      (name ? $('#f-mail') : $('#f-name')).focus();
+      return;
+    }
+    if (form.querySelector('.hp').value) return;           // bot trap
+    const topics = $$('.chips input:checked', form).map(i => i.nextElementSibling.dataset.en || i.nextElementSibling.textContent).join(', ');
+    form.dataset.state = 'sending';
+    sendLabel.textContent = tr('fm.sending');
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: `New project request from ${name} — UZB IT website`,
+          _template: 'table',
+          _captcha: 'false',
+          Name: name,
+          email: mail,
+          'Interested in': topics || '-',
+          Message: msg || '-',
+          'Site language': document.documentElement.lang.toUpperCase(),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || String(data.success) !== 'true') throw new Error(data.message || 'HTTP ' + res.status);
+      form.reset();
+      form.dataset.state = 'ok';
+    } catch (err) {
+      console.warn('Form delivery failed:', err);
+      form.dataset.state = 'err';
+    }
+    sendLabel.textContent = tr('fm.send');
+  });
+})();
+</script>
+
+<!-- ================= 3D scene (Three.js) ================= -->
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const canvas = document.getElementById('gl');
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+} catch (e) {
+  document.body.classList.add('no-webgl');
+  window.__onGLReady && window.__onGLReady();
+  throw e;
+}
+const isMobile = () => innerWidth < 900;
+renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile() ? 1.5 : 1.75));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+
+const BG = 0x05070a, TURQ = 0x19e3d0, GOLD = 0xd9b56b;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(BG);
+scene.fog = new THREE.FogExp2(BG, 0.045);
+
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+const camera = new THREE.PerspectiveCamera(35, innerWidth / innerHeight, 0.1, 120);
+camera.position.set(0, 0.4, 12);
+
+/* ---------- Lights ---------- */
+scene.add(new THREE.AmbientLight(0xffffff, 0.15));
+const lTurq = new THREE.PointLight(TURQ, 60, 30); lTurq.position.set(-5, 2, 4); scene.add(lTurq);
+const lGold = new THREE.PointLight(GOLD, 22, 30); lGold.position.set(5, -3, 3); scene.add(lGold);
+const key = new THREE.DirectionalLight(0xffffff, 1.2); key.position.set(3, 5, 6); scene.add(key);
+
+/* ---------- Logo: three extruded pieces ---------- */
+const S = 0.02;
+const RAW = {
+  top:    [[0,36],[56,0],[113,36],[113,44],[99,51],[56,24],[22,46],[22,52],[0,63]],
+  band:   [[113,55],[113,85],[0,140],[0,110]],
+  bottom: [[113,159],[57,195],[0,159],[0,151],[14,144],[57,171],[91,149],[91,143],[113,132]],
+};
+function toShape(pts){
+  const s = new THREE.Shape();
+  pts.forEach(([x,y],i) => { const X = (x-56.5)*S, Y = (97.5-y)*S; i ? s.lineTo(X,Y) : s.moveTo(X,Y); });
+  s.closePath(); return s;
+}
+const chrome = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 1, roughness: 0.24, clearcoat: 1, clearcoatRoughness: 0.06, envMapIntensity: 2.1 });
+const edgeMat = new THREE.LineBasicMaterial({ color: TURQ, transparent: true, opacity: 0, blending: THREE.AdditiveBlending });
+
+const logo = new THREE.Group(); scene.add(logo);
+const pieces = [];
+const INTRO = {
+  top:    { pos: [-6, 5, -5],  rot: [ 3,  2,  1], delay: 0 },
+  band:   { pos: [ 8, -.5, 3], rot: [-2,  4,  1], delay: .15 },
+  bottom: { pos: [-3, -6, 2],  rot: [ 2, -3, -2], delay: .3 },
+};
+const EXPLODE = {
+  top:    { pos: [ .7, 1.9,  1.2], rot: [ .6, -.8,  .3] },
+  band:   { pos: [-.9,   0,  2.4], rot: [-.4, 1.1, -.2] },
+  bottom: { pos: [ .3, -1.9, -1 ], rot: [ .9,  .5, -.4] },
+};
+for (const name of ['top','band','bottom']){
+  const geo = new THREE.ExtrudeGeometry(toShape(RAW[name]), { depth: .36, bevelEnabled: true, bevelThickness: .045, bevelSize: .03, bevelSegments: 5, curveSegments: 1 });
+  geo.computeBoundingBox();
+  const c = new THREE.Vector3(); geo.boundingBox.getCenter(c);
+  geo.translate(-c.x, -c.y, -c.z);
+  const holder = new THREE.Group();
+  const mesh = new THREE.Mesh(geo, chrome);
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 25), edgeMat);
+  edges.scale.setScalar(1.004);
+  holder.add(mesh, edges);
+  holder.userData = { home: c.clone(), ...INTRO[name], ex: EXPLODE[name] };
+  holder.position.set(...INTRO[name].pos);
+  holder.visible = false;
+  logo.add(holder); pieces.push(holder);
+}
+
+/* ---------- Precision orbit: instrument-grade rings that draw themselves ---------- */
+const R = 3.3;
+const orbit = new THREE.Group(); scene.add(orbit);
+const lineMat = (color, opacity) => new THREE.LineBasicMaterial({ color, transparent: true, opacity, depthWrite: false });
+const arcPts = (r, a0 = 0, a1 = Math.PI * 2, seg = 256) => {
+  const pts = [];
+  for (let i = 0; i <= seg; i++){ const a = a0 + (a1 - a0) * i / seg; pts.push(new THREE.Vector3(Math.cos(a) * r, Math.sin(a) * r, 0)); }
+  return new THREE.BufferGeometry().setFromPoints(pts);
+};
+const mainRing = new THREE.Line(arcPts(R), lineMat(TURQ, .55));
+const innerRing = new THREE.Line(arcPts(R * .82), lineMat(0xffffff, .08));
+const outerRing = new THREE.Line(arcPts(R * 1.34), new THREE.LineDashedMaterial({ color: 0xffffff, transparent: true, opacity: .16, dashSize: .05, gapSize: .09, depthWrite: false }));
+outerRing.computeLineDistances();
+
+// dial ticks: every 15th long, every 5th medium
+const tickPts = [];
+for (let i = 0; i < 180; i++){
+  const a = i / 180 * Math.PI * 2, r0 = R * 1.07, len = i % 15 === 0 ? .2 : i % 5 === 0 ? .11 : .05;
+  tickPts.push(new THREE.Vector3(Math.cos(a) * r0, Math.sin(a) * r0, 0), new THREE.Vector3(Math.cos(a) * (r0 + len), Math.sin(a) * (r0 + len), 0));
+}
+const ticks = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(tickPts), lineMat(0xffffff, .24));
+
+// scanning arcs
+const scan = new THREE.Group();
+scan.add(new THREE.Line(arcPts(R * 1.2, 0, Math.PI * .3, 64), lineMat(TURQ, .9)));
+scan.add(new THREE.Line(arcPts(R * 1.2, Math.PI, Math.PI * 1.08, 32), lineMat(TURQ, .45)));
+
+// perpendicular gyroscope ring
+const gyroHolder = new THREE.Group();
+const gyro = new THREE.Line(arcPts(R * 1.02), lineMat(0xffffff, .1));
+gyro.rotation.x = Math.PI / 2;
+gyroHolder.add(gyro);
+
+// data nodes travelling on the main ring
+const nodeGeo = new THREE.SphereGeometry(.03, 12, 12);
+const nodes = [0, 2.1, 4.2].map(o => { const m = new THREE.Mesh(nodeGeo, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 })); m.userData.o = o; return m; });
+
+orbit.add(mainRing, innerRing, outerRing, ticks, scan, gyroHolder, ...nodes);
+orbit.rotation.set(1.2, 0, -.2);
+const drawn = [mainRing, innerRing, outerRing, ticks, gyro];
+drawn.forEach(l => l.geometry.setDrawRange(0, 0));
+scan.visible = false;
+
+/* Shockwave fired when the logo locks together */
+const shock = new THREE.Mesh(new THREE.RingGeometry(.98, 1, 128), new THREE.MeshBasicMaterial({ color: TURQ, transparent: true, opacity: 0, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false }));
+logo.add(shock);
+
+/* ---------- Particle field ---------- */
+const PCOUNT = isMobile() ? 900 : 2200;
+const pPos = new Float32Array(PCOUNT*3), pCol = new Float32Array(PCOUNT*3);
+const cT = new THREE.Color(TURQ), cG = new THREE.Color(GOLD), cW = new THREE.Color(0xffffff);
+for (let i = 0; i < PCOUNT; i++){
+  const r = 5 + Math.random() * 22, th = Math.random() * Math.PI * 2, ph = Math.acos(2*Math.random() - 1);
+  pPos[i*3] = r * Math.sin(ph) * Math.cos(th);
+  pPos[i*3+1] = r * Math.sin(ph) * Math.sin(th) * .6;
+  pPos[i*3+2] = r * Math.cos(ph) - 4;
+  const c = Math.random() < .45 ? cT : Math.random() < .12 ? cG : cW;
+  pCol.set([c.r, c.g, c.b], i*3);
+}
+const pGeo = new THREE.BufferGeometry();
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
+const points = new THREE.Points(pGeo, new THREE.PointsMaterial({ size: .03, vertexColors: true, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true }));
+scene.add(points);
+
+/* ---------- Horizon grid ---------- */
+const grid = new THREE.GridHelper(80, 80, TURQ, 0x0f3a36);
+grid.position.y = -3.6;
+grid.material.transparent = true; grid.material.opacity = 0; grid.material.depthWrite = false;
+scene.add(grid);
+
+/* ---------- Post-processing ---------- */
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), .55, .5, .9);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+/* ---------- Input ---------- */
+const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+addEventListener('pointermove', e => { mouse.tx = e.clientX / innerWidth * 2 - 1; mouse.ty = e.clientY / innerHeight * 2 - 1; });
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+  renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile() ? 1.5 : 1.75));
+  renderer.setSize(innerWidth, innerHeight); composer.setPixelRatio(renderer.getPixelRatio()); composer.setSize(innerWidth, innerHeight);
+});
+
+/* ---------- Helpers ---------- */
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t*t*(3 - 2*t); };
+const easeOutExpo = t => t >= 1 ? 1 : 1 - Math.pow(2, -10 * t);
+const easeInOut = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+
+/* ---------- Intro timeline ---------- */
+let introStart = -1, locked = false;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const INTRO_DUR = reduce ? .01 : 2.3;
+window.__startIntro = () => { introStart = clock.elapsedTime; pieces.forEach(p => p.visible = true); };
+
+/* ---------- Loop ---------- */
+const clock = new THREE.Clock();
+const veil = document.getElementById('veil');
+const fpsEl = document.getElementById('fps');
+let smoothScroll = 0, frames = 0, fpsT = 0;
+
+function frame(){
+  const dt = clock.getDelta();
+  const t = clock.elapsedTime;
+
+  mouse.x += (mouse.tx - mouse.x) * .05;
+  mouse.y += (mouse.ty - mouse.y) * .05;
+
+  const maxS = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+  smoothScroll += (scrollY / maxS - smoothScroll) * .08;
+  const sp = smoothScroll;
+  const explode = smooth(.02, .22, sp) * (1 - smooth(.8, .97, sp));
+
+  // intro progress
+  const ip = introStart < 0 ? 0 : clamp((t - introStart) / INTRO_DUR);
+  const after = introStart < 0 ? 0 : clamp((t - introStart - INTRO_DUR * .85) / 1.4);
+
+  // logo placement: right of headline on desktop, centered higher on mobile
+  const mob = isMobile();
+  const baseX = mob ? 0 : 2.9, baseY = mob ? 2.35 : 0;
+  const endT = smooth(.86, 1, sp);
+  logo.position.x = lerp(lerp(baseX, mob ? 0 : -.2, explode), 0, endT);
+  logo.position.y = lerp(baseY, mob ? .6 : .3, endT) + Math.sin(t * .8) * .08;
+  logo.position.z = lerp(0, -1.5, explode);
+  const sc = mob ? .5 : 1;
+  logo.scale.setScalar(sc);
+  logo.rotation.y = Math.sin(t * .35) * .2 * after + mouse.x * .35 + explode * t * .15;
+  logo.rotation.x = mouse.y * .25 + Math.sin(t * .5) * .05;
+
+  pieces.forEach(p => {
+    const d = p.userData;
+    const local = easeOutExpo(clamp((ip * INTRO_DUR - d.delay) / (INTRO_DUR - .3)));
+    const ex = easeInOut(explode);
+    for (let k = 0; k < 3; k++){
+      const axis = 'xyz'[k];
+      const home = d.home[axis] + d.ex.pos[k] * ex;
+      p.position[axis] = lerp(d.pos[k], home, local);
+      p.rotation[axis] = lerp(d.rot[k], d.ex.rot[k] * ex, local);
+    }
+    if (ex > 0) p.rotation.z += Math.sin(t * .6 + d.delay * 10) * .08 * ex;
+  });
+
+  // lock moment → shockwave + edge glow
+  if (!locked && ip >= .78){ locked = true; shock.userData.t0 = t; }
+  if (locked){
+    const st = clamp((t - shock.userData.t0) / 1.6);
+    shock.scale.setScalar(1 + easeOutExpo(st) * 5);
+    shock.material.opacity = (1 - st) * .9;
+  }
+  edgeMat.opacity = after * (.35 + .25 * Math.sin(t * 2)) + explode * .5;
+
+  // precision orbit: rings draw on after the lock, then turn slowly
+  orbit.position.copy(logo.position);
+  orbit.scale.setScalar(sc * (1 + explode * .35));
+  orbit.rotation.x = 1.2 + mouse.y * .1 - explode * .5;
+  orbit.rotation.z = -.2 + mouse.x * .05;
+  const draw = easeInOut(clamp(after * 1.1));
+  drawn.forEach(l => l.geometry.setDrawRange(0, Math.floor(l.geometry.attributes.position.count * draw)));
+  scan.visible = draw > .95;
+  ticks.rotation.z = t * .025;
+  outerRing.rotation.z = -t * .015;
+  scan.rotation.z = -t * .3;
+  gyroHolder.rotation.z = t * .1;
+  nodes.forEach((m, i) => {
+    const a = m.userData.o + t * (.16 + i * .035);
+    m.position.set(Math.cos(a) * R, Math.sin(a) * R, 0);
+    m.material.opacity = draw;
+  });
+
+  // atmosphere
+  points.rotation.y = t * .015 + mouse.x * .05;
+  points.material.opacity = lerp(points.material.opacity, introStart < 0 ? 0 : .55, .02);
+  grid.material.opacity = lerp(grid.material.opacity, introStart < 0 ? 0 : .22 * (1 - explode * .6), .02);
+  grid.position.z = (t * .6) % 1;
+
+  lTurq.position.x = -5 + Math.sin(t * .7) * 2;
+  lGold.position.y = -3 + Math.cos(t * .5) * 2;
+
+  // camera: gentle parallax + scroll-driven orbit
+  const ang = explode * .55 + Math.sin(sp * Math.PI * 2) * .15;
+  const dist = 12 + explode * 1.5;
+  camera.position.x = Math.sin(ang) * dist + mouse.x * .5;
+  camera.position.z = Math.cos(ang) * dist;
+  camera.position.y = .4 - mouse.y * .35 - Math.sin(sp * Math.PI) * 1.1;
+  camera.lookAt(explode * -.4, logo.position.y * .4, 0);
+
+  veil.style.opacity = (smooth(.05, .18, sp) * (1 - smooth(.86, .96, sp)) * .7).toFixed(3);
+
+  composer.render();
+
+  frames++; fpsT += dt;
+  if (fpsT > 1){ fpsEl.textContent = Math.round(frames / fpsT) + ' FPS · WebGL'; frames = 0; fpsT = 0; }
+  requestAnimationFrame(frame);
+}
+
+// warm up shaders before revealing
+renderer.compile(scene, camera);
+frame();
+window.__onGLReady && window.__onGLReady();
+</script>
+</body>
+</html>
